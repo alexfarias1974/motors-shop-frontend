@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <Button text="teste" color="bg-brand1" />
+      <Button text="Teste" color="bg-brand1" textColor="text-whiteFixed" />
     </>
   );
 }
