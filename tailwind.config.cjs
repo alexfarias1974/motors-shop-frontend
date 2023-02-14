@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx}",
@@ -49,5 +48,7 @@ module.exports = {
     fontSize: {
       "text-4.5xl": "2.75rem",
     },
+    extend: {},
   },
+  plugins: [],
 };
