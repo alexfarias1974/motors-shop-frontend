@@ -18,6 +18,7 @@ module.exports = {
       grey8: "#F1F3F5",
       grey9: "#F8F9FA",
       grey10: "#FDFDFD",
+      grey11: " #0000007F",
       whiteFixed: "#FFFFFF",
       alert1: "#CD2B31",
       alert2: "#FDD8D8",
