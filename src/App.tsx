@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "./components/Button";
 import Header from "./components/Header";
+import NavBar from "./components/NavBar";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -8,7 +9,6 @@ function App() {
   return (
     <>
       <Header />
-      <Button text="Teste" color="bg-brand1" textColor="text-whiteFixed" />
     </>
   );
 }

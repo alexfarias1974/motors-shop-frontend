@@ -3,9 +3,11 @@ import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import Logo from "../../assets/Motors shop.svg";
 import Button from "../Button";
+import NavBar from "../NavBar";
 
 const Header = () => {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
+  const [isActiveNavBar, setIsActiveNavBar] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 
   return (
@@ -33,7 +35,10 @@ const Header = () => {
           </div>
           <div className="flex items-center gap-11 h-20 border-grey6 border-l-2">
             {isLogin ? (
-              <div className="flex justify-center items-center gap-3 ml-11 cursor-pointer">
+              <div
+                className="flex justify-center items-center gap-3 ml-11 cursor-pointer"
+                onClick={() => setIsActiveNavBar(!isActiveNavBar)}
+              >
                 <div className="flex justify-center items-center bg-brand2 h-8 w-8 rounded-[100%]">
                   <span className="text-whiteFixed font-semibold">SL</span>
                 </div>
@@ -61,6 +66,12 @@ const Header = () => {
           </div>
         </div>
       </header>
+
+      {isActiveNavBar && (
+        <div className="absolute top-[4.25rem] right-[0.9rem]">
+          <NavBar />
+        </div>
+      )}
 
       {isActiveMenu && (
         <div className="md:hidden shadow-[0px_40px_40px_rgba(0,0,0,0.09)] absolute w-[100%]">
