@@ -2,6 +2,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerAnnoucementSchema } from "../../validations/forms.validations";
 import { AiOutlineClose } from "react-icons/ai";
+import api from "../../services/api";
 
 export interface IForm {
   accountSubmit: SubmitHandler<FieldValues>;
@@ -11,14 +12,20 @@ export interface SubmitFunction {
   typeAnnoucement?: string;
   title?: string;
   year?: number;
-  mileage?: string;
-  price?: string;
+  mileage?: number;
+  price?: number;
   description?: string;
   typeVehicle?: string;
   image?: string;
 }
 
 const Form = ({ accountSubmit }: IForm) => {
+  const registerAnnoucement = (data: SubmitFunction) => {
+    api.post("/vehicles", data).then((res) => {
+      return res.data;
+    });
+  };
+
   const {
     register,
     handleSubmit,
@@ -29,7 +36,7 @@ const Form = ({ accountSubmit }: IForm) => {
 
   return (
     <form
-      onSubmit={handleSubmit(accountSubmit)}
+      onSubmit={handleSubmit(registerAnnoucement)}
       className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-lexend  "
     >
       <div className="flex items-center justify-between ">
@@ -50,6 +57,7 @@ const Form = ({ accountSubmit }: IForm) => {
           <option value="Compra">Compra</option>
           <option value="Leilão">Leilão</option>
         </select>
+        <span className="text-alert1">{errors.typeAnnoucement?.message}</span>
       </div>
 
       <div className="flex flex-col gap-1">
@@ -63,6 +71,7 @@ const Form = ({ accountSubmit }: IForm) => {
           {...register("title")}
           className="rounded-md border-2 border-grey4 p-1 hover:border-grey4"
         />
+        <span className="text-alert1">{errors.title?.message}</span>
       </div>
 
       <div className="flex gap-1 flex-wrap md:justify-between">
@@ -113,6 +122,7 @@ const Form = ({ accountSubmit }: IForm) => {
           className="rounded-md border-2 border-grey4 p-1 hover:border-grey4 "
           {...register("description")}
         />
+        <span className="text-alert1">{errors.description?.message}</span>
       </div>
 
       <div className="flex flex-col gap-1">
@@ -127,6 +137,7 @@ const Form = ({ accountSubmit }: IForm) => {
           <option value="Carro">Carro</option>
           <option value="Moto">Moto</option>
         </select>
+        <span className="text-alert1">{errors.typeVehicle?.message}</span>
       </div>
 
       <div className="flex flex-col gap-1">
@@ -139,6 +150,7 @@ const Form = ({ accountSubmit }: IForm) => {
           className="rounded-md border-2 border-grey4 p-1 hover:border-grey4"
           {...register("image")}
         />
+        <span className="text-alert1">{errors.image?.message}</span>
       </div>
       <div className="flex mt-4 justify-between">
         <button className="bg-grey6 text-grey2 rounded-md p-1 ">
