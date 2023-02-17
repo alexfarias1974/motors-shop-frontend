@@ -140,9 +140,11 @@ const Form = ({ accountSubmit }: IForm) => {
           {...register("image")}
         />
       </div>
-      <div className="flex justify-between mt-4">
-        <button className="bg-grey6 text-grey2 rounded-md p-1">Cancelar</button>
-        <button className="bg-brand1 text-whiteFixed rounded-md p-1">
+      <div className="flex mt-4 justify-between">
+        <button className="bg-grey6 text-grey2 rounded-md p-1 ">
+          Cancelar
+        </button>
+        <button className="bg-brand1 text-whiteFixed rounded-md p-1 ">
           Criar anúncio
         </button>
       </div>

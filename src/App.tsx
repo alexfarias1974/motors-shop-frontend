@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "./components/Button";
-import Form from "./components/Form";
+import Form from "./components/Form/registerAnnoucementForm";
 import ModalBase from "./components/ModalBase";
 
 function App() {
