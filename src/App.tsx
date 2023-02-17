@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./components/Button";
-import Form from "./components/Form/registerAnnoucementForm";
-import ModalBase from "./components/ModalBase";
+import Header from "./components/Header";
+import NavBar from "./components/NavBar";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -9,19 +9,7 @@ function App() {
 
   return (
     <>
-      <button
-        onClick={() => {
-          setIsOpenModal(true);
-        }}
-      >
-        opa
-      </button>
-
-      {isOpenModal ? (
-        <ModalBase setIs={setIsOpenModal}>
-          <Form accountSubmit={() => {}} />
-        </ModalBase>
-      ) : null}
+      <Header />
     </>
   );
 }
