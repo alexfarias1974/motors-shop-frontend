@@ -65,7 +65,7 @@ const Form = ({ accountSubmit }: IForm) => {
         />
       </div>
 
-      <div className="flex gap-1 flex-wrap">
+      <div className="flex gap-1 flex-wrap md:justify-between">
         <div className="flex flex-col">
           <label htmlFor="year" className="font-bold">
             Ano
@@ -74,7 +74,7 @@ const Form = ({ accountSubmit }: IForm) => {
             type="number"
             placeholder="2018"
             {...register("year")}
-            className="rounded-md border-2 border-grey4 p-1 hover:border-grey4 w-16 "
+            className="rounded-md border-2 border-grey4 p-1 hover:border-grey4 w-16 md:w-20"
           />
         </div>
 
@@ -86,7 +86,7 @@ const Form = ({ accountSubmit }: IForm) => {
             type="text"
             placeholder="0"
             {...register("mileage")}
-            className="rounded-md border-2 border-grey4 p-1 hover:border-grey4  w-16  "
+            className="rounded-md border-2 border-grey4 p-1 hover:border-grey4  w-28  md:w-28"
           />
         </div>
 
@@ -98,7 +98,7 @@ const Form = ({ accountSubmit }: IForm) => {
             type="text"
             placeholder="50.000,00"
             {...register("price")}
-            className="rounded-md border-2 border-grey4 p-1 hover:border-grey4 w-16"
+            className="rounded-md border-2 border-grey4 p-1 hover:border-grey4 w-20 md:w-20"
           />
         </div>
       </div>
