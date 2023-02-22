@@ -7,9 +7,6 @@
   - [1. Visão Geral](#1-visão-geral)
   - [2. Início Rápido](#2-início-rápido)
     - [Instalando Dependências](#21-instalando-dependências)
-    - [Diretório Projeto](#22-diretorio)
-    - [Visualização](#23-visualização)
-
 
 ---
 
