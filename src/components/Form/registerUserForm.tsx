@@ -1,51 +1,74 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { LoginContext } from "../../context/loginContext";
 import { IRegisterForm, IUser } from "../../interfaces/user.interface";
 import { registerUserSchema } from "../../validations/forms.validations";
 import Button from "../Button";
-import "./styles.css"
+import "./styles.css";
 
 export const RegisterUserForm = () => {
-  const [divClasses, setDivClasses] = useState({
-    buyer: "color1",
-    advertiser: "color2",
-    lastClicked: null,
-  });
+  // const [divClasses, setDivClasses] = useState({
+  //   buyer: "color1",
+  //   advertiser: "color2",
+  //   lastClicked: null,
+  // });
 
-  const handleClick = (div: any) => {
-    const newClasses = { ...divClasses };
-    if (div === newClasses.lastClicked) {
-      newClasses[div] = newClasses[div] ? "color2" : "color1";
-      newClasses[div === "buyer" ? "advertiser" : "buyer"] = newClasses[
-        div === "buyer" ? "advertiser" : "buyer"
-      ]
-        ? "color2"
-        : "color1";
+  // const handleClick = (div: any) => {
+  //   const newClasses = { ...divClasses };
+  //   if (div === newClasses.lastClicked) {
+  //     newClasses[div] = newClasses[div] ? "color2" : "color1";
+  //     newClasses[div === "buyer" ? "advertiser" : "buyer"] = newClasses[
+  //       div === "buyer" ? "advertiser" : "buyer"
+  //     ]
+  //       ? "color2"
+  //       : "color1";
+  //   } else {
+  //     newClasses[div] = "color1";
+  //     newClasses[div === "buyer" ? "advertiser" : "buyer"] = "color2";
+  //   }
+  //   newClasses.lastClicked = div;
+  //   setDivClasses(newClasses);
+  // };
+  const [accountType, setAccountType] = useState<string>("buyer");
+  const [buyerColor, setBuyerColor] = useState<string>("bg-brand1");
+  const [onclick, setOnclick] = useState<boolean>(false);
+  const [advertiserColor, setAdvertiserColor] =
+    useState<string>("bg-whiteFixed");
+
+  useEffect(() => {
+    if (accountType === "buyer") {
+      setBuyerColor("bg-brand1 text-whiteFixed border-brand1");
+      setAdvertiserColor("bg-whiteFixed text-grey0 border-grey5");
     } else {
-      newClasses[div] = "color1";
-      newClasses[div === "buyer" ? "advertiser" : "buyer"] = "color2";
+      setBuyerColor("bg-whiteFixed text-grey0 border-grey5");
+      setAdvertiserColor("bg-brand1 text-whiteFixed border-brand1");
     }
-    newClasses.lastClicked = div;
-    setDivClasses(newClasses);
-  };
+  }, [accountType]);
 
-  const { handleRegisterValues, registerErrors } = useContext(LoginContext);
+  const { handleRegisterValues } = useContext(LoginContext);
 
   const {
     register,
-    handleSubmit: handleRegisterVal,
-    // formState: { errors: registerErrors },
+    handleSubmit,
+    formState: { errors },
     reset: registerReset,
   } = useForm<IRegisterForm>({
+    mode: "onSubmit",
     resolver: yupResolver(registerUserSchema),
   });
+
+  const onSubmitFunction = (data: any) => {
+    data = { ...data, accountType };
+    console.log(data);
+    // handleRegisterValues(data);
+    event?.preventDefault();
+  };
 
   return (
     <div className="bg-grey8">
       <form
-        onSubmit={handleRegisterValues}
+        onSubmit={handleSubmit(onSubmitFunction)}
         className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-Lexend  "
       >
         <div className="flex items-center justify-between ">
@@ -258,18 +281,24 @@ export const RegisterUserForm = () => {
             Tipo de conta
           </p>
           <div className="flex flex-row gap-2 mb-4">
-            <div
-              className={divClasses.buyer}
-              onClick={() => handleClick("buyer")}
+            <button
+              className={`${buyerColor} h-12 max-md:w-[20.813rem] md:w-36 rounded font-semibold text-base border-2 rounded-md`}
+              onClick={() => {
+                setAccountType("buyer");
+                event?.preventDefault();
+              }}
             >
               Comprador
-            </div>
-            <div
-              className={divClasses.advertiser}
-              onClick={() => handleClick("advertiser")}
+            </button>
+            <button
+              className={`${advertiserColor} h-12 max-md:w-[20.813rem] md:w-36 rounded font-semibold text-base border-2 rounded-md `}
+              onClick={() => {
+                setAccountType("advertiser");
+                event?.preventDefault();
+              }}
             >
               Anunciante
-            </div>
+            </button>
           </div>
         </div>
 
@@ -303,7 +332,7 @@ export const RegisterUserForm = () => {
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
           {/* <span className="text-alert1"> */}
-            {/* {registerErrors.passwordConfirmation?.message} */}
+          {/* {registerErrors.passwordConfirmation?.message} */}
           {/* </span> */}
         </div>
 

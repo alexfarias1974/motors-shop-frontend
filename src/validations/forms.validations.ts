@@ -31,7 +31,7 @@ export const registerUserSchema = yup.object().shape({
 
   description: yup.string().required("Adicione uma descrição"),
 
-  accountType: yup.string().required(),
+  // accountType: yup.string().required(),
 
   state: yup.string().required("Adicione seu estado"),
 
@@ -57,15 +57,13 @@ export const registerUserSchema = yup.object().shape({
   passwordConfirmation: yup
     .string()
     .oneOf(
-      [yup.ref("password"), null!], "As senhas devem corresponder entre si"
-      )
-    .required("Confirme sua senha")
+      [yup.ref("password"), null!],
+      "As senhas devem corresponder entre si"
+    )
+    .required("Confirme sua senha"),
 });
 
 export const loginSchema = yup.object().shape({
-  email: yup
-    .string()
-    .required("Campo obrigatório")
-    .email("Email inválido!"),
+  email: yup.string().required("Campo obrigatório").email("Email inválido!"),
   password: yup.string().required("Campo obrigatório"),
 });

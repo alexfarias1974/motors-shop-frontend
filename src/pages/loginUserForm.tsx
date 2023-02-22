@@ -39,7 +39,6 @@ const LoginUser = () => {
         </div>
 
         <div className="flex flex-col gap-1">
-          
           <label
             htmlFor="password"
             className="font-Inter font-medium text-[0.875rem] mb-1"
@@ -56,9 +55,8 @@ const LoginUser = () => {
         </div>
 
         <button type="submit" onClick={() => handleSubmit}>
-            Entrar
+          Entrar
         </button>
-
       </form>
     </div>
   );
