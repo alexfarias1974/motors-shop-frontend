@@ -7,8 +7,9 @@
   - [1. Visão Geral](#1-visão-geral)
   - [2. Início Rápido](#2-início-rápido)
     - [2.1. Instalando Dependências](#21-instalando-dependências)
-    - [2.2. No diretório do projeto, você pode executar:](#22-no-diretório-do-projeto-você-pode-executar)
-    - [2.3. Abra http://127.0.0.1:5173/ para visualizá-lo em seu navegador.](#23-abra-http1270015173-para-visualizá-lo-em-seu-navegador)
+    - [Diretório Projeto](#22-diretorio)
+    - [Visualização](#23-visualização)
+
 
 ---
 
