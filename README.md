@@ -2,7 +2,6 @@
 
 ## Tabela de Conteúdos
 
-- [Motors Shop](#motors-shop)
   - [Tabela de Conteúdos](#tabela-de-conteúdos)
   - [1. Visão Geral](#1-visão-geral)
   - [2. Início Rápido](#2-início-rápido)
