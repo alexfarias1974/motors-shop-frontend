@@ -1,10 +1,10 @@
 import { BsArrowRight } from "react-icons/bs";
 import { MdOutlineWatchLater } from "react-icons/md"
 
-export const ProductCardAuction = () => {
+export const ProductCardAuction = ({classname}: any) => {
   return (
     <>
-      <div className="mx-auto max-w-[46rem] flex flex-col">
+      <div className={`mx-auto max-w-[46rem] h-[24.5rem] flex flex-col cursor-pointer ${classname}`}>
         <div className="bg-gradient-to-t from-grey0 to-grey4 h-[20.5rem] w-[46rem] relative rounded-t">
           <picture>
             <img
@@ -31,7 +31,7 @@ export const ProductCardAuction = () => {
             industry. Lorem...
           </p>
           <div className="flex flex-row items-center">
-            <div className="bg-brand2 rounded-full w-8 h-8 items-center flex justify-center text-center">
+            <div className="bg-brand2 rounded-full w-8 h-[2rem] items-center flex justify-center text-center">
               <p className="font-Inter text-[0.875rem] font-medium text-[#FFFFFF]">
                 R
               </p>
