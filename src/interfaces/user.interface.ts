@@ -20,7 +20,7 @@ export interface IUser {
   isAdm: boolean;
   password: string;
 }
-  
+
 export interface IRegisterUserForm {
   registerUserSubmit: SubmitHandler<FieldValues>;
 }
@@ -42,7 +42,7 @@ export interface IRegisterForm {
   password: string;
   passwordConfirmation: string;
 }
-  
+
 export interface IRequestRegisterForm {
   name: string;
   email: string;
@@ -58,10 +58,10 @@ export interface IRequestRegisterForm {
 
 export interface IUserContextProviderValues {
   logout: () => void;
-  loginData: (data: ILoginDataProps) => void;
-  toRegister: () => void;
-  user: IUser | null;
-  signUp: (data: IRegisterForm) => void;
-  loading: boolean;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  // loginData: (data: ILoginDataProps) => void;
+  // toRegister: () => void;
+  // user: IUser | null;
+  // signUp: (data: IRegisterForm) => void;
+  // loading: boolean;
+  // setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }

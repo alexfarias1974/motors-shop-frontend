@@ -28,7 +28,7 @@ export interface ILoginContextValues {
   handleLoginValues: (
     e?: BaseSyntheticEvent<object, any, any> | undefined
   ) => Promise<void>;
-  handleRegisterValues: Function;
+  handleRegisterValues: (user: IUser) => void;
   // handleRegisterValues: (
   //   e?: BaseSyntheticEvent<object, any, any> | undefined
   // ) => Promise<void>;

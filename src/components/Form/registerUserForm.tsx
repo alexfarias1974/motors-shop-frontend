@@ -32,7 +32,7 @@ export const RegisterUserForm = () => {
   // };
   const [accountType, setAccountType] = useState<string>("buyer");
   const [buyerColor, setBuyerColor] = useState<string>("bg-brand1");
-  const [onclick, setOnclick] = useState<boolean>(false);
+
   const [advertiserColor, setAdvertiserColor] =
     useState<string>("bg-whiteFixed");
 
@@ -59,10 +59,10 @@ export const RegisterUserForm = () => {
   });
 
   const onSubmitFunction = (data: any) => {
+    event?.preventDefault();
     data = { ...data, accountType };
     console.log(data);
-    // handleRegisterValues(data);
-    event?.preventDefault();
+    handleRegisterValues(data);
   };
 
   return (
