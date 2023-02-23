@@ -1,4 +1,4 @@
-export const ProductCard = () => {
+export const ProductCardAdvertiser = () => {
   return (
     <>
       <div className="mx-auto max-w-[19.5rem] flex flex-col">
@@ -34,6 +34,10 @@ export const ProductCard = () => {
           <div className="font-lexend font-medium text-base text-grey1">
             <h4>R$ 00.000,00</h4>
           </div>
+        </div>
+        <div className="flex font-inter text-sm font-semibold text-grey1 gap-3 mt-6">
+          <button className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5">Editar</button>
+          <button className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5">Ver como</button>
         </div>
       </div>
     </>
