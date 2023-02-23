@@ -3,7 +3,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { registerAnnoucementSchema } from "../../validations/forms.validations";
 import { AiOutlineClose } from "react-icons/ai";
 import api from "../../services/api";
-import { useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
+import { UserContext } from "../../context/userContext";
 
 export interface IForm {
   accountSubmit: SubmitHandler<FieldValues>;
@@ -20,13 +21,15 @@ export interface SubmitFunction {
   image?: string;
 }
 
-const Form = ({ accountSubmit }: IForm) => {
+const Form = () => {
   const [sellColor, setSellColor] = useState<string>();
   const [auctionColor, setAuctionColor] = useState<string>();
   const [annoucementType, setAnnouncementType] = useState<string>("sell");
   const [carColor, setCarColor] = useState<string>();
   const [motorcycleColor, setMotorcycleColor] = useState<string>();
   const [vehicleType, setVehicleType] = useState<string>("car");
+  const { createVehicleModalOpen, setCreateVehicleModalOpen } =
+    useContext(UserContext);
 
   useEffect(() => {
     if (annoucementType == "sell") {
@@ -53,10 +56,11 @@ const Form = ({ accountSubmit }: IForm) => {
     api
       .post("/vehicles", data, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzE3MDEzMywiZXhwIjoxNjc3MjU2NTMzLCJzdWIiOiJjNjk3OWI4MS1mODRhLTQ0NDQtYTViZS04NGUyOGM5NmIxNGQifQ.KFcW3J_5IpK2lxTEagntVthhUDIVgsPonnlWpoF0qrQ`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzE4OTY0OCwiZXhwIjoxNjc3Mjc2MDQ4LCJzdWIiOiJjNjk3OWI4MS1mODRhLTQ0NDQtYTViZS04NGUyOGM5NmIxNGQifQ.TmbS66i4YsthWv2K6Twoe8sWrG7QTuXPzoJlKkuPQwg`,
         },
       })
       .then((res) => {
+        setCreateVehicleModalOpen(false);
         return res.data;
       })
       .catch((err) => {
@@ -75,12 +79,15 @@ const Form = ({ accountSubmit }: IForm) => {
   return (
     <form
       onSubmit={handleSubmit(registerAnnoucement)}
-      className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-Lexend"
+      className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-lexend"
     >
       <div className="flex items-center justify-between">
         <h3 className="text-[1rem] font-medium mb-3">Criar anúncio</h3>
 
-        <AiOutlineClose />
+        <AiOutlineClose
+          onClick={() => setCreateVehicleModalOpen(false)}
+          className="hover:cursor-pointer"
+        />
       </div>
 
       <div className="flex flex-col gap-1">
@@ -92,13 +99,13 @@ const Form = ({ accountSubmit }: IForm) => {
         </label>
         <div className="flex justify-between">
           <button
-            className={`${sellColor} h-12 max-md:w-[20.813rem] md:w-36 rounded font-semibold text-base border-2`}
+            className={`${sellColor} h-12 max-md:w-[20.813rem] md:w-[9.5rem] rounded font-semibold text-base border-2`}
             onClick={() => setAnnouncementType("sell")}
           >
             Venda
           </button>
           <button
-            className={`${auctionColor} h-12 max-md:w-[20.813rem] md:w-36 rounded font-semibold text-base border-2`}
+            className={`${auctionColor} h-12 max-md:w-[20.813rem] md:w-[9.5rem] rounded font-semibold text-base border-2`}
             onClick={() => setAnnouncementType("auction")}
           >
             Leilão
@@ -176,13 +183,13 @@ const Form = ({ accountSubmit }: IForm) => {
 
         <div className="flex justify-between">
           <button
-            className={`${carColor} h-12 max-md:w-[20.813rem] md:w-36 rounded font-semibold text-base border-2`}
+            className={`${carColor} h-12 max-md:w-[20.813rem] md:w-[9.5rem] rounded font-semibold text-base border-2`}
             onClick={() => setVehicleType("car")}
           >
             Carro
           </button>
           <button
-            className={`${motorcycleColor} h-12 max-md:w-[20.813rem] md:w-36 rounded font-semibold text-base border-2`}
+            className={`${motorcycleColor} h-12 max-md:w-[20.813rem] md:w-[9.5rem] rounded font-semibold text-base border-2`}
             onClick={() => setVehicleType("motorcycle")}
           >
             Moto
@@ -202,7 +209,10 @@ const Form = ({ accountSubmit }: IForm) => {
         />
       </div>
       <div className="flex mt-4 justify-end gap-3">
-        <button className="bg-grey6 text-grey2 rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-24">
+        <button
+          className="bg-grey6 text-grey2 rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-24"
+          onClick={() => setCreateVehicleModalOpen(false)}
+        >
           Cancelar
         </button>
         <button className="bg-brand1 text-whiteFixed rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-36">
