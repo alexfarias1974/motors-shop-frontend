@@ -3,7 +3,8 @@ export const ProductCard = () => {
     <>
       <div className="mx-auto max-w-[19.5rem] flex flex-col">
         <picture className="bg-grey7 rounded-xl h-[11rem] w-[19.5rem]">
-          <img className="mt-[-3rem]"
+          <img
+            className="mt-[-3rem]"
             src="./src/assets/car_picture1.png"
             alt="Car Picture"
           />
@@ -12,18 +13,17 @@ export const ProductCard = () => {
           Product title stays here - max 1 line
         </h3>
         <div>
-        <p className="h-12 font-inter text-sm font-normal text-grey2 mb-4">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-        </p>
+          <p className="h-12 font-inter text-sm font-normal text-grey2 mb-4">
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry.
+          </p>
         </div>
         <div className="flex flex-row items-center">
           <div className="bg-brand2 rounded-full w-8 h-8 items-center flex justify-center text-center">
             <p className="font-inter text-sm font-medium text-whiteFixed">R</p>
           </div>
           <div>
-            <p className="font-medium text-grey2 ml-4">
-              Anunciante
-            </p>
+            <p className="font-medium text-grey2 ml-4">Anunciante</p>
           </div>
         </div>
         <div className="flex flex-row justify-between mt-4 items-center">

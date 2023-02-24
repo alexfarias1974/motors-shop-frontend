@@ -44,7 +44,7 @@ const ModalBase = ({
     <div
       className={`fixed flex ${alignItems ? alignItems : "items-center"} ${
         justifyContent ? justifyContent : "justify-center"
-      } flex-col w-full min-h-screen bg-grey11 inset-0`}
+      } flex-col w-full min-h-screen bg-grey11 inset-0 z-10`}
     >
       <div
         className={`${width ? width : "w-auto"} ${

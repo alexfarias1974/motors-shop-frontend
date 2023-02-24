@@ -5,7 +5,7 @@ import { LoginContext } from "../../context/loginContext";
 import { IRegisterForm, IUser } from "../../interfaces/user.interface";
 import { registerUserSchema } from "../../validations/forms.validations";
 import Button from "../Button";
-import "./styles.css"
+import "./styles.css";
 
 export const RegisterUserForm = () => {
   const [divClasses, setDivClasses] = useState({
@@ -46,7 +46,7 @@ export const RegisterUserForm = () => {
     <div className="bg-grey8">
       <form
         onSubmit={handleRegisterValues}
-        className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-Lexend  "
+        className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-lexend  "
       >
         <div className="flex items-center justify-between ">
           <h3 className="text-[1.5rem] font-medium mb-3">Cadastro</h3>
@@ -303,7 +303,7 @@ export const RegisterUserForm = () => {
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
           {/* <span className="text-alert1"> */}
-            {/* {registerErrors.passwordConfirmation?.message} */}
+          {/* {registerErrors.passwordConfirmation?.message} */}
           {/* </span> */}
         </div>
 

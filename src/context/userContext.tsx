@@ -1,9 +1,15 @@
-import { createContext, useContext, ReactNode, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
   IContextProps,
-  IUserContextProviderValues
+  IUserContextProviderValues,
 } from "../interfaces/user.interface";
 import { LoginContext } from "./loginContext";
 
@@ -12,7 +18,9 @@ export const UserContext = createContext<IUserContextProviderValues>(
 );
 
 const UserContextProvider = ({ children }: IContextProps) => {
-  const {setToken, token} = useContext(LoginContext)
+  const [createVehicleModalOpen, setCreateVehicleModalOpen] =
+    useState<boolean>(false);
+  const { setToken, token } = useContext(LoginContext);
 
   const navigate = useNavigate();
 
@@ -77,7 +85,9 @@ const UserContextProvider = ({ children }: IContextProps) => {
   return (
     <UserContext.Provider
       value={{
-        logout
+        logout,
+        createVehicleModalOpen,
+        setCreateVehicleModalOpen,
       }}
     >
       {children}
