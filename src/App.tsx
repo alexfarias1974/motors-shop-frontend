@@ -14,8 +14,7 @@ function App() {
 
   return (
     <>
-       <MainRoutes />
-       <Footer />
+      <MainRoutes />
     </>
   );
 }
