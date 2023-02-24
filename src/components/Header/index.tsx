@@ -12,7 +12,10 @@ const Header = () => {
 
   return (
     <>
-      <header className="flex justify-between items-center h-20 bg-grey10 border-grey6 px-[3.75rem] border-b-2 max-md:px-[1rem]">
+      <header
+        className="flex justify-between items-center h-20 bg-grey10 border-grey6 px-[3.75rem] border-b-2 max-md:px-[1rem]"
+        id="header"
+      >
         <img src={Logo} alt="Motors shop Logo" />
         <div className="md:hidden w-[2.875rem] h-[2.875rem] flex justify-center items-center">
           {isActiveMenu ? (
