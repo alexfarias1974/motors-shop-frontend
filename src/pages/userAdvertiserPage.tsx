@@ -12,6 +12,7 @@ import { useContext, useEffect, useState } from "react";
 import Form from "../components/Form/registerAnnoucementForm";
 import { UserContext } from "../context/userContext";
 import api from "../services/api";
+import EditAnnounceForm from "../components/Form/editAnnouncementForm";
 
 const UserAdvertiserPage = () => {
   const [cars, setCars] = useState<ICar[]>([]);
@@ -20,11 +21,11 @@ const UserAdvertiserPage = () => {
     api
       .get("/vehicles/user", {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzIwNTA0MiwiZXhwIjoxNjc3MjkxNDQyLCJzdWIiOiJmYjE2MjliZC05NjhhLTQxODMtOTVmOC1lYzRkM2YyYzMyYTcifQ.eVUk7I87BUSM0SNOv_HsxjApLwd5KJYO_kiNSFX5oSk`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzI3MTI2OSwiZXhwIjoxNjc3MzU3NjY5LCJzdWIiOiJjNjk3OWI4MS1mODRhLTQ0NDQtYTViZS04NGUyOGM5NmIxNGQifQ.KHZOBvpFZa51XR62gjmiF3E-fog_pZEDn2vo40T_E1c`,
         },
       })
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         const cars = res.data.filter(
           (vehicle: any) => vehicle.vehicleType === "car"
         );
@@ -41,13 +42,22 @@ const UserAdvertiserPage = () => {
       });
   }, []);
 
-  const { createVehicleModalOpen, setCreateVehicleModalOpen } =
-    useContext(UserContext);
+  const {
+    createVehicleModalOpen,
+    setCreateVehicleModalOpen,
+    editVehicleModalOpen,
+    setEditVehicleModalOpen,
+  } = useContext(UserContext);
   return (
     <>
       {createVehicleModalOpen ? (
         <ModalBase setIs={setCreateVehicleModalOpen}>
           <Form />
+        </ModalBase>
+      ) : null}
+      {editVehicleModalOpen ? (
+        <ModalBase setIs={setEditVehicleModalOpen}>
+          <EditAnnounceForm />
         </ModalBase>
       ) : null}
       <div className="bg-grey8">
