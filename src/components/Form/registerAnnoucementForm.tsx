@@ -34,7 +34,7 @@ const Form = () => {
   useEffect(() => {
     if (annoucementType == "sell") {
       setSellColor("bg-brand1 text-whiteFixed border-2 border-brand1");
-      setAuctionColor("bg-whiteFixed border-2 border-grey4");
+      setAuctionColor("bg-whiteFixed border-2 border-grey4 hover:bg-grey1 hover:border-grey11 hover:text-whiteFixed");
     } else {
       setSellColor("bg-whiteFixed");
       setAuctionColor("bg-brand1");
@@ -44,7 +44,7 @@ const Form = () => {
   useEffect(() => {
     if (vehicleType == "car") {
       setCarColor("bg-brand1 text-whiteFixed border-2 border-brand1");
-      setMotorcycleColor("bg-whiteFixed border-2 border-grey4");
+      setMotorcycleColor("bg-whiteFixed border-2 border-grey4 hover:bg-grey1 hover:border-grey11 hover:text-whiteFixed");
     } else {
       setCarColor("bg-whiteFixed");
       setMotorcycleColor("bg-brand1");
@@ -56,7 +56,7 @@ const Form = () => {
     api
       .post("/vehicles", data, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzE4OTY0OCwiZXhwIjoxNjc3Mjc2MDQ4LCJzdWIiOiJjNjk3OWI4MS1mODRhLTQ0NDQtYTViZS04NGUyOGM5NmIxNGQifQ.TmbS66i4YsthWv2K6Twoe8sWrG7QTuXPzoJlKkuPQwg`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzIwNTA0MiwiZXhwIjoxNjc3MjkxNDQyLCJzdWIiOiJmYjE2MjliZC05NjhhLTQxODMtOTVmOC1lYzRkM2YyYzMyYTcifQ.eVUk7I87BUSM0SNOv_HsxjApLwd5KJYO_kiNSFX5oSk`,
         },
       })
       .then((res) => {
@@ -79,33 +79,33 @@ const Form = () => {
   return (
     <form
       onSubmit={handleSubmit(registerAnnoucement)}
-      className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-lexend"
+      className="w-[32.5rem] m-auto bg-whiteFixed p-5 flex flex-col gap-1 rounded-md font-inter"
     >
-      <div className="flex items-center justify-between">
-        <h3 className="text-[1rem] font-medium mb-3">Criar anúncio</h3>
+      <div className="flex justify-between">
+        <h3 className="text-[1rem] font-medium mb-3 font-lexend">Criar anúncio</h3>
 
         <AiOutlineClose
           onClick={() => setCreateVehicleModalOpen(false)}
-          className="hover:cursor-pointer"
+          className="hover:cursor-pointer text-grey3 text-[1.5rem]"
         />
       </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col">
         <label
           htmlFor="typeAnnoucement"
-          className="font-medium text-[0.875rem]"
+          className="font-medium text-[0.875rem] mb-4"
         >
           Tipo de anúncio
         </label>
-        <div className="flex justify-between">
+        <div className="flex justify-between gap-3 mb-4">
           <button
-            className={`${sellColor} h-12 max-md:w-[20.813rem] md:w-[9.5rem] rounded font-semibold text-base border-2`}
+            className={`${sellColor} h-12 w-full rounded font-semibold text-base border-2`}
             onClick={() => setAnnouncementType("sell")}
           >
             Venda
           </button>
           <button
-            className={`${auctionColor} h-12 max-md:w-[20.813rem] md:w-[9.5rem] rounded font-semibold text-base border-2`}
+            className={`${auctionColor} h-12 w-full rounded font-semibold text-base border-2`}
             onClick={() => setAnnouncementType("auction")}
           >
             Leilão
@@ -113,8 +113,8 @@ const Form = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
-        <p className="font-medium text-[1rem]">Informações do veículo</p>
+      <div className="flex flex-col gap-2">
+        <p className="font-medium text-[0.875rem] mb-3">Informações do veículo</p>
         <label htmlFor="title" className="font-medium">
           Título
         </label>
@@ -122,74 +122,73 @@ const Form = () => {
           type="text"
           placeholder="Digitar Título"
           {...register("title")}
-          className="rounded-md border-2 border-grey4 p-1 hover:border-grey4 h-12 "
+          className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
         />
       </div>
 
-      <div className="flex gap-1 flex-wrap md:justify-between">
+      <div className="flex justify-between gap-2">
         <div className="flex flex-col">
-          <label htmlFor="year" className="font-medium">
+          <label htmlFor="year" className="font-medium mb-1">
             Ano
           </label>
           <input
             type="number"
             placeholder="2018"
             {...register("year")}
-            className="rounded-md border-2 border-grey4 p-1 hover:border-grey4 w-16 md:w-20 h-12"
+            className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
           />
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="mileage" className="font-medium">
+          <label htmlFor="mileage" className="font-medium mb-1">
             Quilometragem
           </label>
           <input
             type="text"
             placeholder="0"
             {...register("mileage")}
-            className="rounded-md border-2 border-grey4 p-1 hover:border-grey4  w-28  md:w-28 h-12"
+            className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
           />
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="price" className="font-medium">
+          <label htmlFor="price" className="font-medium mb-1">
             Preço
           </label>
           <input
             type="text"
             placeholder="50.000,00"
             {...register("price")}
-            className="rounded-md border-2 border-grey4 p-1 hover:border-grey4 w-20 md:w-20 h-12"
+            className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
           />
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="description" className="font-medium">
+      <div className="flex flex-col gap-2">
+        <label htmlFor="description" className="font-medium mb-1">
           Descrição
         </label>
-        <input
-          type="text"
+        <textarea
           placeholder="Digitar descrição"
-          className="rounded-md border-2 border-grey4 p-1 hover:border-grey4 h-12"
+          className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           {...register("description")}
         />
       </div>
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="typeVehicle" className="font-medium">
+      <div className="flex flex-col gap-3 mb-4">
+        <label htmlFor="typeVehicle" className="font-medium mb-1">
           Tipo de veículo
         </label>
 
-        <div className="flex justify-between">
+        <div className="flex justify-between gap-3">
           <button
-            className={`${carColor} h-12 max-md:w-[20.813rem] md:w-[9.5rem] rounded font-semibold text-base border-2`}
+            className={`${carColor} h-12 w-full rounded font-semibold text-base border-2`}
             onClick={() => setVehicleType("car")}
           >
             Carro
           </button>
           <button
-            className={`${motorcycleColor} h-12 max-md:w-[20.813rem] md:w-[9.5rem] rounded font-semibold text-base border-2`}
+            className={`${motorcycleColor} h-12 w-full rounded font-semibold text-base border-2`}
             onClick={() => setVehicleType("motorcycle")}
           >
             Moto
@@ -197,16 +196,37 @@ const Form = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <label htmlFor="image" className="font-medium">
           Imagem da Capa
         </label>
         <input
           type="text"
           placeholder="inserir URL da imagem"
-          className="rounded-md border-2 border-grey4 p-1 hover:border-grey4 h-12"
+          className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           {...register("image")}
         />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label htmlFor="image" className="font-medium">
+          1ª Imagem da galeria
+        </label>
+        <input
+          type="text"
+          placeholder="inserir URL da imagem"
+          className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
+          {...register("image")}
+        />
+      </div>
+
+      <div>
+        <button
+          className="bg-brand4 text-brand1 font-semibold text-[0.875rem] h-10 px-3"
+          // onClick={() => }
+        >
+          Adicionar campo para imagem da galeria
+        </button>
       </div>
       <div className="flex mt-4 justify-end gap-3">
         <button

@@ -20,7 +20,7 @@ const UserAdvertiserPage = () => {
     api
       .get("/vehicles/user", {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzE5MDgzNCwiZXhwIjoxNjc3Mjc3MjM0LCJzdWIiOiJjNjk3OWI4MS1mODRhLTQ0NDQtYTViZS04NGUyOGM5NmIxNGQifQ.57l-qulTmBUlWo3iuLwWbP4jFi8ODORE2eFQ3z_V8us`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzIwNTA0MiwiZXhwIjoxNjc3MjkxNDQyLCJzdWIiOiJmYjE2MjliZC05NjhhLTQxODMtOTVmOC1lYzRkM2YyYzMyYTcifQ.eVUk7I87BUSM0SNOv_HsxjApLwd5KJYO_kiNSFX5oSk`,
         },
       })
       .then((res) => {
