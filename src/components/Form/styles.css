@@ -1,0 +1,47 @@
+.color1 {
+  width: 100%;
+  height: 48px;
+  font-family: "Inter";
+  font-weight: 600;
+  color: #ffffff;
+  border-radius: 4px;
+  font-size: 16px;
+  display: flex;
+  margin-top: 16px;
+  justify-content: center;
+  align-items: center;
+  --tw-bg-opacity: 1;
+  background-color: rgb(69 41 230 / var(--tw-bg-opacity));
+}
+
+.color2 {
+  width: 100%;
+  height: 48px;
+  font-family: "Inter";
+  font-weight: 600;
+  color: #000;
+  border-radius: 4px;
+  font-size: 16px;
+  display: flex;
+  margin-top: 16px;
+  justify-content: center;
+  align-items: center;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  border: 2px solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(173 181 189 / var(--tw-border-opacity));
+}
+
+.color2:hover {
+  --tw-text-opacity: 1;
+  background: rgb(33 37 41 / var(--tw-text-opacity));
+  color: #ffffff;
+  border-color: rgb(33 37 41 / var(--tw-text-opacity));
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
