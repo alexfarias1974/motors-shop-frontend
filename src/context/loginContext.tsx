@@ -70,7 +70,8 @@ const LoginProvider = ({ children }: IContextProps) => {
   const handleRegisterValues = (data: IUser) => {
     api
       .post("/users", data)
-      .then(({ data }) => {
+      .then((res) => {
+        console.log(res);
         navigate("/login");
       })
       .catch((err) => {
