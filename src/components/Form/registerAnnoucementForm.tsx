@@ -46,8 +46,8 @@ const Form = () => {
       setCarColor("bg-brand1 text-whiteFixed border-2 border-brand1");
       setMotorcycleColor("bg-whiteFixed border-2 border-grey4 hover:bg-grey1 hover:border-grey11 hover:text-whiteFixed");
     } else {
-      setCarColor("bg-whiteFixed");
-      setMotorcycleColor("bg-brand1");
+      setCarColor("bg-whiteFixed border-2 border-grey4 hover:bg-grey1 hover:border-grey11 hover:text-whiteFixed");
+      setMotorcycleColor("bg-brand1 text-whiteFixed border-2 border-brand1");
     }
   }, [vehicleType]);
 
@@ -56,7 +56,7 @@ const Form = () => {
     api
       .post("/vehicles", data, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzIwNTA0MiwiZXhwIjoxNjc3MjkxNDQyLCJzdWIiOiJmYjE2MjliZC05NjhhLTQxODMtOTVmOC1lYzRkM2YyYzMyYTcifQ.eVUk7I87BUSM0SNOv_HsxjApLwd5KJYO_kiNSFX5oSk`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzI0MjM2MSwiZXhwIjoxNjc3MzI4NzYxLCJzdWIiOiJmYjE2MjliZC05NjhhLTQxODMtOTVmOC1lYzRkM2YyYzMyYTcifQ.yemUxnLB8xAMdo_X-kpP_6oNW4QgSEsRWjhbcq3_FUQ`,
         },
       })
       .then((res) => {
@@ -216,7 +216,7 @@ const Form = () => {
           type="text"
           placeholder="inserir URL da imagem"
           className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
-          {...register("image")}
+          // {...register("image")}
         />
       </div>
 

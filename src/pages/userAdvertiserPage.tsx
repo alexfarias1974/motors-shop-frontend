@@ -24,6 +24,7 @@ const UserAdvertiserPage = () => {
         },
       })
       .then((res) => {
+        console.log(res.data)
         const cars = res.data.filter(
           (vehicle: any) => vehicle.vehicleType === "car"
         );
@@ -38,7 +39,7 @@ const UserAdvertiserPage = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [cars, motorcycles]);
+  }, []);
 
   const { createVehicleModalOpen, setCreateVehicleModalOpen } =
     useContext(UserContext);
@@ -122,8 +123,8 @@ const UserAdvertiserPage = () => {
           <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]">
             Carros
           </h3>
-          <div>
-            <div className="flex mt-6 mb-52 overflow-x-hidden overflow-y-auto hover:overflow-x-scroll">
+          <div className="flex">
+            <div className="flex mt-6 mb-52 overflow-x-hidden hover:overflow-x-scroll gap-10">
               {cars?.map((car) => (
                 <ProductCardAdvertiser
                   key={car.id}

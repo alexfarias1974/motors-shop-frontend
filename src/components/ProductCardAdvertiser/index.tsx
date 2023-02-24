@@ -6,7 +6,9 @@ export interface ICar {
   description: string;
   price: number;
 }
+
 export const ProductCardAdvertiser = (car: ICar) => {
+  console.log(typeof(car.price))
   return (
     <>
       <div className="mx-auto max-w-[19.5rem] flex flex-col">
@@ -21,25 +23,18 @@ export const ProductCardAdvertiser = (car: ICar) => {
           {car.title}
         </h3>
         <div>
-          <p className="h-12 font-inter text-sm font-normal text-grey2 mb-4">
+          <p className="h-14 font-inter text-sm font-normal text-grey2 mb-3">
             {car.description}
           </p>
         </div>
-        <div className="flex flex-row items-center">
-          <div className="bg-brand2 rounded-full w-8 h-8 items-center flex justify-center text-center">
-            <p className="font-inter text-sm font-medium text-whiteFixed">R</p>
-          </div>
-          <div>
-            <p className="font-medium text-grey2 ml-4">Anunciante</p>
-          </div>
-        </div>
+        
         <div className="flex flex-row justify-between mt-4 items-center">
           <div className="flex flex-row font-inter text-sm font-medium text-brand1">
-            <h4 className="px-2 py-1 bg-brand4 rounded">{car.mileage}</h4>
+            <h4 className="px-2 py-1 bg-brand4 rounded">{car.mileage} KM</h4>
             <h4 className="px-2 py-1 ml-3 bg-brand4 rounded">{car.year}</h4>
           </div>
-          <div className="font-lexend font-medium text-base text-grey1">
-            <h4>R${car.price}</h4>
+          <div className="font-lexend font-medium text-base text-grey1 mr-3">
+            <h4>{Number(car.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL'}) }</h4>
           </div>
         </div>
         <div className="flex font-inter text-sm font-semibold text-grey1 gap-3 mt-6">
