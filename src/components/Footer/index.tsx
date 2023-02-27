@@ -2,7 +2,6 @@ import LogoMotors from "../../assets/Motors shop.png";
 
 const Footer = () => {
   return (
-
     <footer className="bg-grey0 w-100% bottom-0 left-0  w-full m-auto text-center fixed">
       <div className="text-whiteFixed flex flex-col gap-5 p-5 font-inter md:flex-row justify-between items-center">
         <img src={LogoMotors} alt="Motors Shop logo" className="w-28" />
