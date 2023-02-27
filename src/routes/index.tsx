@@ -13,6 +13,7 @@ const MainRoutes = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/detailed-vehicle" element={<DetailedViewPageVehicle />} />
       <Route path="/userProfile" element={<UserAdvertiserPage />} />
+      <Route path="*" element={<Home />} />
     </Routes>
   );
 };
