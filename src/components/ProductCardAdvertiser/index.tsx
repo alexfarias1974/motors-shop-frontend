@@ -12,7 +12,7 @@ export interface ICar {
 }
 
 export const ProductCardAdvertiser = (car: ICar) => {
-  const { setEditVehicleModalOpen } = useContext(UserContext);
+  const { setEditVehicleModalOpen, setEditVehicleId } = useContext(UserContext);
   return (
     <>
       <div className="mx-auto max-w-[19.5rem] flex flex-col">
@@ -49,7 +49,10 @@ export const ProductCardAdvertiser = (car: ICar) => {
         <div className="flex font-inter text-sm font-semibold text-grey1 gap-3 mt-6">
           <button
             className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
-            onClick={() => setEditVehicleModalOpen(true)}
+            onClick={() => {
+              setEditVehicleModalOpen(true);
+              setEditVehicleId(car.id);
+            }}
           >
             Editar
           </button>

@@ -21,7 +21,7 @@ const UserAdvertiserPage = () => {
     api
       .get("/vehicles/user", {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzUzNjI1MiwiZXhwIjoxNjc3NjIyNjUyLCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.GEB8ioGICIGmRNDy5_GMkgVlkENlLGBePDojDRzcuCE`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzYwNzcxOSwiZXhwIjoxNjc3Njk0MTE5LCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.5h-xv6qTAtrLkp4FctwEoyVKWz4E3mwj8V6xOWEKoWs`,
         },
       })
       .then((res) => {
@@ -137,6 +137,7 @@ const UserAdvertiserPage = () => {
               {cars?.map((car) => (
                 <ProductCardAdvertiser
                   key={car.id}
+                  id={car.id}
                   title={car.title}
                   description={car.description}
                   mileage={car.mileage}
@@ -155,6 +156,7 @@ const UserAdvertiserPage = () => {
               {motorcycles?.map((car) => (
                 <ProductCardAdvertiser
                   key={car.id}
+                  id={car.id}
                   title={car.title}
                   description={car.description}
                   mileage={car.mileage}

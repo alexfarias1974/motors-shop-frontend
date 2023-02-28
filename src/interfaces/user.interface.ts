@@ -68,4 +68,6 @@ export interface IUserContextProviderValues {
   setCreateVehicleModalOpen: Dispatch<SetStateAction<boolean>>;
   editVehicleModalOpen: boolean;
   setEditVehicleModalOpen: Dispatch<SetStateAction<boolean>>;
+  editVehicleId: string;
+  setEditVehicleId: Function;
 }

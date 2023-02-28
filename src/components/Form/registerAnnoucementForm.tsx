@@ -29,7 +29,6 @@ const Form = () => {
   const [motorcycleColor, setMotorcycleColor] = useState<string>();
   const [vehicleType, setVehicleType] = useState<string>("car");
   const [images, setImages] = useState<Array<string>>([]);
-  const [imagesInputs, setImagesInputs] = useState<number>(0);
 
   const { createVehicleModalOpen, setCreateVehicleModalOpen } =
     useContext(UserContext);
@@ -60,15 +59,13 @@ const Form = () => {
     }
   }, [vehicleType]);
 
-  const registerAnnoucement = (data: SubmitFunction) => {
-    console.log(images);
+  const registerAnnouncement = (data: SubmitFunction) => {
     data = { ...data, vehicleType, images: [...images] };
-    console.log(data);
 
     api
       .post("/vehicles", data, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzU5MzI4NSwiZXhwIjoxNjc3Njc5Njg1LCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.dugxoxLlQi_W9DVJUE7iYuCsmrjNEx9-xQKJ0ur8c-g`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzYwNzcxOSwiZXhwIjoxNjc3Njk0MTE5LCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.5h-xv6qTAtrLkp4FctwEoyVKWz4E3mwj8V6xOWEKoWs`,
         },
       })
       .then((res) => {
@@ -83,9 +80,6 @@ const Form = () => {
   const {
     register,
     handleSubmit,
-    setValue,
-    getValues,
-    clearErrors,
     formState: { errors },
   } = useForm<SubmitFunction>({
     resolver: yupResolver(registerAnnoucementSchema),
@@ -98,7 +92,7 @@ const Form = () => {
 
   return (
     <form
-      onSubmit={handleSubmit(registerAnnoucement)}
+      onSubmit={handleSubmit(registerAnnouncement)}
       className="w-[32.5rem] m-auto bg-whiteFixed p-5 flex flex-col gap-1 rounded-md font-inter"
     >
       <div className="flex justify-between">
@@ -230,7 +224,6 @@ const Form = () => {
           className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           onBlur={(e) => images.push(e.target.value)}
         />
-        <span>{errors.images?.message}</span>
       </div>
 
       {images.map((_, index) => {
