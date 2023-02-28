@@ -12,6 +12,7 @@ import { useContext, useEffect, useState } from "react";
 import Form from "../components/Form/registerAnnoucementForm";
 import { UserContext } from "../context/userContext";
 import api from "../services/api";
+import EditAnnounceForm from "../components/Form/editAnnouncementForm";
 
 const UserAdvertiserPage = () => {
   const [cars, setCars] = useState<ICar[]>([]);
@@ -20,11 +21,10 @@ const UserAdvertiserPage = () => {
     api
       .get("/vehicles/user", {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzIwNTA0MiwiZXhwIjoxNjc3MjkxNDQyLCJzdWIiOiJmYjE2MjliZC05NjhhLTQxODMtOTVmOC1lYzRkM2YyYzMyYTcifQ.eVUk7I87BUSM0SNOv_HsxjApLwd5KJYO_kiNSFX5oSk`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzYwNzcxOSwiZXhwIjoxNjc3Njk0MTE5LCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.5h-xv6qTAtrLkp4FctwEoyVKWz4E3mwj8V6xOWEKoWs`,
         },
       })
       .then((res) => {
-        console.log(res.data)
         const cars = res.data.filter(
           (vehicle: any) => vehicle.vehicleType === "car"
         );
@@ -41,13 +41,22 @@ const UserAdvertiserPage = () => {
       });
   }, []);
 
-  const { createVehicleModalOpen, setCreateVehicleModalOpen } =
-    useContext(UserContext);
+  const {
+    createVehicleModalOpen,
+    setCreateVehicleModalOpen,
+    editVehicleModalOpen,
+    setEditVehicleModalOpen,
+  } = useContext(UserContext);
   return (
     <>
       {createVehicleModalOpen ? (
         <ModalBase setIs={setCreateVehicleModalOpen}>
           <Form />
+        </ModalBase>
+      ) : null}
+      {editVehicleModalOpen ? (
+        <ModalBase setIs={setEditVehicleModalOpen}>
+          <EditAnnounceForm />
         </ModalBase>
       ) : null}
       <div className="bg-grey8">
@@ -128,11 +137,13 @@ const UserAdvertiserPage = () => {
               {cars?.map((car) => (
                 <ProductCardAdvertiser
                   key={car.id}
+                  id={car.id}
                   title={car.title}
                   description={car.description}
                   mileage={car.mileage}
                   price={car.price}
                   year={car.year}
+                  images={car.images}
                 />
               ))}
             </div>
@@ -145,11 +156,13 @@ const UserAdvertiserPage = () => {
               {motorcycles?.map((car) => (
                 <ProductCardAdvertiser
                   key={car.id}
+                  id={car.id}
                   title={car.title}
                   description={car.description}
                   mileage={car.mileage}
                   price={car.price}
                   year={car.year}
+                  images={car.images}
                 />
               ))}
             </div>

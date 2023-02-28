@@ -66,4 +66,8 @@ export interface IUserContextProviderValues {
   // setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   createVehicleModalOpen: boolean;
   setCreateVehicleModalOpen: Dispatch<SetStateAction<boolean>>;
+  editVehicleModalOpen: boolean;
+  setEditVehicleModalOpen: Dispatch<SetStateAction<boolean>>;
+  editVehicleId: string;
+  setEditVehicleId: Function;
 }
