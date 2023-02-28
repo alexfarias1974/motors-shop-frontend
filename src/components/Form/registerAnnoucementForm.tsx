@@ -18,7 +18,7 @@ export interface SubmitFunction {
   price?: number;
   description?: string;
   vehicleType?: string;
-  image?: string;
+  images?: Array<string>;
 }
 
 const Form = () => {
@@ -28,13 +28,18 @@ const Form = () => {
   const [carColor, setCarColor] = useState<string>();
   const [motorcycleColor, setMotorcycleColor] = useState<string>();
   const [vehicleType, setVehicleType] = useState<string>("car");
+  const [images, setImages] = useState<Array<string>>([]);
+  const [imagesInputs, setImagesInputs] = useState<number>(0);
+
   const { createVehicleModalOpen, setCreateVehicleModalOpen } =
     useContext(UserContext);
 
   useEffect(() => {
     if (annoucementType == "sell") {
       setSellColor("bg-brand1 text-whiteFixed border-2 border-brand1");
-      setAuctionColor("bg-whiteFixed border-2 border-grey4 hover:bg-grey1 hover:border-grey11 hover:text-whiteFixed");
+      setAuctionColor(
+        "bg-whiteFixed border-2 border-grey4 hover:bg-grey1 hover:border-grey11 hover:text-whiteFixed"
+      );
     } else {
       setSellColor("bg-whiteFixed");
       setAuctionColor("bg-brand1");
@@ -44,19 +49,26 @@ const Form = () => {
   useEffect(() => {
     if (vehicleType == "car") {
       setCarColor("bg-brand1 text-whiteFixed border-2 border-brand1");
-      setMotorcycleColor("bg-whiteFixed border-2 border-grey4 hover:bg-grey1 hover:border-grey11 hover:text-whiteFixed");
+      setMotorcycleColor(
+        "bg-whiteFixed border-2 border-grey4 hover:bg-grey1 hover:border-grey11 hover:text-whiteFixed"
+      );
     } else {
-      setCarColor("bg-whiteFixed border-2 border-grey4 hover:bg-grey1 hover:border-grey11 hover:text-whiteFixed");
+      setCarColor(
+        "bg-whiteFixed border-2 border-grey4 hover:bg-grey1 hover:border-grey11 hover:text-whiteFixed"
+      );
       setMotorcycleColor("bg-brand1 text-whiteFixed border-2 border-brand1");
     }
   }, [vehicleType]);
 
   const registerAnnoucement = (data: SubmitFunction) => {
-    data = { ...data, vehicleType };
+    console.log(images);
+    data = { ...data, vehicleType, images: [...images] };
+    console.log(data);
+
     api
       .post("/vehicles", data, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzI0MjM2MSwiZXhwIjoxNjc3MzI4NzYxLCJzdWIiOiJmYjE2MjliZC05NjhhLTQxODMtOTVmOC1lYzRkM2YyYzMyYTcifQ.yemUxnLB8xAMdo_X-kpP_6oNW4QgSEsRWjhbcq3_FUQ`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzU5MzI4NSwiZXhwIjoxNjc3Njc5Njg1LCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.dugxoxLlQi_W9DVJUE7iYuCsmrjNEx9-xQKJ0ur8c-g`,
         },
       })
       .then((res) => {
@@ -71,10 +83,18 @@ const Form = () => {
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
+    clearErrors,
     formState: { errors },
   } = useForm<SubmitFunction>({
     resolver: yupResolver(registerAnnoucementSchema),
   });
+  const defaultValue = "";
+
+  const addImage = async () => {
+    setImages([...images, defaultValue]);
+  };
 
   return (
     <form
@@ -82,7 +102,9 @@ const Form = () => {
       className="w-[32.5rem] m-auto bg-whiteFixed p-5 flex flex-col gap-1 rounded-md font-inter"
     >
       <div className="flex justify-between">
-        <h3 className="text-[1rem] font-medium mb-3 font-lexend">Criar anúncio</h3>
+        <h3 className="text-[1rem] font-medium mb-3 font-lexend">
+          Criar anúncio
+        </h3>
 
         <AiOutlineClose
           onClick={() => setCreateVehicleModalOpen(false)}
@@ -114,7 +136,9 @@ const Form = () => {
       </div>
 
       <div className="flex flex-col gap-2">
-        <p className="font-medium text-[0.875rem] mb-3">Informações do veículo</p>
+        <p className="font-medium text-[0.875rem] mb-3">
+          Informações do veículo
+        </p>
         <label htmlFor="title" className="font-medium">
           Título
         </label>
@@ -204,26 +228,35 @@ const Form = () => {
           type="text"
           placeholder="inserir URL da imagem"
           className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
-          {...register("image")}
+          onBlur={(e) => images.push(e.target.value)}
         />
+        <span>{errors.images?.message}</span>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="image" className="font-medium">
-          1ª Imagem da galeria
-        </label>
-        <input
-          type="text"
-          placeholder="inserir URL da imagem"
-          className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
-          // {...register("image")}
-        />
-      </div>
+      {images.map((_, index) => {
+        const fieldname = `images[${index}]`;
+
+        return (
+          <div key={fieldname} className="flex flex-col gap-2">
+            <label htmlFor="image" className="font-medium">
+              Imagem
+            </label>
+            <input
+              type="text"
+              name={`${fieldname}`}
+              placeholder="inserir URL da imagem"
+              onBlur={(e) => images.push(e.target.value)}
+              className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
+            />
+          </div>
+        );
+      })}
 
       <div>
         <button
           className="bg-brand4 text-brand1 font-semibold text-[0.875rem] h-10 px-3"
-          // onClick={() => }
+          type="button"
+          onClick={addImage}
         >
           Adicionar campo para imagem da galeria
         </button>
@@ -235,7 +268,10 @@ const Form = () => {
         >
           Cancelar
         </button>
-        <button className="bg-brand1 text-whiteFixed rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-36">
+        <button
+          type="submit"
+          className="bg-brand1 text-whiteFixed rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-36"
+        >
           Criar anúncio
         </button>
       </div>

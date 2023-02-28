@@ -21,11 +21,10 @@ const UserAdvertiserPage = () => {
     api
       .get("/vehicles/user", {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzI3MTI2OSwiZXhwIjoxNjc3MzU3NjY5LCJzdWIiOiJjNjk3OWI4MS1mODRhLTQ0NDQtYTViZS04NGUyOGM5NmIxNGQifQ.KHZOBvpFZa51XR62gjmiF3E-fog_pZEDn2vo40T_E1c`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzUzNjI1MiwiZXhwIjoxNjc3NjIyNjUyLCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.GEB8ioGICIGmRNDy5_GMkgVlkENlLGBePDojDRzcuCE`,
         },
       })
       .then((res) => {
-        console.log(res.data);
         const cars = res.data.filter(
           (vehicle: any) => vehicle.vehicleType === "car"
         );
@@ -143,6 +142,7 @@ const UserAdvertiserPage = () => {
                   mileage={car.mileage}
                   price={car.price}
                   year={car.year}
+                  images={car.images}
                 />
               ))}
             </div>
@@ -160,6 +160,7 @@ const UserAdvertiserPage = () => {
                   mileage={car.mileage}
                   price={car.price}
                   year={car.year}
+                  images={car.images}
                 />
               ))}
             </div>

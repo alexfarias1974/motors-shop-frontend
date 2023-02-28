@@ -8,6 +8,7 @@ export interface ICar {
   mileage: number;
   description: string;
   price: number;
+  images: [{ id: string; imageUrl: string }];
 }
 
 export const ProductCardAdvertiser = (car: ICar) => {
@@ -18,7 +19,7 @@ export const ProductCardAdvertiser = (car: ICar) => {
         <picture className="bg-grey7 rounded-xl h-[11rem] w-[19.5rem]">
           <img
             className="mt-[-3rem]"
-            src="./src/assets/car_picture1.png"
+            src={`${car.images[0].imageUrl}`}
             alt="Car Picture"
           />
         </picture>
