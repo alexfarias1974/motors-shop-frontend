@@ -97,3 +97,12 @@ export const loginSchema = yup.object().shape({
   email: yup.string().required("Campo obrigatório").email("Email inválido!"),
   password: yup.string().required("Campo obrigatório"),
 });
+
+export const userPatchSchema = yup.object().shape({
+  name: yup.string(),
+  email: yup.string(),
+  cpf: yup.number(),
+  phone: yup.number(),
+  birthdate: yup.date(),
+  description: yup.string(),
+});

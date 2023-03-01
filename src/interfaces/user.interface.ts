@@ -71,3 +71,12 @@ export interface IUserContextProviderValues {
   editVehicleId: string;
   setEditVehicleId: Function;
 }
+
+export interface IUserPatchForm {
+  name?: string;
+  email?: string;
+  cpf?: number;
+  phone?: number;
+  birthdate?: Date;
+  description?: string;
+}
