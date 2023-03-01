@@ -59,10 +59,27 @@ export const RegisterUserForm = () => {
   });
 
   const onSubmitFunction = (data: any) => {
-    event?.preventDefault();
-    data = { ...data, accountType };
-    console.log(data);
-    handleRegisterValues(data);
+    const newData = {
+      name: data.name,
+      email: data.email,
+      cpf: data.cpf,
+      phone: data.phone,
+      birthdate: data.birthdate,
+      description: data.description,
+      password: data.password,
+      passwordConfirmation: data.passwordConfirmation,
+      accountType: accountType,
+      address: {
+        state: data.state,
+        city: data.city,
+        street: data.street,
+        zipCode: data.zipCode,
+        number: data.number,
+        complement: data.complement,
+      },
+    };
+    console.log(newData);
+    handleRegisterValues(newData);
   };
 
   return (
@@ -189,7 +206,7 @@ export const RegisterUserForm = () => {
             {...register("zipCode")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
-          {/* <span className="text-alert1">{registerErrors.zipCode?.message}</span> */}
+          <span className="text-alert1">{errors.zipCode?.message}</span>
         </div>
 
         <div className="flex flex-row gap-2 justify-between">
@@ -282,7 +299,7 @@ export const RegisterUserForm = () => {
           </p>
           <div className="flex flex-row gap-2 mb-4">
             <button
-              className={`${buyerColor} h-12 max-md:w-[20.813rem] md:w-36 rounded font-semibold text-base border-2 rounded-md`}
+              className={`${buyerColor} h-12 max-md:w-[20.813rem] md:w-36 font-semibold text-base border-2 rounded-md`}
               onClick={() => {
                 setAccountType("buyer");
                 event?.preventDefault();
@@ -291,7 +308,7 @@ export const RegisterUserForm = () => {
               Comprador
             </button>
             <button
-              className={`${advertiserColor} h-12 max-md:w-[20.813rem] md:w-36 rounded font-semibold text-base border-2 rounded-md `}
+              className={`${advertiserColor} h-12 max-md:w-[20.813rem] md:w-36 font-semibold text-base border-2 rounded-md `}
               onClick={() => {
                 setAccountType("advertiser");
                 event?.preventDefault();

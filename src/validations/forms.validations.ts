@@ -61,20 +61,6 @@ export const registerUserSchema = yup.object().shape({
 
   description: yup.string().required("Adicione uma descrição"),
 
-  // accountType: yup.string().required(),
-
-  state: yup.string().required("Adicione seu estado"),
-
-  city: yup.string().required("Adicione sua cidade"),
-
-  street: yup.string().required("Adicione sua rua"),
-
-  zipCode: yup.string().required("Adicione seu CEP"),
-
-  number: yup.number().notRequired(),
-
-  complement: yup.string().notRequired(),
-
   password: yup
     .string()
     .matches(/[A-Z]/, "deve conter ao menos 1 letra maiúscula")
@@ -91,6 +77,13 @@ export const registerUserSchema = yup.object().shape({
       "As senhas devem corresponder entre si"
     )
     .required("Confirme sua senha"),
+
+  state: yup.string().required("Adicione seu estado"),
+  city: yup.string().required("Adicione sua cidade"),
+  street: yup.string().required("Adicione sua rua"),
+  zipCode: yup.string().required("Adicione seu CEP"),
+  number: yup.number().notRequired(),
+  complement: yup.string().notRequired(),
 });
 
 export const loginSchema = yup.object().shape({

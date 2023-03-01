@@ -68,6 +68,7 @@ const LoginProvider = ({ children }: IContextProps) => {
   });
 
   const handleRegisterValues = (data: IUser) => {
+    console.log("entrando na func");
     api
       .post("/users", data)
       .then((res) => {
