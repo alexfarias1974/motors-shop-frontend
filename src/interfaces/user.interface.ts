@@ -67,3 +67,12 @@ export interface IUserContextProviderValues {
   createVehicleModalOpen: boolean;
   setCreateVehicleModalOpen: Dispatch<SetStateAction<boolean>>;
 }
+
+export interface IUserPatchForm {
+  name?: string;
+  email?: string;
+  cpf?: number;
+  phone?: number;
+  birthdate?: Date;
+  description?: string;
+}
