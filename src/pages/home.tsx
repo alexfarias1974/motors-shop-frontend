@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { Link } from "react-scroll";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
