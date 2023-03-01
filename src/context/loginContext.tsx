@@ -62,7 +62,6 @@ const LoginProvider = ({ children }: IContextProps) => {
     register: login,
     handleSubmit: handleLogin,
     formState: { errors: loginErrors },
-    reset: loginReset,
   } = useForm<ILoginDataProps>({
     resolver: yupResolver(loginSchema),
   });
@@ -80,17 +79,17 @@ const LoginProvider = ({ children }: IContextProps) => {
       });
   };
 
-  const handleLoginValues = handleLogin((data: ILoginDataProps) => {
+  const handleLoginValues = (data: ILoginDataProps) => {
+    console.log("entrando na func");
     api
-      .post<{ token: string }>("/login", data)
-      .then(({ data }) => {
-        localStorage.setItem("@tokenId:token", data.token);
-        setToken(localStorage.getItem("@tokenId:token"));
+      .post("/login", data)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("@tokenId:token", res.data.token);
+        navigate("/home");
       })
       .catch((err) => console.log(err));
-
-    loginReset();
-  });
+  };
 
   return (
     <LoginContext.Provider

@@ -25,9 +25,8 @@ export interface ILoginDataResponse {
 export interface ILoginContextValues {
   login: UseFormRegister<ILoginDataProps>;
   // register: UseFormRegister<IUser>;
-  handleLoginValues: (
-    e?: BaseSyntheticEvent<object, any, any> | undefined
-  ) => Promise<void>;
+  handleLoginValues: Function;
+
   handleRegisterValues: (user: IUser) => void;
   // handleRegisterValues: (
   //   e?: BaseSyntheticEvent<object, any, any> | undefined
