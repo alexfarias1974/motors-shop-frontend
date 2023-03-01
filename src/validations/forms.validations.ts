@@ -55,15 +55,22 @@ export const registerUserSchema = yup.object().shape({
   passwordConfirmation: yup
     .string()
     .oneOf(
-      [yup.ref("password"), null!], "As senhas devem corresponder entre si"
-      )
-    .required("Confirme sua senha")
+      [yup.ref("password"), null!],
+      "As senhas devem corresponder entre si"
+    )
+    .required("Confirme sua senha"),
 });
 
 export const loginSchema = yup.object().shape({
-  email: yup
-    .string()
-    .required("Campo obrigatório")
-    .email("Email inválido!"),
+  email: yup.string().required("Campo obrigatório").email("Email inválido!"),
   password: yup.string().required("Campo obrigatório"),
+});
+
+export const userPatchSchema = yup.object().shape({
+  name: yup.string(),
+  email: yup.string(),
+  cpf: yup.number(),
+  phone: yup.number(),
+  birthdate: yup.date(),
+  description: yup.string(),
 });
