@@ -18,6 +18,11 @@ export const UserContext = createContext<IUserContextProviderValues>(
 );
 
 const UserContextProvider = ({ children }: IContextProps) => {
+  const [createVehicleModalOpen, setCreateVehicleModalOpen] =
+    useState<boolean>(false);
+  const [editVehicleModalOpen, setEditVehicleModalOpen] =
+    useState<boolean>(false);
+  const [editVehicleId, setEditVehicleId] = useState<string>("");
   const { setToken, token } = useContext(LoginContext);
 
   const navigate = useNavigate();
@@ -84,6 +89,12 @@ const UserContextProvider = ({ children }: IContextProps) => {
     <UserContext.Provider
       value={{
         logout,
+        createVehicleModalOpen,
+        setCreateVehicleModalOpen,
+        editVehicleModalOpen,
+        setEditVehicleModalOpen,
+        editVehicleId,
+        setEditVehicleId,
       }}
     >
       {children}

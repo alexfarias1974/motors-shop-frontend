@@ -1,7 +1,7 @@
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { IAddress } from "./address.interface";
 import { ILoginDataProps } from "./login.interface";
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 export interface IContextProps {
   children: ReactNode;
@@ -64,4 +64,10 @@ export interface IUserContextProviderValues {
   // signUp: (data: IRegisterForm) => void;
   // loading: boolean;
   // setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  createVehicleModalOpen: boolean;
+  setCreateVehicleModalOpen: Dispatch<SetStateAction<boolean>>;
+  editVehicleModalOpen: boolean;
+  setEditVehicleModalOpen: Dispatch<SetStateAction<boolean>>;
+  editVehicleId: string;
+  setEditVehicleId: Function;
 }

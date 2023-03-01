@@ -1,10 +1,11 @@
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { registerAnnoucementSchema } from "../../validations/forms.validations";
+import { useContext, useEffect, useState } from "react";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
-import api from "../../services/api";
-import { SetStateAction, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/userContext";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { editAnnoucementSchema } from "../../validations/forms.validations";
+import api from "../../services/api";
 
 export interface IForm {
   accountSubmit: SubmitHandler<FieldValues>;
@@ -21,7 +22,7 @@ export interface SubmitFunction {
   images?: Array<string>;
 }
 
-const Form = () => {
+const EditAnnounceForm = () => {
   const [sellColor, setSellColor] = useState<string>();
   const [auctionColor, setAuctionColor] = useState<string>();
   const [annoucementType, setAnnouncementType] = useState<string>("sell");
@@ -29,9 +30,7 @@ const Form = () => {
   const [motorcycleColor, setMotorcycleColor] = useState<string>();
   const [vehicleType, setVehicleType] = useState<string>("car");
   const [images, setImages] = useState<Array<string>>([]);
-
-  const { createVehicleModalOpen, setCreateVehicleModalOpen } =
-    useContext(UserContext);
+  const { setEditVehicleModalOpen, editVehicleId } = useContext(UserContext);
 
   useEffect(() => {
     if (annoucementType == "sell") {
@@ -59,18 +58,39 @@ const Form = () => {
     }
   }, [vehicleType]);
 
-  const registerAnnouncement = (data: SubmitFunction) => {
-    data = { ...data, vehicleType, images: [...images] };
+  const editAnnouncement = (data: SubmitFunction) => {
+    console.log(images);
+    data = { ...data, vehicleType };
+    if (images.length > 0) {
+      data = { ...data, images: [...images] };
+    }
+
+    console.log(data);
 
     api
-      .post("/vehicles", data, {
+      .patch(`/vehicles/${editVehicleId}`, data, {
         headers: {
           Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzYwNzcxOSwiZXhwIjoxNjc3Njk0MTE5LCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.5h-xv6qTAtrLkp4FctwEoyVKWz4E3mwj8V6xOWEKoWs`,
         },
       })
       .then((res) => {
-        setCreateVehicleModalOpen(false);
+        setEditVehicleModalOpen(false);
         return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteAnnouncement = () => {
+    api
+      .delete(`/vehicles/${editVehicleId}`, {
+        headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzYwNzcxOSwiZXhwIjoxNjc3Njk0MTE5LCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.5h-xv6qTAtrLkp4FctwEoyVKWz4E3mwj8V6xOWEKoWs`,
+        },
+      })
+      .then((res) => {
+        setEditVehicleModalOpen(false);
       })
       .catch((err) => {
         console.log(err);
@@ -82,7 +102,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SubmitFunction>({
-    resolver: yupResolver(registerAnnoucementSchema),
+    resolver: yupResolver(editAnnoucementSchema),
   });
   const defaultValue = "";
 
@@ -92,23 +112,23 @@ const Form = () => {
 
   return (
     <form
-      onSubmit={handleSubmit(registerAnnouncement)}
       className="w-[32.5rem] m-auto bg-whiteFixed p-5 flex flex-col gap-1 rounded-md font-inter"
+      onSubmit={handleSubmit(editAnnouncement)}
     >
       <div className="flex justify-between">
         <h3 className="text-[1rem] font-medium mb-3 font-lexend">
-          Criar anúncio
+          Editar anúncio
         </h3>
 
         <AiOutlineClose
-          onClick={() => setCreateVehicleModalOpen(false)}
           className="hover:cursor-pointer text-grey3 text-[1.5rem]"
+          onClick={() => setEditVehicleModalOpen(false)}
         />
       </div>
 
       <div className="flex flex-col">
         <label
-          htmlFor="typeAnnoucement"
+          htmlFor="typeAnnouncement"
           className="font-medium text-[0.875rem] mb-4"
         >
           Tipo de anúncio
@@ -138,7 +158,7 @@ const Form = () => {
         </label>
         <input
           type="text"
-          placeholder="Digitar Título"
+          placeholder="Digitar título"
           {...register("title")}
           className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
         />
@@ -197,17 +217,18 @@ const Form = () => {
         <label htmlFor="typeVehicle" className="font-medium mb-1">
           Tipo de veículo
         </label>
-
         <div className="flex justify-between gap-3">
           <button
             className={`${carColor} h-12 w-full rounded font-semibold text-base border-2`}
             onClick={() => setVehicleType("car")}
+            type="button"
           >
             Carro
           </button>
           <button
             className={`${motorcycleColor} h-12 w-full rounded font-semibold text-base border-2`}
             onClick={() => setVehicleType("motorcycle")}
+            type="button"
           >
             Moto
           </button>
@@ -254,22 +275,21 @@ const Form = () => {
           Adicionar campo para imagem da galeria
         </button>
       </div>
+
       <div className="flex mt-4 justify-end gap-3">
         <button
-          className="bg-grey6 text-grey2 rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-24"
-          onClick={() => setCreateVehicleModalOpen(false)}
+          className="bg-grey6 text-grey2 rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-64"
+          type="button"
+          onClick={deleteAnnouncement}
         >
-          Cancelar
+          Excluir anúncio
         </button>
-        <button
-          type="submit"
-          className="bg-brand1 text-whiteFixed rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-36"
-        >
-          Criar anúncio
+        <button className="bg-brand1 text-whiteFixed rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-52">
+          Salvar alterações
         </button>
       </div>
     </form>
   );
 };
 
-export default Form;
+export default EditAnnounceForm;
