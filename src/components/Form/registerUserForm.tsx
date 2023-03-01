@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { LoginContext } from "../../context/loginContext";
 import { IRegisterForm, IUser } from "../../interfaces/user.interface";
@@ -8,45 +8,85 @@ import Button from "../Button";
 import "./styles.css";
 
 export const RegisterUserForm = () => {
-  const [divClasses, setDivClasses] = useState({
-    buyer: "color1",
-    advertiser: "color2",
-    lastClicked: null,
-  });
+  // const [divClasses, setDivClasses] = useState({
+  //   buyer: "color1",
+  //   advertiser: "color2",
+  //   lastClicked: null,
+  // });
 
-  const handleClick = (div: any) => {
-    const newClasses = { ...divClasses };
-    if (div === newClasses.lastClicked) {
-      newClasses[div] = newClasses[div] ? "color2" : "color1";
-      newClasses[div === "buyer" ? "advertiser" : "buyer"] = newClasses[
-        div === "buyer" ? "advertiser" : "buyer"
-      ]
-        ? "color2"
-        : "color1";
+  // const handleClick = (div: any) => {
+  //   const newClasses = { ...divClasses };
+  //   if (div === newClasses.lastClicked) {
+  //     newClasses[div] = newClasses[div] ? "color2" : "color1";
+  //     newClasses[div === "buyer" ? "advertiser" : "buyer"] = newClasses[
+  //       div === "buyer" ? "advertiser" : "buyer"
+  //     ]
+  //       ? "color2"
+  //       : "color1";
+  //   } else {
+  //     newClasses[div] = "color1";
+  //     newClasses[div === "buyer" ? "advertiser" : "buyer"] = "color2";
+  //   }
+  //   newClasses.lastClicked = div;
+  //   setDivClasses(newClasses);
+  // };
+  const [accountType, setAccountType] = useState<string>("buyer");
+  const [buyerColor, setBuyerColor] = useState<string>("bg-brand1");
+
+  const [advertiserColor, setAdvertiserColor] =
+    useState<string>("bg-whiteFixed");
+
+  useEffect(() => {
+    if (accountType === "buyer") {
+      setBuyerColor("bg-brand1 text-whiteFixed border-brand1");
+      setAdvertiserColor("bg-whiteFixed text-grey0 border-grey5");
     } else {
-      newClasses[div] = "color1";
-      newClasses[div === "buyer" ? "advertiser" : "buyer"] = "color2";
+      setBuyerColor("bg-whiteFixed text-grey0 border-grey5");
+      setAdvertiserColor("bg-brand1 text-whiteFixed border-brand1");
     }
-    newClasses.lastClicked = div;
-    setDivClasses(newClasses);
-  };
+  }, [accountType]);
 
-  const { handleRegisterValues, registerErrors } = useContext(LoginContext);
+  const { handleRegisterValues } = useContext(LoginContext);
 
   const {
     register,
-    handleSubmit: handleRegisterVal,
-    // formState: { errors: registerErrors },
+    handleSubmit,
+    formState: { errors },
     reset: registerReset,
   } = useForm<IRegisterForm>({
+    mode: "onSubmit",
     resolver: yupResolver(registerUserSchema),
   });
+
+  const onSubmitFunction = (data: any) => {
+    const newData = {
+      name: data.name,
+      email: data.email,
+      cpf: data.cpf,
+      phone: data.phone,
+      birthdate: data.birthdate,
+      description: data.description,
+      password: data.password,
+      passwordConfirmation: data.passwordConfirmation,
+      accountType: accountType,
+      address: {
+        state: data.state,
+        city: data.city,
+        street: data.street,
+        zipCode: data.zipCode,
+        number: data.number,
+        complement: data.complement,
+      },
+    };
+    console.log(newData);
+    handleRegisterValues(newData);
+  };
 
   return (
     <div className="bg-grey8">
       <form
-        onSubmit={handleRegisterValues}
-        className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-lexend  "
+        onSubmit={handleSubmit(onSubmitFunction)}
+        className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-Lexend  "
       >
         <div className="flex items-center justify-between ">
           <h3 className="text-[1.5rem] font-medium mb-3">Cadastro</h3>
@@ -166,7 +206,7 @@ export const RegisterUserForm = () => {
             {...register("zipCode")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
-          {/* <span className="text-alert1">{registerErrors.zipCode?.message}</span> */}
+          <span className="text-alert1">{errors.zipCode?.message}</span>
         </div>
 
         <div className="flex flex-row gap-2 justify-between">
@@ -258,18 +298,24 @@ export const RegisterUserForm = () => {
             Tipo de conta
           </p>
           <div className="flex flex-row gap-2 mb-4">
-            <div
-              className={divClasses.buyer}
-              onClick={() => handleClick("buyer")}
+            <button
+              className={`${buyerColor} h-12 max-md:w-[20.813rem] md:w-36 font-semibold text-base border-2 rounded-md`}
+              onClick={() => {
+                setAccountType("buyer");
+                event?.preventDefault();
+              }}
             >
               Comprador
-            </div>
-            <div
-              className={divClasses.advertiser}
-              onClick={() => handleClick("advertiser")}
+            </button>
+            <button
+              className={`${advertiserColor} h-12 max-md:w-[20.813rem] md:w-36 font-semibold text-base border-2 rounded-md `}
+              onClick={() => {
+                setAccountType("advertiser");
+                event?.preventDefault();
+              }}
             >
               Anunciante
-            </div>
+            </button>
           </div>
         </div>
 

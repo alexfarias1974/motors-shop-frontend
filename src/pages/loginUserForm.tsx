@@ -1,12 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { LoginContext } from "../context/loginContext";
 import { UserContext } from "../context/userContext";
 import { ILoginDataProps } from "../interfaces/login.interface";
 import { loginSchema } from "../validations/forms.validations";
 
 const LoginUser = () => {
-  const { toRegister, loginData } = useContext(UserContext);
+  const { handleLoginValues } = useContext(LoginContext);
 
   const {
     register,
@@ -14,9 +15,14 @@ const LoginUser = () => {
     formState: { errors },
   } = useForm<ILoginDataProps>({ resolver: yupResolver(loginSchema) });
 
+  const onSubmitFunction = (data: any) => {
+    console.log(data);
+    handleLoginValues(data);
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit(loginData)}>
+      <form onSubmit={handleSubmit(onSubmitFunction)}>
         <h3>Login</h3>
 
         <div className="flex flex-col gap-1">
@@ -39,7 +45,6 @@ const LoginUser = () => {
         </div>
 
         <div className="flex flex-col gap-1">
-          
           <label
             htmlFor="password"
             className="font-Inter font-medium text-[0.875rem] mb-1"
@@ -55,10 +60,7 @@ const LoginUser = () => {
           <span className="text-alert1">{errors.password?.message}</span>
         </div>
 
-        <button type="submit" onClick={() => handleSubmit}>
-            Entrar
-        </button>
-
+        <button type="submit">Entrar</button>
       </form>
     </div>
   );

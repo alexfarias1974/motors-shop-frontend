@@ -16,8 +16,8 @@ export interface IUser {
   description: string;
   address: IAddress;
   accountType: string;
-  id: string;
-  isAdm: boolean;
+  id?: string;
+  isAdm?: boolean;
   password: string;
 }
 
