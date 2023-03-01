@@ -13,6 +13,9 @@ import Form from "../components/Form/registerAnnoucementForm";
 import { UserContext } from "../context/userContext";
 import api from "../services/api";
 import EditAnnounceForm from "../components/Form/editAnnouncementForm";
+import { LoginContext } from "../context/loginContext";
+import { Link } from "react-router-dom";
+import { AiOutlineClose } from "react-icons/ai";
 
 const UserAdvertiserPage = () => {
   const [cars, setCars] = useState<ICar[]>([]);
@@ -47,6 +50,7 @@ const UserAdvertiserPage = () => {
     editVehicleModalOpen,
     setEditVehicleModalOpen,
   } = useContext(UserContext);
+
   return (
     <>
       {createVehicleModalOpen ? (

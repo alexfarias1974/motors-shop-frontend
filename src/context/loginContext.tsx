@@ -4,8 +4,15 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import api from "../services/api";
-import { loginSchema, registerUserSchema } from "../validations/forms.validations";
-import { ILoginContextValues, ILoginDataProps, ITokenHeaders } from "../interfaces/login.interface";
+import {
+  loginSchema,
+  registerUserSchema,
+} from "../validations/forms.validations";
+import {
+  ILoginContextValues,
+  ILoginDataProps,
+  ITokenHeaders,
+} from "../interfaces/login.interface";
 import { IContextProps, IUser } from "../interfaces/user.interface";
 
 export const LoginContext = createContext<ILoginContextValues>(
@@ -13,12 +20,13 @@ export const LoginContext = createContext<ILoginContextValues>(
 );
 
 const LoginProvider = ({ children }: IContextProps) => {
-
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("@tokenId:token")
   );
 
   const [user, setUser] = useState<IUser | null>(null);
+
+  const [isModalSucessAccount, setIsModalSucessAccount] = useState(false);
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -31,9 +39,7 @@ const LoginProvider = ({ children }: IContextProps) => {
           Authorization: `Bearer ${token}`,
         } as ITokenHeaders;
 
-        api
-        .get<IUser>("/user")
-        .then(({ data }) => {
+        api.get<IUser>("/user").then(({ data }) => {
           setUser(data);
           navigate("/home", { replace: true });
         });
@@ -67,25 +73,24 @@ const LoginProvider = ({ children }: IContextProps) => {
     api
       .post("/users", data)
       .then(({ data }) => {
-        console.log(data)
-        navigate("/login")
+        setIsModalSucessAccount(true);
       })
       .catch((err) => {
         console.log(err);
       });
   });
 
-    const handleLoginValues = handleLogin((data: ILoginDataProps) => {
-        api
-            .post<{ token: string }>("/login", data)
-            .then(({ data }) => {
-                localStorage.setItem("@tokenId:token", data.token);
-                setToken(localStorage.getItem("@tokenId:token"));
-            })
-            .catch((err) => console.log(err));
-            
-            loginReset();
-    });
+  const handleLoginValues = handleLogin((data: ILoginDataProps) => {
+    api
+      .post<{ token: string }>("/login", data)
+      .then(({ data }) => {
+        localStorage.setItem("@tokenId:token", data.token);
+        setToken(localStorage.getItem("@tokenId:token"));
+      })
+      .catch((err) => console.log(err));
+
+    loginReset();
+  });
 
   return (
     <LoginContext.Provider
@@ -100,6 +105,8 @@ const LoginProvider = ({ children }: IContextProps) => {
         setToken,
         user,
         loading,
+        isModalSucessAccount,
+        setIsModalSucessAccount,
       }}
     >
       {children}
