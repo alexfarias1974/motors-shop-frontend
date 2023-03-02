@@ -4,11 +4,13 @@ import { useState } from "react";
 import Logo from "../../assets/Motors shop.svg";
 import Button from "../Button";
 import NavBar from "../NavBar";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const [isActiveNavBar, setIsActiveNavBar] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -51,19 +53,16 @@ const Header = () => {
               <>
                 <span
                   className="ml-11 font-semibold text-grey2 cursor-pointer"
-                  onClick={() => setIsLogin(!isLogin)}
+                  onClick={() => navigate("/login")}
                 >
                   Fazer Login
                 </span>
-                <Button
-                  text="Cadastrar"
-                  color="bg-grey10"
-                  hoverColor="bg-grey1"
-                  hoverTextColor="text-whiteFixed"
-                  textColor="text-grey0"
-                  border="border-2"
-                  borderColor="border-grey4"
-                />
+                <button
+                  className="bg-grey10 text-grey0 border-2 border-grey4 hover:text-whiteFixed hover:bg-grey1 h-12 max-md-2[20.813rem] md:w-36 rounded font-semibold text-base"
+                  onClick={() => navigate("/register")}
+                >
+                  Cadastrar
+                </button>
               </>
             )}
           </div>
