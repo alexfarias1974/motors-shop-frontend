@@ -5,6 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import api from "../../services/api";
 import { SetStateAction, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/userContext";
+import ModalBase from "../ModalBase";
 
 export interface IForm {
   accountSubmit: SubmitHandler<FieldValues>;
@@ -29,6 +30,7 @@ const Form = () => {
   const [motorcycleColor, setMotorcycleColor] = useState<string>();
   const [vehicleType, setVehicleType] = useState<string>("car");
   const [images, setImages] = useState<Array<string>>([]);
+  const [isModalSucess, setIsModalSucess] = useState(false);
 
   const { createVehicleModalOpen, setCreateVehicleModalOpen } =
     useContext(UserContext);
@@ -69,6 +71,7 @@ const Form = () => {
         },
       })
       .then((res) => {
+        setIsModalSucess(true);
         setCreateVehicleModalOpen(false);
         return res.data;
       })
@@ -91,184 +94,214 @@ const Form = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(registerAnnouncement)}
-      className="w-[32.5rem] m-auto bg-whiteFixed p-5 flex flex-col gap-1 rounded-md font-inter"
-    >
-      <div className="flex justify-between">
-        <h3 className="text-[1rem] font-medium mb-3 font-lexend">
-          Criar anúncio
-        </h3>
+    <>
+      <form
+        onSubmit={handleSubmit(registerAnnouncement)}
+        className="w-[32.5rem] m-auto bg-whiteFixed p-5 flex flex-col gap-1 rounded-md font-inter"
+      >
+        <div className="flex justify-between">
+          <h3 className="text-[1rem] font-medium mb-3 font-lexend">
+            Criar anúncio
+          </h3>
 
-        <AiOutlineClose
-          onClick={() => setCreateVehicleModalOpen(false)}
-          className="hover:cursor-pointer text-grey3 text-[1.5rem]"
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <label
-          htmlFor="typeAnnoucement"
-          className="font-medium text-[0.875rem] mb-4"
-        >
-          Tipo de anúncio
-        </label>
-        <div className="flex justify-between gap-3 mb-4">
-          <button
-            className={`${sellColor} h-12 w-full rounded font-semibold text-base border-2`}
-            onClick={() => setAnnouncementType("sell")}
-          >
-            Venda
-          </button>
-          <button
-            className={`${auctionColor} h-12 w-full rounded font-semibold text-base border-2`}
-            onClick={() => setAnnouncementType("auction")}
-          >
-            Leilão
-          </button>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <p className="font-medium text-[0.875rem] mb-3">
-          Informações do veículo
-        </p>
-        <label htmlFor="title" className="font-medium">
-          Título
-        </label>
-        <input
-          type="text"
-          placeholder="Digitar Título"
-          {...register("title")}
-          className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
-        />
-      </div>
-
-      <div className="flex justify-between gap-2">
-        <div className="flex flex-col">
-          <label htmlFor="year" className="font-medium mb-1">
-            Ano
-          </label>
-          <input
-            type="number"
-            placeholder="2018"
-            {...register("year")}
-            className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
+          <AiOutlineClose
+            onClick={() => setCreateVehicleModalOpen(false)}
+            className="hover:cursor-pointer text-grey3 text-[1.5rem]"
           />
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="mileage" className="font-medium mb-1">
-            Quilometragem
+          <label
+            htmlFor="typeAnnoucement"
+            className="font-medium text-[0.875rem] mb-4"
+          >
+            Tipo de anúncio
+          </label>
+          <div className="flex justify-between gap-3 mb-4">
+            <button
+              className={`${sellColor} h-12 w-full rounded font-semibold text-base border-2`}
+              onClick={() => setAnnouncementType("sell")}
+            >
+              Venda
+            </button>
+            <button
+              className={`${auctionColor} h-12 w-full rounded font-semibold text-base border-2`}
+              onClick={() => setAnnouncementType("auction")}
+            >
+              Leilão
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <p className="font-medium text-[0.875rem] mb-3">
+            Informações do veículo
+          </p>
+          <label htmlFor="title" className="font-medium">
+            Título
           </label>
           <input
             type="text"
-            placeholder="0"
-            {...register("mileage")}
-            className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
+            placeholder="Digitar Título"
+            {...register("title")}
+            className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
         </div>
 
-        <div className="flex flex-col">
-          <label htmlFor="price" className="font-medium mb-1">
-            Preço
-          </label>
-          <input
-            type="text"
-            placeholder="50.000,00"
-            {...register("price")}
-            className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
-          />
-        </div>
-      </div>
+        <div className="flex justify-between gap-2">
+          <div className="flex flex-col">
+            <label htmlFor="year" className="font-medium mb-1">
+              Ano
+            </label>
+            <input
+              type="number"
+              placeholder="2018"
+              {...register("year")}
+              className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
+            />
+          </div>
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="description" className="font-medium mb-1">
-          Descrição
-        </label>
-        <textarea
-          placeholder="Digitar descrição"
-          className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
-          {...register("description")}
-        />
-      </div>
-
-      <div className="flex flex-col gap-3 mb-4">
-        <label htmlFor="typeVehicle" className="font-medium mb-1">
-          Tipo de veículo
-        </label>
-
-        <div className="flex justify-between gap-3">
-          <button
-            className={`${carColor} h-12 w-full rounded font-semibold text-base border-2`}
-            onClick={() => setVehicleType("car")}
-          >
-            Carro
-          </button>
-          <button
-            className={`${motorcycleColor} h-12 w-full rounded font-semibold text-base border-2`}
-            onClick={() => setVehicleType("motorcycle")}
-          >
-            Moto
-          </button>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <label htmlFor="image" className="font-medium">
-          Imagem da Capa
-        </label>
-        <input
-          type="text"
-          placeholder="inserir URL da imagem"
-          className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
-          onBlur={(e) => images.push(e.target.value)}
-        />
-      </div>
-
-      {images.map((_, index) => {
-        const fieldname = `images[${index}]`;
-
-        return (
-          <div key={fieldname} className="flex flex-col gap-2">
-            <label htmlFor="image" className="font-medium">
-              Imagem
+          <div className="flex flex-col">
+            <label htmlFor="mileage" className="font-medium mb-1">
+              Quilometragem
             </label>
             <input
               type="text"
-              name={`${fieldname}`}
-              placeholder="inserir URL da imagem"
-              onBlur={(e) => images.push(e.target.value)}
-              className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
+              placeholder="0"
+              {...register("mileage")}
+              className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
             />
           </div>
-        );
-      })}
 
-      <div>
-        <button
-          className="bg-brand4 text-brand1 font-semibold text-[0.875rem] h-10 px-3"
-          type="button"
-          onClick={addImage}
-        >
-          Adicionar campo para imagem da galeria
-        </button>
-      </div>
-      <div className="flex mt-4 justify-end gap-3">
-        <button
-          className="bg-grey6 text-grey2 rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-24"
-          onClick={() => setCreateVehicleModalOpen(false)}
-        >
-          Cancelar
-        </button>
-        <button
-          type="submit"
-          className="bg-brand1 text-whiteFixed rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-36"
-        >
-          Criar anúncio
-        </button>
-      </div>
-    </form>
+          <div className="flex flex-col">
+            <label htmlFor="price" className="font-medium mb-1">
+              Preço
+            </label>
+            <input
+              type="text"
+              placeholder="50.000,00"
+              {...register("price")}
+              className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="description" className="font-medium mb-1">
+            Descrição
+          </label>
+          <textarea
+            placeholder="Digitar descrição"
+            className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
+            {...register("description")}
+          />
+        </div>
+
+        <div className="flex flex-col gap-3 mb-4">
+          <label htmlFor="typeVehicle" className="font-medium mb-1">
+            Tipo de veículo
+          </label>
+
+          <div className="flex justify-between gap-3">
+            <button
+              className={`${carColor} h-12 w-full rounded font-semibold text-base border-2`}
+              onClick={() => setVehicleType("car")}
+            >
+              Carro
+            </button>
+            <button
+              className={`${motorcycleColor} h-12 w-full rounded font-semibold text-base border-2`}
+              onClick={() => setVehicleType("motorcycle")}
+            >
+              Moto
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="image" className="font-medium">
+            Imagem da Capa
+          </label>
+          <input
+            type="text"
+            placeholder="inserir URL da imagem"
+            className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
+            onBlur={(e) => images.push(e.target.value)}
+          />
+        </div>
+
+        {images.map((_, index) => {
+          const fieldname = `images[${index}]`;
+
+          return (
+            <div key={fieldname} className="flex flex-col gap-2">
+              <label htmlFor="image" className="font-medium">
+                Imagem
+              </label>
+              <input
+                type="text"
+                name={`${fieldname}`}
+                placeholder="inserir URL da imagem"
+                onBlur={(e) => images.push(e.target.value)}
+                className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
+              />
+            </div>
+          );
+        })}
+
+        <div>
+          <button
+            className="bg-brand4 text-brand1 font-semibold text-[0.875rem] h-10 px-3"
+            type="button"
+            onClick={addImage}
+          >
+            Adicionar campo para imagem da galeria
+          </button>
+        </div>
+        <div className="flex mt-4 justify-end gap-3">
+          <button
+            className="bg-grey6 text-grey2 rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-24"
+            onClick={() => setCreateVehicleModalOpen(false)}
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            className="bg-brand1 text-whiteFixed rounded-md p-1 h-12 max-md:w-[20.813rem] md:w-36"
+          >
+            Criar anúncio
+          </button>
+        </div>
+      </form>
+
+      {isModalSucess ? (
+        <ModalBase setIs={setIsModalSucess}>
+          <div className="bg-whiteFixed w-11/12 rounded-md p-3 flex flex-col gap-5 max-w-[26.568rem]">
+            <div className="flex justify-between">
+              <h2 className="text-[1rem] font-medium mb-3 font-lexend">
+                Sucesso!
+              </h2>
+              <AiOutlineClose
+                onClick={() => setIsModalSucess(false)}
+                className="hover:cursor-pointer text-grey3 text-[.900rem]"
+              />
+            </div>
+
+            <div>
+              <p className="font-lexend font-bold text-[1rem]">
+                Seu anúncio foi criado com sucesso!
+              </p>
+            </div>
+
+            <div>
+              <p className="font-inter text-grey2 text-[1rem]">
+                Agora você poderá ver seus negócios crescendo em grande escala
+              </p>
+            </div>
+          </div>
+        </ModalBase>
+      ) : null}
+    </>
   );
 };
 

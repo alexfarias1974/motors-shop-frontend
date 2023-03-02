@@ -196,7 +196,7 @@ const NavBar = () => {
                 Cancelar
               </button>
               <button
-                className="text-alert1 bg-alert2 p-2 rounde-md"
+                className="text-alert1 bg-alert2 p-2 rounded-md"
                 onClick={deleteProfile}
               >
                 Sim, excluir perfil
