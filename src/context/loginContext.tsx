@@ -4,8 +4,15 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import api from "../services/api";
-import { loginSchema, registerUserSchema } from "../validations/forms.validations";
-import { ILoginContextValues, ILoginDataProps, ITokenHeaders } from "../interfaces/login.interface";
+import {
+  loginSchema,
+  registerUserSchema,
+} from "../validations/forms.validations";
+import {
+  ILoginContextValues,
+  ILoginDataProps,
+  ITokenHeaders,
+} from "../interfaces/login.interface";
 import { IContextProps, IUser } from "../interfaces/user.interface";
 
 export const LoginContext = createContext<ILoginContextValues>(
@@ -13,12 +20,13 @@ export const LoginContext = createContext<ILoginContextValues>(
 );
 
 const LoginProvider = ({ children }: IContextProps) => {
-
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("@tokenId:token")
   );
 
   const [user, setUser] = useState<IUser | null>(null);
+
+  const [isModalSucessAccount, setIsModalSucessAccount] = useState(false);
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -31,9 +39,7 @@ const LoginProvider = ({ children }: IContextProps) => {
           Authorization: `Bearer ${token}`,
         } as ITokenHeaders;
 
-        api
-        .get<IUser>("/user")
-        .then(({ data }) => {
+        api.get<IUser>("/user").then(({ data }) => {
           setUser(data);
           navigate("/home", { replace: true });
         });
@@ -45,61 +51,65 @@ const LoginProvider = ({ children }: IContextProps) => {
     loadUser();
   }, [token]);
 
-  const {
-    register,
-    handleSubmit: handleRegister,
-    formState: { errors: registerErrors },
-    reset: registerReset,
-  } = useForm<IUser>({
-    resolver: yupResolver(registerUserSchema),
-  });
+  // const {
+  //   register,
+  //   handleSubmit: handleRegister,
+  //   formState: { errors: registerErrors },
+  //   reset: registerReset,
+  // } = useForm<IUser>({
+  //   resolver: yupResolver(registerUserSchema),
+  // });
 
   const {
     register: login,
     handleSubmit: handleLogin,
     formState: { errors: loginErrors },
-    reset: loginReset,
   } = useForm<ILoginDataProps>({
     resolver: yupResolver(loginSchema),
   });
 
-  const handleRegisterValues = handleRegister((data: IUser) => {
+  const handleRegisterValues = (data: IUser) => {
+    console.log("entrando na func");
     api
       .post("/users", data)
-      .then(({ data }) => {
-        console.log(data)
-        navigate("/login")
+
+      .then((res) => {
+        console.log(res);
+        navigate("/login");
+        setIsModalSucessAccount(true);
       })
       .catch((err) => {
         console.log(err);
       });
-  });
+  };
 
-    const handleLoginValues = handleLogin((data: ILoginDataProps) => {
-        api
-            .post<{ token: string }>("/login", data)
-            .then(({ data }) => {
-                localStorage.setItem("@tokenId:token", data.token);
-                setToken(localStorage.getItem("@tokenId:token"));
-            })
-            .catch((err) => console.log(err));
-            
-            loginReset();
-    });
+  const handleLoginValues = (data: ILoginDataProps) => {
+    console.log("entrando na func");
+    api
+      .post("/login", data)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("@tokenId:token", res.data.token);
+        navigate("/home");
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <LoginContext.Provider
       value={{
         login,
-        register,
+        // register,
         handleLoginValues,
         handleRegisterValues,
         loginErrors,
-        registerErrors,
+        // registerErrors,
         token,
         setToken,
         user,
         loading,
+        isModalSucessAccount,
+        setIsModalSucessAccount,
       }}
     >
       {children}

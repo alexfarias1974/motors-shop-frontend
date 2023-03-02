@@ -5,7 +5,7 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from "react-hook-form";
-import { AxiosHeaders, HeadersDefaults } from "axios";
+import { HeadersDefaults } from "axios";
 
 export interface ITokenHeaders extends HeadersDefaults {
   Authorization: string;
@@ -24,17 +24,19 @@ export interface ILoginDataResponse {
 
 export interface ILoginContextValues {
   login: UseFormRegister<ILoginDataProps>;
-  register: UseFormRegister<IUser>;
-  handleLoginValues: (
-    e?: BaseSyntheticEvent<object, any, any> | undefined
-  ) => Promise<void>;
-  handleRegisterValues: (
-    e?: BaseSyntheticEvent<object, any, any> | undefined
-  ) => Promise<void>;
+  // register: UseFormRegister<IUser>;
+  handleLoginValues: Function;
+
+  handleRegisterValues: (user: IUser) => void;
+  // handleRegisterValues: (
+  //   e?: BaseSyntheticEvent<object, any, any> | undefined
+  // ) => Promise<void>;
   loginErrors: FieldErrors<ILoginDataProps>;
-  registerErrors: FieldErrors<IRegisterForm>;
+  // registerErrors: FieldErrors<IRegisterForm>;
   token: string | null;
   setToken: Dispatch<SetStateAction<string | null>>;
   user: IUser | null;
   loading: boolean;
+  isModalSucessAccount: boolean;
+  setIsModalSucessAccount: Dispatch<SetStateAction<boolean>>;
 }
