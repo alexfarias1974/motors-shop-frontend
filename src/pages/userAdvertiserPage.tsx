@@ -16,15 +16,33 @@ import EditAnnounceForm from "../components/Form/editAnnouncementForm";
 import { LoginContext } from "../context/loginContext";
 import { Link } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
+import { IUser } from "../interfaces/user.interface";
 
 const UserAdvertiserPage = () => {
   const [cars, setCars] = useState<ICar[]>([]);
-  const [motorcycles, setMotorcyles] = useState<ICar[]>([]);
+  const [motorcycles, setMotorcycles] = useState<ICar[]>([]);
+  const [userInfo, setUserInfo] = useState({} as IUser);
+
+  useEffect(() => {
+    const token = localStorage.getItem("@tokenId:token");
+    if (token) {
+      api
+        .get("users/profile", { headers: { Authorization: `Bearer ${token}` } })
+        .then((res) => {
+          console.log(res.data);
+          setUserInfo(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
   useEffect(() => {
     api
       .get("/vehicles/user", {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzYwNzcxOSwiZXhwIjoxNjc3Njk0MTE5LCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.5h-xv6qTAtrLkp4FctwEoyVKWz4E3mwj8V6xOWEKoWs`,
+          Authorization: `Bearer ${localStorage.getItem("@tokenId:token")}`,
         },
       })
       .then((res) => {
@@ -37,12 +55,12 @@ const UserAdvertiserPage = () => {
           (vehicle: any) => vehicle.vehicleType === "motorcycle"
         );
 
-        setMotorcyles(motorcycles);
+        setMotorcycles(motorcycles);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [cars, motorcycles]);
 
   const {
     createVehicleModalOpen,
@@ -71,13 +89,13 @@ const UserAdvertiserPage = () => {
             <div className="flex flex-col">
               <div className="bg-brand2 rounded-full ml-11 w-28 h-28 items-center flex justify-center text-center">
                 <p className="font-Inter text-[2.25rem] font-medium text-whiteFixed">
-                  SL
+                  {userInfo.name ? userInfo.name[0].toUpperCase() : ""}
                 </p>
               </div>
 
               <div className="flex gap-6 items-center rounded-full mt-5">
                 <p className="ml-11 font-lexend text-[1.25rem] font-semibold text-grey1">
-                  Samuel Leão
+                  {userInfo.name}
                 </p>
                 <p className="bg-brand4 p-2 font-inter text-[0.875rem] text-brand1 font-medium">
                   Anunciante
@@ -85,9 +103,7 @@ const UserAdvertiserPage = () => {
               </div>
               <div className="ml-11 mr-11">
                 <p className="font-inter text-[14px] text-grey2 font-normal mt-5">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s
+                  {userInfo.description}
                 </p>
               </div>
               <div>

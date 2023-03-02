@@ -71,7 +71,7 @@ const EditAnnounceForm = () => {
     api
       .patch(`/vehicles/${editVehicleId}`, data, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzYwNzcxOSwiZXhwIjoxNjc3Njk0MTE5LCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.5h-xv6qTAtrLkp4FctwEoyVKWz4E3mwj8V6xOWEKoWs`,
+          Authorization: `Bearer ${localStorage.getItem("@tokenId:token")}`,
         },
       })
       .then((res) => {
@@ -87,7 +87,7 @@ const EditAnnounceForm = () => {
     api
       .delete(`/vehicles/${editVehicleId}`, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzYwNzcxOSwiZXhwIjoxNjc3Njk0MTE5LCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.5h-xv6qTAtrLkp4FctwEoyVKWz4E3mwj8V6xOWEKoWs`,
+          Authorization: `Bearer ${localStorage.getItem("@tokenId:token")}`,
         },
       })
       .then((res) => {

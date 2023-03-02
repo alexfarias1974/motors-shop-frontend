@@ -2,8 +2,44 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import carLogo from "../assets/car_picture1.png";
 import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../context/userContext";
+import api from "../services/api";
+import { ICar } from "../components/ProductCardAdvertiser";
+import { LoginContext } from "../context/loginContext";
 
 const DetailedViewPageVehicle = () => {
+  const { carPageId } = useContext(UserContext);
+  const [car, setCar] = useState<ICar>();
+  const { user, setUser } = useContext(LoginContext);
+
+  useEffect(() => {
+    api
+      .get(`/vehicles/${carPageId}`)
+      .then((res) => {
+        setCar(res.data);
+        console.log(car);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("@tokenId:token");
+    if (token) {
+      api
+        .get("users/profile", { headers: { Authorization: `Bearer ${token}` } })
+        .then((res) => {
+          console.log(res.data);
+          setUser(res.data);
+          console.log(user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
   // <section className="w-screen h-[17rem] bg-brand2 flex flex-col  items-center text-center"></section>
   const imagesCars = [
     {
@@ -58,17 +94,24 @@ const DetailedViewPageVehicle = () => {
 
             <div className="w-11/12 bg-grey10 rounded-md mt-5 flex flex-col gap-2 p-5">
               <h3 className=" font-lexend font-bold text-grey1 pt-5 ">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                {car?.title}
               </h3>
 
               <div className="md:flex md:flex-row items-center md: justify-between">
                 <div className="flex gap-1 p-2 flex-row font-inter text-sm font-medium text-brand1">
-                  <span className="px-2 py-1 bg-brand4 rounded">2013</span>
-                  <span className="px-2 py-1 bg-brand4 rounded">0 KM</span>
+                  <span className="px-2 py-1 bg-brand4 rounded">
+                    {car?.year}
+                  </span>
+                  <span className="px-2 py-1 bg-brand4 rounded">
+                    {car?.mileage}
+                  </span>
                 </div>
 
                 <h4 className="flex p-4 font-lexend font-bold text-base text-grey1">
-                  R$ 00.000,00
+                  {Number(car?.price).toLocaleString("pt-br", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
                 </h4>
               </div>
 
@@ -87,11 +130,7 @@ const DetailedViewPageVehicle = () => {
                 Descrição
               </h2>
 
-              <p className="text-grey2 font-inter">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-                praesentium delectus tempora, minima maxime nobis qui ut
-                architecto asperiores dolorem.
-              </p>
+              <p className="text-grey2 font-inter">{car?.description}</p>
             </div>
 
             <div className="mt-5 w-11/12 p-5 flex flex-col gap-5  bg-grey10 rounded-md lg:hidden">
@@ -117,13 +156,10 @@ const DetailedViewPageVehicle = () => {
                 </p>
               </div>
               <h2 className="font-lexend font-bold text-grey1 pt-1 ">
-                Samuel Leão
+                {user?.name}
               </h2>
 
-              <p className="text-grey2 font-inter">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-                praesentium delectus tempora.
-              </p>
+              <p className="text-grey2 font-inter">{user?.description}</p>
 
               <Link
                 to={"/userProfile"}
@@ -224,13 +260,10 @@ const DetailedViewPageVehicle = () => {
               </p>
             </div>
             <h2 className="font-lexend font-bold text-grey1 pt-1 ">
-              Samuel Leão
+              {user?.name}
             </h2>
 
-            <p className="text-grey2 font-inter">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-              praesentium delectus tempora.
-            </p>
+            <p className="text-grey2 font-inter">{user?.description}</p>
 
             <Link
               to={"/userProfile"}

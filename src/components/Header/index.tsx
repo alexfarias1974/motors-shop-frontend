@@ -1,16 +1,35 @@
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../../assets/Motors shop.svg";
 import Button from "../Button";
 import NavBar from "../NavBar";
 import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
+import { IUser } from "../../interfaces/user.interface";
 
 const Header = () => {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const [isActiveNavBar, setIsActiveNavBar] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({} as IUser);
+
+  useEffect(() => {
+    const token = localStorage.getItem("@tokenId:token");
+    if (token) {
+      setIsLogin(true);
+      api
+        .get("users/profile", { headers: { Authorization: `Bearer ${token}` } })
+        .then((res) => {
+          console.log(res.data);
+          setUserInfo(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
 
   return (
     <>
@@ -45,9 +64,11 @@ const Header = () => {
                 onClick={() => setIsActiveNavBar(!isActiveNavBar)}
               >
                 <div className="flex justify-center items-center bg-brand2 h-8 w-8 rounded-[100%]">
-                  <span className="text-whiteFixed font-semibold">SL</span>
+                  <span className="text-whiteFixed font-semibold">
+                    {userInfo.name ? userInfo.name[0].toUpperCase() : ""}
+                  </span>
                 </div>
-                <p>Samuel Leão</p>
+                <p>{userInfo.name}</p>
               </div>
             ) : (
               <>
@@ -71,7 +92,7 @@ const Header = () => {
 
       {isActiveNavBar && (
         <div className="absolute top-[4.25rem] right-[0.9rem]">
-          <NavBar />
+          <NavBar accountType={userInfo.accountType} />
         </div>
       )}
 

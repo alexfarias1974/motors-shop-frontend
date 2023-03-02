@@ -7,11 +7,6 @@ import {
 } from "react-hook-form";
 import { HeadersDefaults } from "axios";
 
-export interface ITokenHeaders extends HeadersDefaults {
-  Authorization: string;
-  [key: string]: AxiosHeaderValue;
-}
-
 export interface ILoginDataProps {
   email: string;
   password: string;
@@ -33,9 +28,9 @@ export interface ILoginContextValues {
   // ) => Promise<void>;
   loginErrors: FieldErrors<ILoginDataProps>;
   // registerErrors: FieldErrors<IRegisterForm>;
-  token: string | null;
-  setToken: Dispatch<SetStateAction<string | null>>;
+
   user: IUser | null;
+  setUser: Function;
   loading: boolean;
   isModalSucessAccount: boolean;
   setIsModalSucessAccount: Dispatch<SetStateAction<boolean>>;

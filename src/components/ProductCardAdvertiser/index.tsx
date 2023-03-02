@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 
 export interface ICar {
@@ -12,13 +13,16 @@ export interface ICar {
 }
 
 export const ProductCardAdvertiser = (car: ICar) => {
-  const { setEditVehicleModalOpen, setEditVehicleId } = useContext(UserContext);
+  const { setEditVehicleModalOpen, setEditVehicleId, setCarPageId } =
+    useContext(UserContext);
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="mx-auto max-w-[19.5rem] flex flex-col">
         <picture className="bg-grey7 rounded-xl h-[11rem] w-[19.5rem]">
           <img
-            className="mt-[-3rem]"
+            className="h-[11rem] w-[19.5rem] rounded"
             src={`${car.images[0].imageUrl}`}
             alt="Car Picture"
           />
@@ -56,7 +60,13 @@ export const ProductCardAdvertiser = (car: ICar) => {
           >
             Editar
           </button>
-          <button className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5">
+          <button
+            className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
+            onClick={() => {
+              setCarPageId(car.id);
+              navigate("/detailed-vehicle");
+            }}
+          >
             Ver como
           </button>
         </div>

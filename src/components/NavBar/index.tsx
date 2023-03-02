@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../context/loginContext";
 import { IUserPatchForm } from "../../interfaces/user.interface";
 import api from "../../services/api";
@@ -9,10 +10,11 @@ import { userPatchSchema } from "../../validations/forms.validations";
 import Button from "../Button";
 import ModalBase from "../ModalBase";
 
-const NavBar = () => {
+const NavBar = (accountType: any) => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
-  const { token } = useContext(LoginContext);
+  const token = localStorage.getItem("@tokenId:token");
+  const navigate = useNavigate();
 
   const patchProfile = (data: IUserPatchForm) => {
     api
@@ -40,17 +42,53 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-between p-5 w-[12.5rem] h-[12.5rem]  bg-grey9 rounded shadow-[0_4px_40px_-10px_rgba(0,0,0,0.25)]">
-        <span
-          className="text-grey2 cursor-pointer"
-          onClick={() => setIsModalEditOpen(true)}
-        >
-          Editar Perfil
-        </span>
-        <span className="text-grey2 cursor-pointer">Editar Endereço</span>
-        <span className="text-grey2 cursor-pointer">Minhas Compras</span>
-        <span className="text-grey2 cursor-pointer">Sair</span>
-      </div>
+      {accountType === "buyer" ? (
+        <div className="flex flex-col justify-between p-5 w-[12.5rem] h-[12.5rem]  bg-grey9 rounded shadow-[0_4px_40px_-10px_rgba(0,0,0,0.25)]">
+          <span
+            className="text-grey2 cursor-pointer"
+            onClick={() => setIsModalEditOpen(true)}
+          >
+            Editar Perfil
+          </span>
+          <span className="text-grey2 cursor-pointer">Editar Endereço</span>
+          <span className="text-grey2 cursor-pointer">Minhas Compras</span>
+          <span
+            className="text-grey2 cursor-pointer"
+            onClick={() => {
+              localStorage.clear();
+              window.location.reload();
+            }}
+          >
+            Sair
+          </span>
+        </div>
+      ) : (
+        <div className="flex flex-col justify-between p-5 w-[12.5rem] h-[12.5rem]  bg-grey9 rounded shadow-[0_4px_40px_-10px_rgba(0,0,0,0.25)]">
+          <span
+            className="text-grey2 cursor-pointer"
+            onClick={() => setIsModalEditOpen(true)}
+          >
+            Editar Perfil
+          </span>
+          <span className="text-grey2 cursor-pointer">Editar Endereço</span>
+          <span
+            className="text-grey2 cursor-pointer"
+            onClick={() => navigate("/userProfile")}
+          >
+            Meus Anúncios
+          </span>
+          <span
+            className="text-grey2 cursor-pointer"
+            onClick={() => {
+              localStorage.clear();
+              window.location.reload();
+            }}
+          >
+            Sair
+          </span>
+        </div>
+      )}
+
       {isModalEditOpen ? (
         <ModalBase setIs={setIsModalEditOpen}>
           <div className="bg-whiteFixed w-[20rem]   p-2 rounded-md md:p-0 md:w-[20rem]  md:h-[30rem] xl:h-[39rem] overflow-y-scroll">
