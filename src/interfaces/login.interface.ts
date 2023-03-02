@@ -37,4 +37,6 @@ export interface ILoginContextValues {
   setToken: Dispatch<SetStateAction<string | null>>;
   user: IUser | null;
   loading: boolean;
+  isModalSucessAccount: boolean;
+  setIsModalSucessAccount: Dispatch<SetStateAction<boolean>>;
 }

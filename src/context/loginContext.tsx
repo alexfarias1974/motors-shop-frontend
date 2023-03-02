@@ -26,6 +26,8 @@ const LoginProvider = ({ children }: IContextProps) => {
 
   const [user, setUser] = useState<IUser | null>(null);
 
+  const [isModalSucessAccount, setIsModalSucessAccount] = useState(false);
+
   const [loading, setLoading] = useState<boolean>(true);
 
   const navigate = useNavigate();
@@ -70,9 +72,11 @@ const LoginProvider = ({ children }: IContextProps) => {
     console.log("entrando na func");
     api
       .post("/users", data)
+
       .then((res) => {
         console.log(res);
         navigate("/login");
+        setIsModalSucessAccount(true);
       })
       .catch((err) => {
         console.log(err);
@@ -104,6 +108,8 @@ const LoginProvider = ({ children }: IContextProps) => {
         setToken,
         user,
         loading,
+        isModalSucessAccount,
+        setIsModalSucessAccount,
       }}
     >
       {children}

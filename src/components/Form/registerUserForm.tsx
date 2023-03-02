@@ -1,10 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { AiOutlineClose } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { LoginContext } from "../../context/loginContext";
 import { IRegisterForm, IUser } from "../../interfaces/user.interface";
 import { registerUserSchema } from "../../validations/forms.validations";
 import Button from "../Button";
+import ModalBase from "../ModalBase";
 import "./styles.css";
 
 export const RegisterUserForm = () => {
@@ -46,7 +49,14 @@ export const RegisterUserForm = () => {
     }
   }, [accountType]);
 
-  const { handleRegisterValues } = useContext(LoginContext);
+
+  const {
+    handleRegisterValues,
+    registerErrors,
+    isModalSucessAccount,
+    setIsModalSucessAccount,
+  } = useContext(LoginContext);
+
 
   const {
     register,
@@ -357,6 +367,41 @@ export const RegisterUserForm = () => {
           <Button text={"Finalizar Cadastro"} type="submit" />
         </div>
       </form>
+
+      {isModalSucessAccount ? (
+        <ModalBase setIs={setIsModalSucessAccount}>
+          <div className="bg-whiteFixed w-11/12 rounded-md p-3 flex flex-col gap-5 max-w-[26.568rem]">
+            <div className="flex justify-between">
+              <h2 className="text-[1rem] font-medium mb-3 font-lexend">
+                Sucesso!
+              </h2>
+              <AiOutlineClose
+                onClick={() => setIsModalSucessAccount(false)}
+                className="hover:cursor-pointer text-grey3 text-[.900rem]"
+              />
+            </div>
+
+            <div>
+              <p className="font-lexend font-bold text-[1rem]">
+                Sua conta foi criada com sucesso!
+              </p>
+            </div>
+
+            <div>
+              <p className="font-inter text-grey2 text-[1rem]">
+                Agora você poderá ver seus negócios crescendo em grande escala
+              </p>
+            </div>
+
+            <Link
+              to={"/login"}
+              className="bg-brand1 text-center rounded w-28 font-inter p-2 text-[14px] text-whiteFixed font-semibold"
+            >
+              Ir para o login
+            </Link>
+          </div>
+        </ModalBase>
+      ) : null}
     </div>
   );
 };
