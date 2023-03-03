@@ -7,11 +7,6 @@ import {
 } from "react-hook-form";
 import { HeadersDefaults } from "axios";
 
-export interface ITokenHeaders extends HeadersDefaults {
-  Authorization: string;
-  [key: string]: AxiosHeaderValue;
-}
-
 export interface ILoginDataProps {
   email: string;
   password: string;
@@ -26,7 +21,7 @@ export interface ILoginContextValues {
   login: UseFormRegister<ILoginDataProps>;
   // register: UseFormRegister<IUser>;
   handleLoginValues: Function;
-
+  handleForgotPasswordValues: Function;
   handleRegisterValues: (user: IUser) => void;
   // handleRegisterValues: (
   //   e?: BaseSyntheticEvent<object, any, any> | undefined
@@ -39,4 +34,10 @@ export interface ILoginContextValues {
   loading: boolean;
   isModalSucessAccount: boolean;
   setIsModalSucessAccount: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface IForgotPasswordForm {
+  email: string;
+  password: string;
+  passwordConfirmation: string;
 }

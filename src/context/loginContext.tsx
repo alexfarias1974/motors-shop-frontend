@@ -9,9 +9,9 @@ import {
   registerUserSchema,
 } from "../validations/forms.validations";
 import {
+  IForgotPasswordForm,
   ILoginContextValues,
   ILoginDataProps,
-  ITokenHeaders,
 } from "../interfaces/login.interface";
 import { IContextProps, IUser } from "../interfaces/user.interface";
 
@@ -32,34 +32,7 @@ const LoginProvider = ({ children }: IContextProps) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadUser = () => {
-      if (token) {
-        api.defaults.headers = {
-          Authorization: `Bearer ${token}`,
-        } as ITokenHeaders;
-
-        api.get<IUser>("/user").then(({ data }) => {
-          setUser(data);
-          navigate("/home", { replace: true });
-        });
-      }
-
-      setLoading(false);
-    };
-
-    loadUser();
-  }, [token]);
-
-  // const {
-  //   register,
-  //   handleSubmit: handleRegister,
-  //   formState: { errors: registerErrors },
-  //   reset: registerReset,
-  // } = useForm<IUser>({
-  //   resolver: yupResolver(registerUserSchema),
-  // });
-
+ 
   const {
     register: login,
     handleSubmit: handleLogin,
@@ -83,6 +56,18 @@ const LoginProvider = ({ children }: IContextProps) => {
       });
   };
 
+  const handleForgotPasswordValues = (data: IForgotPasswordForm) => {
+    api
+      .patch("/forgotPassword", data)
+      .then((res) => {
+        console.log(res);
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const handleLoginValues = (data: ILoginDataProps) => {
     console.log("entrando na func");
     api
@@ -104,6 +89,7 @@ const LoginProvider = ({ children }: IContextProps) => {
         handleRegisterValues,
         loginErrors,
         // registerErrors,
+        handleForgotPasswordValues,
         token,
         setToken,
         user,
