@@ -1,38 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { AiOutlineClose } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { LoginContext } from "../../context/loginContext";
-import { IRegisterForm, IUser } from "../../interfaces/user.interface";
-import { registerUserSchema } from "../../validations/forms.validations";
-import Button from "../Button";
-import ModalBase from "../ModalBase";
-import "./styles.css";
+import { LoginContext } from "../context/loginContext";
+import { IRegisterForm, IUser } from "../interfaces/user.interface";
+import { registerUserSchema } from "../validations/forms.validations";
+import Button from "../components/Button";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export const RegisterUserForm = () => {
-  // const [divClasses, setDivClasses] = useState({
-  //   buyer: "color1",
-  //   advertiser: "color2",
-  //   lastClicked: null,
-  // });
-
-  // const handleClick = (div: any) => {
-  //   const newClasses = { ...divClasses };
-  //   if (div === newClasses.lastClicked) {
-  //     newClasses[div] = newClasses[div] ? "color2" : "color1";
-  //     newClasses[div === "buyer" ? "advertiser" : "buyer"] = newClasses[
-  //       div === "buyer" ? "advertiser" : "buyer"
-  //     ]
-  //       ? "color2"
-  //       : "color1";
-  //   } else {
-  //     newClasses[div] = "color1";
-  //     newClasses[div === "buyer" ? "advertiser" : "buyer"] = "color2";
-  //   }
-  //   newClasses.lastClicked = div;
-  //   setDivClasses(newClasses);
-  // };
+  
   const [accountType, setAccountType] = useState<string>("buyer");
   const [buyerColor, setBuyerColor] = useState<string>("bg-brand1");
 
@@ -49,14 +26,7 @@ export const RegisterUserForm = () => {
     }
   }, [accountType]);
 
-
-  const {
-    handleRegisterValues,
-    registerErrors,
-    isModalSucessAccount,
-    setIsModalSucessAccount,
-  } = useContext(LoginContext);
-
+  const { handleRegisterValues } = useContext(LoginContext);
 
   const {
     register,
@@ -93,10 +63,12 @@ export const RegisterUserForm = () => {
   };
 
   return (
-    <div className="bg-grey8">
+    <>
+    <Header />
+    <div className="bg-grey8 py-10">
       <form
         onSubmit={handleSubmit(onSubmitFunction)}
-        className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-Lexend  "
+        className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-Lexend"
       >
         <div className="flex items-center justify-between ">
           <h3 className="text-[1.5rem] font-medium mb-3">Cadastro</h3>
@@ -118,7 +90,7 @@ export const RegisterUserForm = () => {
             {...register("name")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
-          {/* <span className="text-alert1">{registerErrors.name?.message}</span> */}
+          <span className="text-alert1">{errors.name?.message}</span>
         </div>
 
         <div className="flex flex-col">
@@ -134,7 +106,7 @@ export const RegisterUserForm = () => {
             {...register("email")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
-          {/* <span className="text-alert1">{registerErrors.email?.message}</span> */}
+          <span className="text-alert1">{errors.email?.message}</span>
         </div>
 
         <div className="flex flex-col">
@@ -150,7 +122,7 @@ export const RegisterUserForm = () => {
             {...register("cpf")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
-          {/* <span className="text-alert1">{registerErrors.cpf?.message}</span> */}
+          <span className="text-alert1">{errors.cpf?.message}</span>
         </div>
 
         <div className="flex flex-col">
@@ -166,7 +138,7 @@ export const RegisterUserForm = () => {
             {...register("phone")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
-          {/* <span className="text-alert1">{registerErrors.phone?.message}</span> */}
+          <span className="text-alert1">{errors.phone?.message}</span>
         </div>
 
         <div className="flex flex-col">
@@ -182,7 +154,7 @@ export const RegisterUserForm = () => {
             {...register("birthdate")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
-          {/* <span className="text-alert1">{registerErrors.birthdate?.message}</span> */}
+          <span className="text-alert1">{errors.birthdate?.message}</span>
         </div>
 
         <div className="flex flex-col">
@@ -197,7 +169,7 @@ export const RegisterUserForm = () => {
             {...register("description")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-18 focus:outline-none mb-4"
           />
-          {/* <span className="text-alert1">{registerErrors.description?.message}</span> */}
+          <span className="text-alert1">{errors.description?.message}</span>
         </div>
 
         <div className="flex flex-col gap-1">
@@ -233,7 +205,7 @@ export const RegisterUserForm = () => {
               {...register("state")}
               className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
             />
-            {/* <span className="text-alert1">{registerErrors.state?.message}</span> */}
+            <span className="text-alert1">{errors.state?.message}</span>
           </div>
 
           <div className="flex flex-col">
@@ -249,7 +221,7 @@ export const RegisterUserForm = () => {
               {...register("city")}
               className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
             />
-            {/* <span className="text-alert1">{registerErrors.city?.message}</span> */}
+            <span className="text-alert1">{errors.city?.message}</span>
           </div>
         </div>
 
@@ -266,7 +238,7 @@ export const RegisterUserForm = () => {
             {...register("street")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
-          {/* <span className="text-alert1">{registerErrors.street?.message}</span> */}
+          <span className="text-alert1">{errors.street?.message}</span>
         </div>
 
         <div className="flex flex-row gap-2 justify-between">
@@ -283,7 +255,7 @@ export const RegisterUserForm = () => {
               {...register("number")}
               className="appearance-none m-0 font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
             />
-            {/* <span className="text-alert1">{registerErrors.number?.message}</span> */}
+            <span className="text-alert1">{errors.number?.message}</span>
           </div>
 
           <div className="flex flex-col">
@@ -299,7 +271,7 @@ export const RegisterUserForm = () => {
               {...register("complement")}
               className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4 w-full"
             />
-            {/* <span className="text-alert1">{registerErrors.complement?.message}</span> */}
+            <span className="text-alert1">{errors.complement?.message}</span>
           </div>
         </div>
 
@@ -342,7 +314,7 @@ export const RegisterUserForm = () => {
             {...register("password")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
-          {/* <span className="text-alert1">{registerErrors.password?.message}</span> */}
+          <span className="text-alert1">{errors.password?.message}</span>
         </div>
 
         <div className="flex flex-col">
@@ -358,50 +330,17 @@ export const RegisterUserForm = () => {
             {...register("passwordConfirmation")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
-          {/* <span className="text-alert1"> */}
-          {/* {registerErrors.passwordConfirmation?.message} */}
-          {/* </span> */}
+          <span className="text-alert1">
+          {errors.passwordConfirmation?.message}
+          </span>
         </div>
 
         <div className="font-Inter font-semibold text-whiteFixed rounded-md text-[1rem] flex mt-4 justify-center bg-brand1 hover:bg-brand2">
           <Button text={"Finalizar Cadastro"} type="submit" />
         </div>
       </form>
-
-      {isModalSucessAccount ? (
-        <ModalBase setIs={setIsModalSucessAccount}>
-          <div className="bg-whiteFixed w-11/12 rounded-md p-3 flex flex-col gap-5 max-w-[26.568rem]">
-            <div className="flex justify-between">
-              <h2 className="text-[1rem] font-medium mb-3 font-lexend">
-                Sucesso!
-              </h2>
-              <AiOutlineClose
-                onClick={() => setIsModalSucessAccount(false)}
-                className="hover:cursor-pointer text-grey3 text-[.900rem]"
-              />
-            </div>
-
-            <div>
-              <p className="font-lexend font-bold text-[1rem]">
-                Sua conta foi criada com sucesso!
-              </p>
-            </div>
-
-            <div>
-              <p className="font-inter text-grey2 text-[1rem]">
-                Agora você poderá ver seus negócios crescendo em grande escala
-              </p>
-            </div>
-
-            <Link
-              to={"/login"}
-              className="bg-brand1 text-center rounded w-28 font-inter p-2 text-[14px] text-whiteFixed font-semibold"
-            >
-              Ir para o login
-            </Link>
-          </div>
-        </ModalBase>
-      ) : null}
     </div>
+    <Footer />
+    </>
   );
 };

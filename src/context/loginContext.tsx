@@ -51,56 +51,59 @@ const LoginProvider = ({ children }: IContextProps) => {
     loadUser();
   }, [token]);
 
-  const {
-    register,
-    handleSubmit: handleRegister,
-    formState: { errors: registerErrors },
-    reset: registerReset,
-  } = useForm<IUser>({
-    resolver: yupResolver(registerUserSchema),
-  });
+  // const {
+  //   register,
+  //   handleSubmit: handleRegister,
+  //   formState: { errors: registerErrors },
+  //   reset: registerReset,
+  // } = useForm<IUser>({
+  //   resolver: yupResolver(registerUserSchema),
+  // });
 
   const {
     register: login,
     handleSubmit: handleLogin,
     formState: { errors: loginErrors },
-    reset: loginReset,
   } = useForm<ILoginDataProps>({
     resolver: yupResolver(loginSchema),
   });
 
-  const handleRegisterValues = handleRegister((data: IUser) => {
+  const handleRegisterValues = (data: IUser) => {
+    console.log("entrando na func");
     api
       .post("/users", data)
-      .then(({ data }) => {
+
+      .then((res) => {
+        console.log(res);
+        navigate("/login");
         setIsModalSucessAccount(true);
       })
       .catch((err) => {
         console.log(err);
       });
-  });
+  };
 
-  const handleLoginValues = handleLogin((data: ILoginDataProps) => {
+  const handleLoginValues = (data: ILoginDataProps) => {
+    console.log("entrando na func");
     api
-      .post<{ token: string }>("/login", data)
-      .then(({ data }) => {
-        localStorage.setItem("@tokenId:token", data.token);
-        setToken(localStorage.getItem("@tokenId:token"));
+      .post("/login", data)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("@tokenId:token", res.data.token);
+        navigate("/home");
       })
       .catch((err) => console.log(err));
-
-    loginReset();
-  });
+  };
 
   return (
     <LoginContext.Provider
       value={{
         login,
-        register,
+        // register,
         handleLoginValues,
         handleRegisterValues,
         loginErrors,
-        registerErrors,
+        // registerErrors,
         token,
         setToken,
         user,
