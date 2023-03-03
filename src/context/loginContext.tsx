@@ -9,6 +9,7 @@ import {
   registerUserSchema,
 } from "../validations/forms.validations";
 import {
+  IForgotPasswordForm,
   ILoginContextValues,
   ILoginDataProps,
 } from "../interfaces/login.interface";
@@ -46,6 +47,18 @@ const LoginProvider = ({ children }: IContextProps) => {
       });
   };
 
+  const handleForgotPasswordValues = (data: IForgotPasswordForm) => {
+    api
+      .patch("/forgotPassword", data)
+      .then((res) => {
+        console.log(res);
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const handleLoginValues = (data: ILoginDataProps) => {
     api
       .post("/login", data)
@@ -64,7 +77,7 @@ const LoginProvider = ({ children }: IContextProps) => {
         handleLoginValues,
         handleRegisterValues,
         loginErrors,
-
+        handleForgotPasswordValues,
         user,
         setUser,
         loading,

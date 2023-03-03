@@ -133,3 +133,24 @@ export const userPatchSchema = yup.object().shape({
     return yup.mixed().notRequired();
   }),
 });
+
+export const forgotPasswordSchema = yup.object().shape({
+  email: yup.string(),
+  password: yup
+    .string()
+    .matches(/[A-Z]/, "deve conter ao menos 1 letra maiúscula")
+    .matches(/([a-z])/, "deve conter ao menos 1 letra minúscula")
+    .matches(/(\d)/, "deve conter ao menos 1 número")
+    .matches(/(\W)|_/, "deve conter ao menos 1 caracter especial")
+    .matches(/.{8,}/, "deve conter ao menos 8 dígitos")
+    .required("Crie uma senha"),
+
+  passwordConfirmation: yup
+    .string()
+    .oneOf(
+      [yup.ref("password"), null!],
+      "As senhas devem corresponder entre si"
+    )
+    .required("Confirme sua senha")
+})
+
