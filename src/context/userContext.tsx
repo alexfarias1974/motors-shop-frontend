@@ -18,7 +18,7 @@ const UserContextProvider = ({ children }: IContextProps) => {
   const [editVehicleModalOpen, setEditVehicleModalOpen] =
     useState<boolean>(false);
   const [editVehicleId, setEditVehicleId] = useState<string>("");
-  const [carPageId, setCarPageId] = useState<string>("");
+  // const [carPageId, setCarPageId] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -89,8 +89,8 @@ const UserContextProvider = ({ children }: IContextProps) => {
         setEditVehicleModalOpen,
         editVehicleId,
         setEditVehicleId,
-        carPageId,
-        setCarPageId,
+        // carPageId,
+        // setCarPageId,
       }}
     >
       {children}

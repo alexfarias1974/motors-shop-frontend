@@ -124,6 +124,7 @@ const Home = () => {
                 price={car.price}
                 year={car.year}
                 images={car.images}
+                owner={car.owner}
               />
             ))}
           </div>
@@ -146,6 +147,7 @@ const Home = () => {
                 price={car.price}
                 year={car.year}
                 images={car.images}
+                owner={car.owner}
               />
             ))}
           </div>

@@ -9,6 +9,7 @@ import { UserContext } from "../context/userContext";
 import { ILoginDataProps } from "../interfaces/login.interface";
 import { loginSchema } from "../validations/forms.validations";
 import LogoMotors from "../assets/Motors shop.png";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginUser = () => {
   const { handleLoginValues } = useContext(LoginContext);
@@ -23,6 +24,8 @@ const LoginUser = () => {
     console.log(data);
     handleLoginValues(data);
   };
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -74,15 +77,20 @@ const LoginUser = () => {
           >
             Esqueci minha senha
           </a>
-          <div className="font-Inter font-semibold text-whiteFixed rounded-md text-[1rem] flex mt-4 justify-center bg-brand1 hover:bg-brand2 mb-4">
-            <Button text={"Entrar"} type="submit" />
-          </div>
+          <button className="font-Inter font-semibold text-whiteFixed rounded-md text-[1rem] flex mt-4 justify-center bg-brand1 hover:bg-brand2 mb-4 py-[0.625rem] border-2 border-brand1">
+            Entrar
+          </button>
           <p className="text-center font-Inter font-normal text-[0.875rem] text-grey2">
             Ainda não possui conta?
           </p>
-          <div className="font-Inter font-semibold text-grey0 rounded-md text-[1rem] flex mt-4 justify-center border-solid border-2 border-grey5 bg-whiteFixed hover:bg-grey0 hover:border-grey0 hover:text-whiteFixed">
-            <Button onClick="location.href='./register'" text={"Cadastrar"} />
-          </div>
+
+          <Link
+            to={"/register"}
+            className="font-Inter font-semibold text-grey0 rounded-md text-[1rem] flex mt-4 justify-center border-solid border-2 border-grey5 bg-whiteFixed hover:bg-grey0 hover:border-grey0 hover:text-whiteFixed py-[0.625rem]"
+          >
+            Cadastrar
+          </Link>
+          {/* <Button onClick="location.href='./register'" text={"Cadastrar"} /> */}
         </form>
       </div>
       <Footer />

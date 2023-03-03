@@ -164,6 +164,7 @@ const UserAdvertiserPage = () => {
                   price={car.price}
                   year={car.year}
                   images={car.images}
+                  owner={car.owner}
                 />
               ))}
             </div>
@@ -183,6 +184,7 @@ const UserAdvertiserPage = () => {
                   price={car.price}
                   year={car.year}
                   images={car.images}
+                  owner={car.owner}
                 />
               ))}
             </div>

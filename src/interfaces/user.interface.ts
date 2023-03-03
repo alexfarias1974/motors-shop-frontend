@@ -71,8 +71,8 @@ export interface IUserContextProviderValues {
   setEditVehicleModalOpen: Dispatch<SetStateAction<boolean>>;
   editVehicleId: string;
   setEditVehicleId: Function;
-  carPageId: string;
-  setCarPageId: Function;
+  // carPageId: string;
+  // setCarPageId: Function;
 }
 
 export interface IUserPatchForm {

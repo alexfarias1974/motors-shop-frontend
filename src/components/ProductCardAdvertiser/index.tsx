@@ -1,20 +1,21 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
+import { IUser } from "../../interfaces/user.interface";
 
 export interface ICar {
-  id?: string;
+  id: string;
   title: string;
   year: number;
   mileage: number;
   description: string;
   price: number;
   images: [{ id: string; imageUrl: string }];
+  owner: IUser;
 }
 
 export const ProductCardAdvertiser = (car: ICar) => {
-  const { setEditVehicleModalOpen, setEditVehicleId, setCarPageId } =
-    useContext(UserContext);
+  const { setEditVehicleModalOpen, setEditVehicleId } = useContext(UserContext);
   const navigate = useNavigate();
 
   return (
@@ -63,7 +64,7 @@ export const ProductCardAdvertiser = (car: ICar) => {
           <button
             className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
             onClick={() => {
-              setCarPageId(car.id);
+              localStorage.setItem("@carId:id", car.id);
               navigate("/detailed-vehicle");
             }}
           >

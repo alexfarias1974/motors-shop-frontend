@@ -9,15 +9,17 @@ import { ICar } from "../components/ProductCardAdvertiser";
 import { LoginContext } from "../context/loginContext";
 
 const DetailedViewPageVehicle = () => {
-  const { carPageId } = useContext(UserContext);
+  // const { carPageId } = useContext(UserContext);
   const [car, setCar] = useState<ICar>();
   const { user, setUser } = useContext(LoginContext);
+  const [mainImage, setMainImage] = useState<string | undefined>();
 
   useEffect(() => {
     api
-      .get(`/vehicles/${carPageId}`)
+      .get(`/vehicles/${localStorage.getItem("@carId:id")}`)
       .then((res) => {
         setCar(res.data);
+        setMainImage(res.data.images[0].imageUrl);
         console.log(car);
       })
       .catch((err) => {
@@ -40,27 +42,6 @@ const DetailedViewPageVehicle = () => {
         });
     }
   }, []);
-  // <section className="w-screen h-[17rem] bg-brand2 flex flex-col  items-center text-center"></section>
-  const imagesCars = [
-    {
-      img: carLogo,
-    },
-    {
-      img: carLogo,
-    },
-    {
-      img: carLogo,
-    },
-    {
-      img: carLogo,
-    },
-    {
-      img: carLogo,
-    },
-    {
-      img: carLogo,
-    },
-  ];
 
   const comments = [
     {
@@ -86,11 +67,13 @@ const DetailedViewPageVehicle = () => {
       <main className="flex flex-col h-full lg:flex-row  lg:bg-brand2 lg:max-h-96 lg:justify-center xl:justify-center">
         <section className="bg-grey8  flex justify-center flex-col lg:h-full">
           <div className=" bg-brand2 flex flex-col items-center text-center h-72 lg:w-[35rem]">
-            <img
-              src={carLogo}
-              alt="Imagem de um carro"
-              className=" bg-grey10 rounded-md w-72 p-8 mt-5 lg:w-96"
-            />
+            <picture className="bg-grey10 rounded-md lg:min-w-[32rem] mt-5 lg:w-96 mx-4">
+              <img
+                src={mainImage}
+                alt="Imagem de um carro"
+                className="rounded min-w-full max-h-60"
+              />
+            </picture>
 
             <div className="w-11/12 bg-grey10 rounded-md mt-5 flex flex-col gap-2 p-5">
               <h3 className=" font-lexend font-bold text-grey1 pt-5 ">
@@ -139,9 +122,13 @@ const DetailedViewPageVehicle = () => {
               </h2>
 
               <div className="flex flex-wrap gap-2 justify-center p-5">
-                {imagesCars.length > 0 ? (
-                  imagesCars.map((images) => (
-                    <img src={images.img} className="w-16 bg-grey7" />
+                {car?.images ? (
+                  car.images.map((image) => (
+                    <img
+                      src={image.imageUrl}
+                      className="w-16 bg-grey7 p-1 hover:cursor-pointer"
+                      onClick={() => setMainImage(image.imageUrl)}
+                    />
                   ))
                 ) : (
                   <p>Não há fotos desse</p>
@@ -243,9 +230,13 @@ const DetailedViewPageVehicle = () => {
             </div>
 
             <div className="flex flex-wrap gap-7 justify-center p-6 w-96 rounded-md">
-              {imagesCars.length > 0 ? (
-                imagesCars.map((images) => (
-                  <img src={images.img} className="w-16 bg-grey7 p-1" />
+              {car?.images ? (
+                car.images.map((image) => (
+                  <img
+                    src={image.imageUrl}
+                    className="w-16 bg-grey7 p-1 hover:cursor-pointer"
+                    onClick={() => setMainImage(image.imageUrl)}
+                  />
                 ))
               ) : (
                 <p>Não há fotos desse</p>

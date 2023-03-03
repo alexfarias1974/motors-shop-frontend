@@ -68,7 +68,7 @@ export const RegisterUserForm = () => {
   };
 
   return (
-    <div className="bg-grey8">
+    <div className="bg-grey8 py-10">
       <form
         onSubmit={handleSubmit(onSubmitFunction)}
         className="w-11/12 md:w-96 m-auto bg-whiteFixed p-8 flex flex-col gap-1 rounded-md font-Lexend  "
@@ -338,9 +338,9 @@ export const RegisterUserForm = () => {
           </span>
         </div>
 
-        <div className="font-Inter font-semibold text-whiteFixed rounded-md text-[1rem] flex mt-4 justify-center bg-brand1 hover:bg-brand2">
-          <Button text={"Finalizar Cadastro"} type="submit" />
-        </div>
+        <button className="font-Inter font-semibold text-whiteFixed rounded-md text-[1rem] flex mt-4 justify-center bg-brand1 hover:bg-brand2 py-[0.625rem] border-2 border-brand1">
+          Finalizar Cadastro
+        </button>
       </form>
 
       {isModalSucessAccount ? (

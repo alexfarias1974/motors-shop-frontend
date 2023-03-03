@@ -81,6 +81,7 @@ const NavBar = (accountType: any) => {
             className="text-grey2 cursor-pointer"
             onClick={() => {
               localStorage.clear();
+              navigate("/home");
               window.location.reload();
             }}
           >
