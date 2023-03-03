@@ -1,24 +1,29 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
+import { IUser } from "../../interfaces/user.interface";
 
 export interface ICar {
-  id?: string;
+  id: string;
   title: string;
   year: number;
   mileage: number;
   description: string;
   price: number;
   images: [{ id: string; imageUrl: string }];
+  owner: IUser;
 }
 
 export const ProductCardAdvertiser = (car: ICar) => {
   const { setEditVehicleModalOpen, setEditVehicleId } = useContext(UserContext);
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="mx-auto max-w-[19.5rem] flex flex-col">
         <picture className="bg-grey7 rounded-xl h-[11rem] w-[19.5rem]">
           <img
-            className="mt-[-3rem]"
+            className="h-[11rem] w-[19.5rem] rounded"
             src={`${car.images[0].imageUrl}`}
             alt="Car Picture"
           />
@@ -56,7 +61,13 @@ export const ProductCardAdvertiser = (car: ICar) => {
           >
             Editar
           </button>
-          <button className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5">
+          <button
+            className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
+            onClick={() => {
+              localStorage.setItem("@carId:id", car.id);
+              navigate("/detailed-vehicle");
+            }}
+          >
             Ver como
           </button>
         </div>

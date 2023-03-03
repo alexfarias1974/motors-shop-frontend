@@ -20,10 +20,6 @@ export const LoginContext = createContext<ILoginContextValues>(
 );
 
 const LoginProvider = ({ children }: IContextProps) => {
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("@tokenId:token")
-  );
-
   const [user, setUser] = useState<IUser | null>(null);
 
   const [isModalSucessAccount, setIsModalSucessAccount] = useState(false);
@@ -32,7 +28,6 @@ const LoginProvider = ({ children }: IContextProps) => {
 
   const navigate = useNavigate();
 
- 
   const {
     register: login,
     handleSubmit: handleLogin,
@@ -42,13 +37,9 @@ const LoginProvider = ({ children }: IContextProps) => {
   });
 
   const handleRegisterValues = (data: IUser) => {
-    console.log("entrando na func");
     api
       .post("/users", data)
-
       .then((res) => {
-        console.log(res);
-        navigate("/login");
         setIsModalSucessAccount(true);
       })
       .catch((err) => {
@@ -69,7 +60,6 @@ const LoginProvider = ({ children }: IContextProps) => {
   }
 
   const handleLoginValues = (data: ILoginDataProps) => {
-    console.log("entrando na func");
     api
       .post("/login", data)
       .then((res) => {
@@ -84,15 +74,12 @@ const LoginProvider = ({ children }: IContextProps) => {
     <LoginContext.Provider
       value={{
         login,
-        // register,
         handleLoginValues,
         handleRegisterValues,
         loginErrors,
-        // registerErrors,
         handleForgotPasswordValues,
-        token,
-        setToken,
         user,
+        setUser,
         loading,
         isModalSucessAccount,
         setIsModalSucessAccount,

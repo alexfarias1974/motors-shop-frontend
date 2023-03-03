@@ -2,6 +2,7 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import { IAddress } from "./address.interface";
 import { ILoginDataProps } from "./login.interface";
 import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ICar } from "../components/ProductCardAdvertiser";
 
 export interface IContextProps {
   children: ReactNode;
@@ -70,6 +71,8 @@ export interface IUserContextProviderValues {
   setEditVehicleModalOpen: Dispatch<SetStateAction<boolean>>;
   editVehicleId: string;
   setEditVehicleId: Function;
+  // carPageId: string;
+  // setCarPageId: Function;
 }
 
 export interface IUserPatchForm {

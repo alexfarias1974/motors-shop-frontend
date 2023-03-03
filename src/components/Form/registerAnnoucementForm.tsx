@@ -67,12 +67,12 @@ const Form = () => {
     api
       .post("/vehicles", data, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlhdCI6MTY3NzYwNzcxOSwiZXhwIjoxNjc3Njk0MTE5LCJzdWIiOiIwNzczMmMwYi0wZDU3LTRkMWQtYTEyYS02YTZlODA4MmI5N2IifQ.5h-xv6qTAtrLkp4FctwEoyVKWz4E3mwj8V6xOWEKoWs`,
+          Authorization: `Bearer ${localStorage.getItem("@tokenId:token")}`,
         },
       })
       .then((res) => {
         setIsModalSucess(true);
-        setCreateVehicleModalOpen(false);
+        // setCreateVehicleModalOpen(false);
         return res.data;
       })
       .catch((err) => {
@@ -120,12 +120,14 @@ const Form = () => {
           <div className="flex justify-between gap-3 mb-4">
             <button
               className={`${sellColor} h-12 w-full rounded font-semibold text-base border-2`}
+              type="button"
               onClick={() => setAnnouncementType("sell")}
             >
               Venda
             </button>
             <button
               className={`${auctionColor} h-12 w-full rounded font-semibold text-base border-2`}
+              type="button"
               onClick={() => setAnnouncementType("auction")}
             >
               Leilão
@@ -205,12 +207,14 @@ const Form = () => {
           <div className="flex justify-between gap-3">
             <button
               className={`${carColor} h-12 w-full rounded font-semibold text-base border-2`}
+              type="button"
               onClick={() => setVehicleType("car")}
             >
               Carro
             </button>
             <button
               className={`${motorcycleColor} h-12 w-full rounded font-semibold text-base border-2`}
+              type="button"
               onClick={() => setVehicleType("motorcycle")}
             >
               Moto
@@ -282,7 +286,10 @@ const Form = () => {
                 Sucesso!
               </h2>
               <AiOutlineClose
-                onClick={() => setIsModalSucess(false)}
+                onClick={() => {
+                  setIsModalSucess(false);
+                  setCreateVehicleModalOpen(false);
+                }}
                 className="hover:cursor-pointer text-grey3 text-[.900rem]"
               />
             </div>

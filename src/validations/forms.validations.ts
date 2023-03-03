@@ -49,14 +49,18 @@ export const registerUserSchema = yup.object().shape({
 
   email: yup.string().required("Adicione seu e-mail").email("E-mail inválido"),
 
-  cpf: yup.string().required("Adicione seu CPF"),
+  cpf: yup
+    .string()
+    .required("Adicione seu CPF")
+    .min(11, "CPF deve conter no mínimo 11 caracteres")
+    .max(11, "CPF deve conter no máximo 11 caracteres"),
 
   phone: yup.string().required("Adicione seu telefone"),
 
   birthdate: yup
     .date()
     .max(new Date(), "Data de nascimento não pode ser no futuro")
-    .min(new Date("1900-01-01"), "Data de nascimento inválida")
+    .min(new Date("01-01-1900"), "Data de nascimento inválida")
     .required("Adicione sua data de nascimento"),
 
   description: yup.string().required("Adicione uma descrição"),
@@ -92,12 +96,42 @@ export const loginSchema = yup.object().shape({
 });
 
 export const userPatchSchema = yup.object().shape({
-  name: yup.string(),
-  email: yup.string(),
-  cpf: yup.number(),
-  phone: yup.number(),
-  birthdate: yup.date(),
-  description: yup.string(),
+  name: yup.lazy((value) => {
+    if (value !== undefined) {
+      yup.string();
+    }
+    return yup.mixed().notRequired();
+  }),
+  email: yup.lazy((value) => {
+    if (value !== undefined) {
+      yup.string();
+    }
+    return yup.mixed().notRequired();
+  }),
+  cpf: yup.lazy((value) => {
+    if (value !== undefined) {
+      yup.number();
+    }
+    return yup.mixed().notRequired();
+  }),
+  phone: yup.lazy((value) => {
+    if (value !== undefined) {
+      yup.number();
+    }
+    return yup.mixed().notRequired();
+  }),
+  birthdate: yup.lazy((value) => {
+    if (value !== undefined) {
+      yup.date();
+    }
+    return yup.mixed().notRequired();
+  }),
+  description: yup.lazy((value) => {
+    if (value !== undefined) {
+      yup.string();
+    }
+    return yup.mixed().notRequired();
+  }),
 });
 
 export const forgotPasswordSchema = yup.object().shape({
@@ -119,3 +153,4 @@ export const forgotPasswordSchema = yup.object().shape({
     )
     .required("Confirme sua senha")
 })
+

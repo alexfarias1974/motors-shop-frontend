@@ -28,9 +28,9 @@ export interface ILoginContextValues {
   // ) => Promise<void>;
   loginErrors: FieldErrors<ILoginDataProps>;
   // registerErrors: FieldErrors<IRegisterForm>;
-  token: string | null;
-  setToken: Dispatch<SetStateAction<string | null>>;
+
   user: IUser | null;
+  setUser: Function;
   loading: boolean;
   isModalSucessAccount: boolean;
   setIsModalSucessAccount: Dispatch<SetStateAction<boolean>>;
