@@ -51,6 +51,9 @@ const UserAdvertiserPage = () => {
     setEditVehicleModalOpen,
   } = useContext(UserContext);
 
+  const { isModalSucessAccount, setIsModalSucessAccount } =
+    useContext(LoginContext);
+
   return (
     <>
       {createVehicleModalOpen ? (
@@ -174,6 +177,41 @@ const UserAdvertiserPage = () => {
         </main>
         <Footer />
       </div>
+
+      {isModalSucessAccount ? (
+        <ModalBase setIs={setIsModalSucessAccount}>
+          <div className="bg-whiteFixed w-11/12 rounded-md p-3 flex flex-col gap-5 max-w-[26.568rem]">
+            <div className="flex justify-between">
+              <h2 className="text-[1rem] font-medium mb-3 font-lexend">
+                Sucesso!
+              </h2>
+              <AiOutlineClose
+                onClick={() => setIsModalSucessAccount(false)}
+                className="hover:cursor-pointer text-grey3 text-[.900rem]"
+              />
+            </div>
+
+            <div>
+              <p className="font-lexend font-bold text-[1rem]">
+                Sua conta foi criada com sucesso!
+              </p>
+            </div>
+
+            <div>
+              <p className="font-inter text-grey2 text-[1rem]">
+                Agora você poderá ver seus negócios crescendo em grande escala
+              </p>
+            </div>
+
+            <Link
+              to={"/login"}
+              className="border-brand1 border-2 border-solid rounded ml-11 mt-11 w-[146px] h-[48px] bg-whiteFixed font-inter text-[16px] text-brand1 font-semibold hover:bg-brand4"
+            >
+              Ir para o login
+            </Link>
+          </div>
+        </ModalBase>
+      ) : null}
     </>
   );
 };
