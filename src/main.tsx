@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import App from "./App";
 import LoginProvider from "./context/loginContext";
 import UserContextProvider from "./context/userContext";
@@ -15,5 +16,17 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </LoginProvider>
       </UserContextProvider>
     </BrowserRouter>
+    <ToastContainer
+      position="top-center"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
   </React.StrictMode>
 );
