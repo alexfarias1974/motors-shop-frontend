@@ -5,10 +5,22 @@ import Header from "../components/Header";
 import { ProductCard } from "../components/ProductCard";
 import { ICar } from "../components/ProductCardAdvertiser";
 import { ProductCardAuction } from "../components/ProductCardAuction";
+import { ProductCardAuction2 } from "../components/ProductCardAuction/index2";
+import { ProductCardAuction3 } from "../components/ProductCardAuction/index3";
+import { ProductCardAuction4 } from "../components/ProductCardAuction/index4";
 import "../index.css";
 import api from "../services/api";
+import { motion } from "framer-motion";
 
 const Home = () => {
+  const carousel = useRef<HTMLDivElement | null>(null);
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    setWidth(
+      carousel.current?.scrollWidth ? -carousel.current.offsetWidth : 800
+    );
+  }, []);
+
   const carsRef: any = useRef(null);
   const motorbikesRef: any = useRef(null);
 
@@ -84,25 +96,13 @@ const Home = () => {
               <ProductCardAuction />
             </div>
             <div className="inline-block mr-4 h-full animate-slide infinite">
-              <ProductCardAuction />
+              <ProductCardAuction2 />
             </div>
             <div className="inline-block mr-4 h-full animate-slide infinite">
-              <ProductCardAuction />
+              <ProductCardAuction3 />
             </div>
             <div className="inline-block mr-4 h-full animate-slide infinite">
-              <ProductCardAuction />
-            </div>
-            <div className="inline-block mr-4 h-full animate-slide infinite">
-              <ProductCardAuction />
-            </div>
-            <div className="inline-block mr-4 h-full animate-slide infinite">
-              <ProductCardAuction />
-            </div>
-            <div className="inline-block mr-4 h-full animate-slide infinite">
-              <ProductCardAuction />
-            </div>
-            <div className="inline-block mr-4 h-full animate-slide infinite">
-              <ProductCardAuction />
+              <ProductCardAuction4 />
             </div>
           </div>
         </div>
@@ -112,46 +112,66 @@ const Home = () => {
         >
           Carros
         </h3>
-        <div>
-          <div className="flex mt-6 mb-52 overflow-auto scrollbar-hide">
-            {cars?.map((car) => (
-              <ProductCard
-                key={car.id}
-                id={car.id}
-                title={car.title}
-                description={car.description}
-                mileage={car.mileage}
-                price={car.price}
-                year={car.year}
-                images={car.images}
-                owner={car.owner}
-              />
-            ))}
-          </div>
-        </div>
+        <section className="app w-full mx-auto my-0 min-h-[80vh] flex content-center max-w-[90vw]">
+          <motion.div
+            ref={carousel}
+            className="carousel cursor-grab overflow-hidden"
+            whileTap={{ cursor: "grabbing" }}
+          >
+            <motion.div
+              className="inner flex gap-8"
+              drag="x"
+              dragConstraints={{ right: 0, left: -width }}
+            >
+              {cars?.map((car) => (
+                <ProductCard
+                  key={car.id}
+                  id={car.id}
+                  title={car.title}
+                  description={car.description}
+                  mileage={car.mileage}
+                  price={car.price}
+                  year={car.year}
+                  images={car.images}
+                  owner={car.owner}
+                />
+              ))}
+            </motion.div>
+          </motion.div>
+        </section>
         <h3
           ref={motorbikesRef}
           className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]"
         >
           Motos
         </h3>
-        <div>
-          <div className="mt-6 mb-52 overflow-auto scrollbar-hide whitespace-nowrap">
-            {motorcycles?.map((car) => (
-              <ProductCard
-                key={car.id}
-                id={car.id}
-                title={car.title}
-                description={car.description}
-                mileage={car.mileage}
-                price={car.price}
-                year={car.year}
-                images={car.images}
-                owner={car.owner}
-              />
-            ))}
-          </div>
-        </div>
+        <section className="app w-full mx-auto my-0 min-h-[80vh] flex content-center max-w-[90vw]">
+          <motion.div
+            ref={carousel}
+            className="carousel cursor-grab overflow-hidden"
+            whileTap={{ cursor: "grabbing" }}
+          >
+            <motion.div
+              className="inner flex gap-8"
+              drag="x"
+              dragConstraints={{ right: 0, left: -width }}
+            >
+              {motorcycles?.map((car) => (
+                <ProductCard
+                  key={car.id}
+                  id={car.id}
+                  title={car.title}
+                  description={car.description}
+                  mileage={car.mileage}
+                  price={car.price}
+                  year={car.year}
+                  images={car.images}
+                  owner={car.owner}
+                />
+              ))}
+            </motion.div>
+          </motion.div>
+        </section>
       </main>
       <Footer />
     </>
