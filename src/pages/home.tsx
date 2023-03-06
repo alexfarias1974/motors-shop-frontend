@@ -138,6 +138,11 @@ const Home = () => {
               ))}
             </motion.div>
           </motion.div>
+          {cars.length < 1 ? (
+            <p className="font-lexend items-center mt-4 text-[1rem]">
+              Não há carros a venda no momento!
+            </p>
+          ) : null}
         </section>
         <h3
           ref={motorbikesRef}
@@ -171,6 +176,11 @@ const Home = () => {
               ))}
             </motion.div>
           </motion.div>
+          {motorcycles.length < 1 ? (
+            <p className="font-lexend items-center mt-4 text-[1rem]">
+              Não há motos a venda no momento!
+            </p>
+          ) : null}
         </section>
       </main>
       <Footer />

@@ -24,10 +24,12 @@ import { motion } from "framer-motion";
 
 const UserAdvertiserPage = () => {
   const carousel = useRef<HTMLDivElement | null>(null);
-  const [width, setWidth] = useState(0)
+  const [width, setWidth] = useState(0);
   useEffect(() => {
-    setWidth(carousel.current?.scrollWidth? - carousel.current.offsetWidth: 1000)
-  }, [])
+    setWidth(
+      carousel.current?.scrollWidth ? -carousel.current.offsetWidth : 1000
+    );
+  }, []);
 
   const [cars, setCars] = useState<ICar[]>([]);
   const [motorcycles, setMotorcycles] = useState<ICar[]>([]);
@@ -78,6 +80,9 @@ const UserAdvertiserPage = () => {
     editVehicleModalOpen,
     setEditVehicleModalOpen,
   } = useContext(UserContext);
+
+  const { isModalSucessAccount, setIsModalSucessAccount } =
+    useContext(LoginContext);
 
   return (
     <>
@@ -155,13 +160,15 @@ const UserAdvertiserPage = () => {
           </h3>
           <section className="w-full mx-auto my-0 min-h-[80vh] flex content-center max-w-[90vw]">
             <motion.div
-            ref={carousel}
-            className="cursor-grab overflow-hidden mb-0"
-            whileTap={{cursor: "grabbing"}}>
+              ref={carousel}
+              className="cursor-grab overflow-hidden mb-0"
+              whileTap={{ cursor: "grabbing" }}
+            >
               <motion.div
-              className="flex gap-8"
-              drag="x"
-              dragConstraints={{ right: 0, left: -width }}>
+                className="flex gap-8"
+                drag="x"
+                dragConstraints={{ right: 0, left: -width }}
+              >
                 {cars?.map((car) => (
                   <ProductCardAdvertiser
                     key={car.id}
@@ -177,38 +184,85 @@ const UserAdvertiserPage = () => {
                 ))}
               </motion.div>
             </motion.div>
+            {cars.length < 1 ? (
+              <p className="font-lexend items-center mt-4 text-[1rem]">
+                Não há carros a venda no momento!
+              </p>
+            ) : null}
           </section>
           <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000">
             Motos
           </h3>
           <section className="w-full mx-auto my-0 min-h-[80vh] flex content-center max-w-[90vw]">
             <motion.div
-            ref={carousel}
-            className="cursor-grab overflow-hidden"
-            whileTap={{cursor: "grabbing"}}>
+              ref={carousel}
+              className="cursor-grab overflow-hidden"
+              whileTap={{ cursor: "grabbing" }}
+            >
               <motion.div
-              className="flex gap-8 m"
-              drag="x"
-              dragConstraints={{ right: 0, left: -width }}>
-              {motorcycles?.map((car) => (
-                <ProductCardAdvertiser
-                  key={car.id}
-                  id={car.id}
-                  title={car.title}
-                  description={car.description}
-                  mileage={car.mileage}
-                  price={car.price}
-                  year={car.year}
-                  images={car.images}
-                  owner={car.owner}
-                />
-              ))}
+                className="flex gap-8 m"
+                drag="x"
+                dragConstraints={{ right: 0, left: -width }}
+              >
+                {motorcycles?.map((car) => (
+                  <ProductCardAdvertiser
+                    key={car.id}
+                    id={car.id}
+                    title={car.title}
+                    description={car.description}
+                    mileage={car.mileage}
+                    price={car.price}
+                    year={car.year}
+                    images={car.images}
+                    owner={car.owner}
+                  />
+                ))}
+              </motion.div>
             </motion.div>
-            </motion.div>
+            {motorcycles.length < 1 ? (
+              <p className="font-lexend items-center mt-4 text-[1rem]">
+                Não há motos a venda no momento!
+              </p>
+            ) : null}
           </section>
         </main>
         <Footer />
       </div>
+
+      {isModalSucessAccount ? (
+        <ModalBase setIs={setIsModalSucessAccount}>
+          <div className="bg-whiteFixed w-11/12 rounded-md p-3 flex flex-col gap-5 max-w-[26.568rem]">
+            <div className="flex justify-between">
+              <h2 className="text-[1rem] font-medium mb-3 font-lexend">
+                Sucesso!
+              </h2>
+              <AiOutlineClose
+                onClick={() => setIsModalSucessAccount(false)}
+                className="hover:cursor-pointer text-grey3 text-[.900rem]"
+              />
+            </div>
+
+            <div>
+              <p className="font-lexend font-bold text-[1rem]">
+                Sua conta foi criada com sucesso!
+              </p>
+            </div>
+
+            <div>
+              <p className="font-inter text-grey2 text-[1rem]">
+                Agora você poderá ver seus negócios crescendo em grande escala
+              </p>
+            </div>
+
+            <Link
+              to={"/login"}
+              className="border-brand1 border-2 border-solid rounded ml-11 mt-11 w-[146px] h-[48px] bg-whiteFixed font-inter text-[16px] text-brand1 font-semibold hover:bg-brand4"
+            >
+              Ir para o login
+            </Link>
+          </div>
+        </ModalBase>
+      ) : null}
     </>
   );
 };
