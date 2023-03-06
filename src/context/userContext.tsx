@@ -1,11 +1,6 @@
-import {
-  createContext,
-  useContext,
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ICar } from "../components/ProductCardAdvertiser";
 
 import {
   IContextProps,
@@ -23,13 +18,12 @@ const UserContextProvider = ({ children }: IContextProps) => {
   const [editVehicleModalOpen, setEditVehicleModalOpen] =
     useState<boolean>(false);
   const [editVehicleId, setEditVehicleId] = useState<string>("");
-  const { setToken, token } = useContext(LoginContext);
+  // const [carPageId, setCarPageId] = useState<string>("");
 
   const navigate = useNavigate();
 
   const logout = () => {
     localStorage.clear();
-    setToken(null);
     navigate("/login", { replace: true });
   };
 
@@ -95,6 +89,8 @@ const UserContextProvider = ({ children }: IContextProps) => {
         setEditVehicleModalOpen,
         editVehicleId,
         setEditVehicleId,
+        // carPageId,
+        // setCarPageId,
       }}
     >
       {children}

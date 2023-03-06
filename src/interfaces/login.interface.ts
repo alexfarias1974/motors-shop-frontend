@@ -5,12 +5,7 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from "react-hook-form";
-import { AxiosHeaders, HeadersDefaults } from "axios";
-
-export interface ITokenHeaders extends HeadersDefaults {
-  Authorization: string;
-  [key: string]: AxiosHeaderValue;
-}
+import { HeadersDefaults } from "axios";
 
 export interface ILoginDataProps {
   email: string;
@@ -24,19 +19,25 @@ export interface ILoginDataResponse {
 
 export interface ILoginContextValues {
   login: UseFormRegister<ILoginDataProps>;
-  register: UseFormRegister<IUser>;
-  handleLoginValues: (
-    e?: BaseSyntheticEvent<object, any, any> | undefined
-  ) => Promise<void>;
-  handleRegisterValues: (
-    e?: BaseSyntheticEvent<object, any, any> | undefined
-  ) => Promise<void>;
+  // register: UseFormRegister<IUser>;
+  handleLoginValues: Function;
+  handleForgotPasswordValues: Function;
+  handleRegisterValues: (user: IUser) => void;
+  // handleRegisterValues: (
+  //   e?: BaseSyntheticEvent<object, any, any> | undefined
+  // ) => Promise<void>;
   loginErrors: FieldErrors<ILoginDataProps>;
-  registerErrors: FieldErrors<IRegisterForm>;
-  token: string | null;
-  setToken: Dispatch<SetStateAction<string | null>>;
+  // registerErrors: FieldErrors<IRegisterForm>;
+
   user: IUser | null;
+  setUser: Function;
   loading: boolean;
   isModalSucessAccount: boolean;
   setIsModalSucessAccount: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface IForgotPasswordForm {
+  email: string;
+  password: string;
+  passwordConfirmation: string;
 }

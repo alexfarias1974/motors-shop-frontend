@@ -1,14 +1,35 @@
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../../assets/Motors shop.svg";
 import Button from "../Button";
 import NavBar from "../NavBar";
+import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
+import { IUser } from "../../interfaces/user.interface";
 
 const Header = () => {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const [isActiveNavBar, setIsActiveNavBar] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({} as IUser);
+
+  useEffect(() => {
+    const token = localStorage.getItem("@tokenId:token");
+    if (token) {
+      setIsLogin(true);
+      api
+        .get("users/profile", { headers: { Authorization: `Bearer ${token}` } })
+        .then((res) => {
+          console.log(res.data);
+          setUserInfo(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
 
   return (
     <>
@@ -16,7 +37,12 @@ const Header = () => {
         className="flex justify-between items-center h-20 bg-grey10 border-grey6 px-[3.75rem] border-b-2 max-md:px-[1rem]"
         id="header"
       >
-        <img src={Logo} alt="Motors shop Logo" />
+        <img
+          src={Logo}
+          alt="Motors shop Logo"
+          className="hover:cursor-pointer"
+          onClick={() => navigate("/home")}
+        />
         <div className="md:hidden w-[2.875rem] h-[2.875rem] flex justify-center items-center">
           {isActiveMenu ? (
             <IoClose onClick={() => setIsActiveMenu(!isActiveMenu)} />
@@ -43,27 +69,26 @@ const Header = () => {
                 onClick={() => setIsActiveNavBar(!isActiveNavBar)}
               >
                 <div className="flex justify-center items-center bg-brand2 h-8 w-8 rounded-[100%]">
-                  <span className="text-whiteFixed font-semibold">SL</span>
+                  <span className="text-whiteFixed font-semibold">
+                    {userInfo.name ? userInfo.name[0].toUpperCase() : ""}
+                  </span>
                 </div>
-                <p>Samuel Leão</p>
+                <p>{userInfo.name}</p>
               </div>
             ) : (
               <>
                 <span
                   className="ml-11 font-semibold text-grey2 cursor-pointer"
-                  onClick={() => setIsLogin(!isLogin)}
+                  onClick={() => navigate("/login")}
                 >
                   Fazer Login
                 </span>
-                <Button
-                  text="Cadastrar"
-                  color="bg-grey10"
-                  hoverColor="bg-grey1"
-                  hoverTextColor="text-whiteFixed"
-                  textColor="text-grey0"
-                  border="border-2"
-                  borderColor="border-grey4"
-                />
+                <button
+                  className="bg-grey10 text-grey0 border-2 border-grey4 hover:text-whiteFixed hover:bg-grey1 h-12 max-md-2[20.813rem] md:w-36 rounded font-semibold text-base"
+                  onClick={() => navigate("/register")}
+                >
+                  Cadastrar
+                </button>
               </>
             )}
           </div>
@@ -72,7 +97,7 @@ const Header = () => {
 
       {isActiveNavBar && (
         <div className="absolute top-[4.25rem] right-[0.9rem]">
-          <NavBar />
+          <NavBar accountType={userInfo.accountType} />
         </div>
       )}
 
