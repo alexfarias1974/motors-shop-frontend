@@ -371,6 +371,7 @@ export const RegisterUserForm = () => {
             <Link
               to={"/login"}
               className="bg-brand1 text-center rounded w-28 font-inter p-2 text-[14px] text-whiteFixed font-semibold"
+              onClick={() => setIsModalSucessAccount(false)}
             >
               Ir para o login
             </Link>
