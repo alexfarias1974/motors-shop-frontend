@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
@@ -29,11 +30,13 @@ export const ProductCardAdvertiser = (car: ICar) => {
           />
         </picture>
         <h3 className="font-lexend font-bold text-grey1 mt-3 mb-4">
-          {car.title}
+          {car.title.length > 31 ? `${car.title.slice(0, 31)}...` : car.title}
         </h3>
-        <div>
-          <p className="h-14 font-inter text-sm font-normal text-grey2 mb-3">
-            {car.description}
+        <div className="flex flex-wrap break-word">
+          <p className="h-12 font-inter text-sm font-normal text-grey2 mb-3">
+            {car.description.length > 80
+              ? `${car.description.slice(0, 80)}...`
+              : car.description}
           </p>
         </div>
 

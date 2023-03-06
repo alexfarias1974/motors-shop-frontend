@@ -22,9 +22,9 @@ export const ProductCard = (car: ICar) => {
         <h3 className="font-lexend font-bold text-grey1 mt-3 mb-4">
           {car.title.length > 31 ? `${car.title.slice(0, 31)}...` : car.title}
         </h3>
-        <div>
-          <p className="h-12 font-inter text-sm font-normal text-grey2 mb-4">
-            {car.description.length > 50
+        <div className="flex flex-wrap">
+          <p className="h-14 font-inter text-sm font-normal text-grey2 mb-4">
+            {car.description.length > 78
               ? `${car.description.slice(0, 78)}...`
               : car.description}
           </p>
