@@ -24,10 +24,12 @@ import { motion } from "framer-motion";
 
 const UserAdvertiserPage = () => {
   const carousel = useRef<HTMLDivElement | null>(null);
-  const [width, setWidth] = useState(0)
+  const [width, setWidth] = useState(0);
   useEffect(() => {
-    setWidth(carousel.current?.scrollWidth? - carousel.current.offsetWidth: 1000)
-  }, [])
+    setWidth(
+      carousel.current?.scrollWidth ? -carousel.current.offsetWidth : 1000
+    );
+  }, []);
 
   const [cars, setCars] = useState<ICar[]>([]);
   const [motorcycles, setMotorcycles] = useState<ICar[]>([]);
@@ -158,13 +160,15 @@ const UserAdvertiserPage = () => {
           </h3>
           <section className="w-full mx-auto my-0 min-h-[80vh] flex content-center max-w-[90vw]">
             <motion.div
-            ref={carousel}
-            className="cursor-grab overflow-hidden mb-0"
-            whileTap={{cursor: "grabbing"}}>
+              ref={carousel}
+              className="cursor-grab overflow-hidden mb-0"
+              whileTap={{ cursor: "grabbing" }}
+            >
               <motion.div
-              className="flex gap-8"
-              drag="x"
-              dragConstraints={{ right: 0, left: -width }}>
+                className="flex gap-8"
+                drag="x"
+                dragConstraints={{ right: 0, left: -width }}
+              >
                 {cars?.map((car) => (
                   <ProductCardAdvertiser
                     key={car.id}
@@ -180,34 +184,46 @@ const UserAdvertiserPage = () => {
                 ))}
               </motion.div>
             </motion.div>
+            {cars.length < 1 ? (
+              <p className="font-lexend items-center mt-4 text-[1rem]">
+                Não há carros a venda no momento!
+              </p>
+            ) : null}
           </section>
           <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000">
             Motos
           </h3>
           <section className="w-full mx-auto my-0 min-h-[80vh] flex content-center max-w-[90vw]">
             <motion.div
-            ref={carousel}
-            className="cursor-grab overflow-hidden"
-            whileTap={{cursor: "grabbing"}}>
+              ref={carousel}
+              className="cursor-grab overflow-hidden"
+              whileTap={{ cursor: "grabbing" }}
+            >
               <motion.div
-              className="flex gap-8 m"
-              drag="x"
-              dragConstraints={{ right: 0, left: -width }}>
-              {motorcycles?.map((car) => (
-                <ProductCardAdvertiser
-                  key={car.id}
-                  id={car.id}
-                  title={car.title}
-                  description={car.description}
-                  mileage={car.mileage}
-                  price={car.price}
-                  year={car.year}
-                  images={car.images}
-                  owner={car.owner}
-                />
-              ))}
+                className="flex gap-8 m"
+                drag="x"
+                dragConstraints={{ right: 0, left: -width }}
+              >
+                {motorcycles?.map((car) => (
+                  <ProductCardAdvertiser
+                    key={car.id}
+                    id={car.id}
+                    title={car.title}
+                    description={car.description}
+                    mileage={car.mileage}
+                    price={car.price}
+                    year={car.year}
+                    images={car.images}
+                    owner={car.owner}
+                  />
+                ))}
+              </motion.div>
             </motion.div>
-            </motion.div>
+            {motorcycles.length < 1 ? (
+              <p className="font-lexend items-center mt-4 text-[1rem]">
+                Não há motos a venda no momento!
+              </p>
+            ) : null}
           </section>
         </main>
         <Footer />
