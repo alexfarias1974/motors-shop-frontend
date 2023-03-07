@@ -24,6 +24,7 @@ const Header = () => {
         .then((res) => {
           console.log(res.data);
           setUserInfo(res.data);
+          setIsLogin(true);
         })
         .catch((err) => {
           console.log(err);
@@ -107,7 +108,7 @@ const Header = () => {
         </div>
       )}
 
-      {isActiveMenu && (
+      {isActiveMenu && !isLogin ? (
         <div className="md:hidden shadow-[0px_40px_40px_rgba(0,0,0,0.09)] absolute w-[100%]">
           <div className="h-[14.75rem] bg-whiteFixed flex flex-col gap-11 py-[2rem] px-4 border-b-[1px] border-grey4">
             <a className="font-semibold text-grey2" href="#cars">
@@ -137,6 +138,13 @@ const Header = () => {
             </div>
           </div>
         </div>
+      ) : (
+        isActiveMenu &&
+        isLogin === true && (
+          <div className="absolute top-[4.25rem] right-[0.9rem]">
+            <NavBar accountType={userInfo.accountType} />
+          </div>
+        )
       )}
     </>
   );
