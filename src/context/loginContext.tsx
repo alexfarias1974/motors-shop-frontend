@@ -44,7 +44,6 @@ const LoginProvider = ({ children }: IContextProps) => {
         setIsModalSucessAccount(true);
       })
       .catch((err) => {
-        console.log(err);
         toast.error("Algo deu errado com o seu registro!");
       });
   };
