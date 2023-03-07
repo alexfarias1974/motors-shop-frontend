@@ -22,6 +22,32 @@ export interface IUser {
   password: string;
 }
 
+export interface IVehicle {
+  id: string;
+  title: string;
+  year: number;
+  mileage: number;
+  description: string;
+  price: number;
+  images: [{ id: string; imageUrl: string }];
+  owner: IOwner;
+}
+
+export interface IOwner {
+  name: string;
+  email: string;
+  cpf: string;
+  phone: string;
+  birthdate: Date;
+  description: string;
+  address: IAddress;
+  accountType: string;
+  id?: string;
+  isAdm?: boolean;
+  password: string;
+  vehicle?: IVehicle[];
+}
+
 export interface IRegisterUserForm {
   registerUserSubmit: SubmitHandler<FieldValues>;
 }
@@ -71,6 +97,10 @@ export interface IUserContextProviderValues {
   setEditVehicleModalOpen: Dispatch<SetStateAction<boolean>>;
   editVehicleId: string;
   setEditVehicleId: Function;
+  owner: IOwner;
+  setOwner: React.Dispatch<React.SetStateAction<IOwner>>;
+  ownerCars: IVehicle[];
+  setOwnerCars: React.Dispatch<React.SetStateAction<IVehicle[]>>;
   // carPageId: string;
   // setCarPageId: Function;
 }

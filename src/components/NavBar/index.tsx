@@ -73,7 +73,11 @@ const NavBar = (accountType: any) => {
           <span className="text-grey2 cursor-pointer">Editar Endereço</span>
           <span
             className="text-grey2 cursor-pointer"
-            onClick={() => navigate("/userProfile")}
+            onClick={() => {
+              navigate("/userProfile");
+              window.location.reload();
+              window.localStorage.removeItem("objectOwner:owner");
+            }}
           >
             Meus Anúncios
           </span>

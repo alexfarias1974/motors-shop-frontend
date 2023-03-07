@@ -16,7 +16,7 @@ import EditAnnounceForm from "../components/Form/editAnnouncementForm";
 import { LoginContext } from "../context/loginContext";
 import { Link } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
-import { IUser } from "../interfaces/user.interface";
+import { IOwner, IUser, IVehicle } from "../interfaces/user.interface";
 import { ProductCardAuction2 } from "../components/ProductCardAuction/index2";
 import { ProductCardAuction3 } from "../components/ProductCardAuction/index3";
 import { ProductCardAuction4 } from "../components/ProductCardAuction/index4";
@@ -34,14 +34,17 @@ const UserAdvertiserPage = () => {
   const [cars, setCars] = useState<ICar[]>([]);
   const [motorcycles, setMotorcycles] = useState<ICar[]>([]);
   const [userInfo, setUserInfo] = useState({} as IUser);
+  const [owner, setOwner] = useState({} as IOwner);
+  const [ownerCars, setOwnerCars] = useState<IVehicle[]>([]);
+  const [ownerMotorCycles, setOwnerMotorCycles] = useState<IVehicle[]>([]);
+
+  const token = localStorage.getItem("@tokenId:token");
 
   useEffect(() => {
-    const token = localStorage.getItem("@tokenId:token");
     if (token) {
       api
         .get("users/profile", { headers: { Authorization: `Bearer ${token}` } })
         .then((res) => {
-          console.log(res.data);
           setUserInfo(res.data);
         })
         .catch((err) => {
@@ -49,6 +52,26 @@ const UserAdvertiserPage = () => {
         });
     }
   }, []);
+
+  const takeObj = window.localStorage.getItem("objectOwner:owner") as string;
+
+  let convert = JSON.parse(takeObj);
+  if (takeObj) {
+    useEffect(() => {
+      const cars = convert.vehicle.filter(
+        (vehicle: any) => vehicle.vehicleType === "car"
+      );
+      setOwnerCars(cars);
+
+      const motorcycles = convert.vehicle.filter(
+        (vehicle: any) => vehicle.vehicleType === "motorcycle"
+      );
+
+      setOwnerMotorCycles(motorcycles);
+
+      setOwner(convert);
+    }, []);
+  }
 
   useEffect(() => {
     api
@@ -104,13 +127,17 @@ const UserAdvertiserPage = () => {
             <div className="flex flex-col">
               <div className="bg-brand2 rounded-full ml-11 w-28 h-28 items-center flex justify-center text-center">
                 <p className="font-Inter text-[2.25rem] font-medium text-whiteFixed">
-                  {userInfo.name ? userInfo.name[0].toUpperCase() : ""}
+                  {owner.name
+                    ? owner.name[0].toUpperCase()
+                    : userInfo.name
+                    ? userInfo.name[0].toUpperCase()
+                    : ""}
                 </p>
               </div>
 
               <div className="flex gap-6 items-center rounded-full mt-5">
                 <p className="ml-11 font-lexend text-[1.25rem] font-semibold text-grey1">
-                  {userInfo.name}
+                  {owner.name ? owner.name : userInfo.name}
                 </p>
                 <p className="bg-brand4 p-2 font-inter text-[0.875rem] text-brand1 font-medium">
                   Anunciante
@@ -118,17 +145,31 @@ const UserAdvertiserPage = () => {
               </div>
               <div className="ml-11 mr-11">
                 <p className="font-inter text-[14px] text-grey2 font-normal mt-5">
-                  {userInfo.description}
+                  {owner.description ? owner.description : userInfo.description}
                 </p>
               </div>
-              <div>
-                <button
-                  className="border-brand1 border-2 border-solid rounded ml-11 mt-11 w-[146px] h-[48px] bg-whiteFixed font-inter text-[16px] text-brand1 font-semibold hover:bg-brand4"
-                  onClick={() => setCreateVehicleModalOpen(true)}
-                >
-                  Criar Anúncio
-                </button>
-              </div>
+
+              {userInfo.name === owner.name ? (
+                <div>
+                  <button
+                    className="border-brand1 border-2 border-solid rounded ml-11 mt-11 w-[146px] h-[48px] bg-whiteFixed font-inter text-[16px] text-brand1 font-semibold hover:bg-brand4"
+                    onClick={() => setCreateVehicleModalOpen(true)}
+                  >
+                    Criar Anúncio
+                  </button>
+                </div>
+              ) : null}
+
+              {!owner.name ? (
+                <div>
+                  <button
+                    className="border-brand1 border-2 border-solid rounded ml-11 mt-11 w-[146px] h-[48px] bg-whiteFixed font-inter text-[16px] text-brand1 font-semibold hover:bg-brand4"
+                    onClick={() => setCreateVehicleModalOpen(true)}
+                  >
+                    Criar Anúncio
+                  </button>
+                </div>
+              ) : null}
             </div>
           </div>
         </section>
@@ -169,7 +210,7 @@ const UserAdvertiserPage = () => {
                 drag="x"
                 dragConstraints={{ right: 0, left: -width }}
               >
-                {cars?.map((car) => (
+                {ownerCars?.map((car) => (
                   <ProductCardAdvertiser
                     key={car.id}
                     id={car.id}
@@ -182,8 +223,25 @@ const UserAdvertiserPage = () => {
                     owner={car.owner}
                   />
                 ))}
+
+                {!takeObj
+                  ? cars.map((car) => (
+                      <ProductCardAdvertiser
+                        key={car.id}
+                        id={car.id}
+                        title={car.title}
+                        description={car.description}
+                        mileage={car.mileage}
+                        price={car.price}
+                        year={car.year}
+                        images={car.images}
+                        owner={car.owner}
+                      />
+                    ))
+                  : null}
               </motion.div>
             </motion.div>
+
             {cars.length < 1 ? (
               <p className="font-lexend items-center mt-4 text-[1rem]">
                 Não há carros a venda no momento!
@@ -204,65 +262,47 @@ const UserAdvertiserPage = () => {
                 drag="x"
                 dragConstraints={{ right: 0, left: -width }}
               >
-                {motorcycles?.map((car) => (
+                {motorcycles?.map((motorCycle) => (
                   <ProductCardAdvertiser
-                    key={car.id}
-                    id={car.id}
-                    title={car.title}
-                    description={car.description}
-                    mileage={car.mileage}
-                    price={car.price}
-                    year={car.year}
-                    images={car.images}
-                    owner={car.owner}
+                    key={motorCycle.id}
+                    id={motorCycle.id}
+                    title={motorCycle.title}
+                    description={motorCycle.description}
+                    mileage={motorCycle.mileage}
+                    price={motorCycle.price}
+                    year={motorCycle.year}
+                    images={motorCycle.images}
+                    owner={motorCycle.owner}
                   />
                 ))}
+
+                {!takeObj
+                  ? motorcycles.map((car) => (
+                      <ProductCardAdvertiser
+                        key={car.id}
+                        id={car.id}
+                        title={car.title}
+                        description={car.description}
+                        mileage={car.mileage}
+                        price={car.price}
+                        year={car.year}
+                        images={car.images}
+                        owner={car.owner}
+                      />
+                    ))
+                  : null}
               </motion.div>
             </motion.div>
+
             {motorcycles.length < 1 ? (
               <p className="font-lexend items-center mt-4 text-[1rem]">
-                Não há motos a venda no momento!
+                Não há carros a venda no momento!
               </p>
             ) : null}
           </section>
         </main>
         <Footer />
       </div>
-
-      {isModalSucessAccount ? (
-        <ModalBase setIs={setIsModalSucessAccount}>
-          <div className="bg-whiteFixed w-11/12 rounded-md p-3 flex flex-col gap-5 max-w-[26.568rem]">
-            <div className="flex justify-between">
-              <h2 className="text-[1rem] font-medium mb-3 font-lexend">
-                Sucesso!
-              </h2>
-              <AiOutlineClose
-                onClick={() => setIsModalSucessAccount(false)}
-                className="hover:cursor-pointer text-grey3 text-[.900rem]"
-              />
-            </div>
-
-            <div>
-              <p className="font-lexend font-bold text-[1rem]">
-                Sua conta foi criada com sucesso!
-              </p>
-            </div>
-
-            <div>
-              <p className="font-inter text-grey2 text-[1rem]">
-                Agora você poderá ver seus negócios crescendo em grande escala
-              </p>
-            </div>
-
-            <Link
-              to={"/login"}
-              className="border-brand1 border-2 border-solid rounded ml-11 mt-11 w-[146px] h-[48px] bg-whiteFixed font-inter text-[16px] text-brand1 font-semibold hover:bg-brand4"
-            >
-              Ir para o login
-            </Link>
-          </div>
-        </ModalBase>
-      ) : null}
     </>
   );
 };
