@@ -20,27 +20,15 @@ const DetailedViewPageVehicle = () => {
       .then((res) => {
         setCar(res.data);
         setMainImage(res.data.images[0].imageUrl);
-        console.log(car);
+        setUser(res.data.owner);
+
+        let ownerObject = JSON.stringify(res.data.owner);
+
+        window.localStorage.setItem("objectOwner:owner", ownerObject);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-
-  useEffect(() => {
-    const token = localStorage.getItem("@tokenId:token");
-    if (token) {
-      api
-        .get("users/profile", { headers: { Authorization: `Bearer ${token}` } })
-        .then((res) => {
-          console.log(res.data);
-          setUser(res.data);
-          console.log(user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   }, []);
 
   const comments = [
