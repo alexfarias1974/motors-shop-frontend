@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
+import "react-toastify/dist/ReactToastify.css";
 import api from "../services/api";
 import {
   loginSchema,
@@ -14,6 +14,7 @@ import {
   ILoginDataProps,
 } from "../interfaces/login.interface";
 import { IContextProps, IUser } from "../interfaces/user.interface";
+import { toast } from "react-toastify";
 
 export const LoginContext = createContext<ILoginContextValues>(
   {} as ILoginContextValues
@@ -42,9 +43,7 @@ const LoginProvider = ({ children }: IContextProps) => {
       .then((res) => {
         setIsModalSucessAccount(true);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => toast.error("Algo deu errado com o seu registro!"));
   };
 
   const handleForgotPasswordValues = (data: IForgotPasswordForm) => {
@@ -54,9 +53,7 @@ const LoginProvider = ({ children }: IContextProps) => {
         console.log(res);
         navigate("/login");
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => toast.error("Email inválido ou senha repetida!"));
   }
 
   const handleLoginValues = (data: ILoginDataProps) => {
@@ -67,7 +64,7 @@ const LoginProvider = ({ children }: IContextProps) => {
         localStorage.setItem("@tokenId:token", res.data.token);
         navigate("/home");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error("Email ou senha inválidos!"));
   };
 
   return (
