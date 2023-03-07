@@ -96,7 +96,13 @@ export const registerUserSchema = yup.object().shape({
     .string()
     .required("Adicione seu CEP")
     .matches(/^[0-9]{5}-[0-9]{3}$/, "Formato invalido"),
-  number: yup.number().notRequired(),
+  number: yup.lazy((value) => {
+    if (value !== undefined) {
+      yup.number();
+    }
+    return yup.mixed().notRequired();
+  }),
+
   complement: yup.string().notRequired(),
 });
 
