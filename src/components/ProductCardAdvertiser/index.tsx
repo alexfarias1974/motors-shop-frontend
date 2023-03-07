@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { IUser } from "../../interfaces/user.interface";
+import api from "../../services/api";
 
 export interface ICar {
   id: string;
@@ -17,7 +18,28 @@ export interface ICar {
 
 export const ProductCardAdvertiser = (car: ICar) => {
   const { setEditVehicleModalOpen, setEditVehicleId } = useContext(UserContext);
+  const [userInfo, setUserInfo] = useState({} as IUser);
   const navigate = useNavigate();
+
+  const token = localStorage.getItem("@tokenId:token");
+
+  useEffect(() => {
+    if (token) {
+      api
+        .get("users/profile", { headers: { Authorization: `Bearer ${token}` } })
+        .then((res) => {
+          setUserInfo(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
+  const takeObj = window.localStorage.getItem("objectOwner:owner") as string;
+  let convert = JSON.parse(takeObj);
+
+  const cpf = window.localStorage.getItem("@cpfUser:cpf");
 
   return (
     <>
@@ -54,26 +76,28 @@ export const ProductCardAdvertiser = (car: ICar) => {
             </h4>
           </div>
         </div>
-        <div className="flex font-inter text-sm font-semibold text-grey1 gap-3 mt-6">
-          <button
-            className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
-            onClick={() => {
-              setEditVehicleModalOpen(true);
-              setEditVehicleId(car.id);
-            }}
-          >
-            Editar
-          </button>
-          <button
-            className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
-            onClick={() => {
-              localStorage.setItem("@carId:id", car.id);
-              navigate("/detailed-vehicle");
-            }}
-          >
-            Ver como
-          </button>
-        </div>
+        {!takeObj ? (
+          <div className="flex font-inter text-sm font-semibold text-grey1 gap-3 mt-6">
+            <button
+              className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
+              onClick={() => {
+                setEditVehicleModalOpen(true);
+                setEditVehicleId(car.id);
+              }}
+            >
+              Editar
+            </button>
+            <button
+              className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
+              onClick={() => {
+                localStorage.setItem("@carId:id", car.id);
+                navigate("/detailed-vehicle");
+              }}
+            >
+              Ver como
+            </button>
+          </div>
+        ) : null}
       </div>
     </>
   );
