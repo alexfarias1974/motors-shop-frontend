@@ -4,7 +4,10 @@ import { ICar } from "../components/ProductCardAdvertiser";
 
 import {
   IContextProps,
+  IOwner,
+  IUser,
   IUserContextProviderValues,
+  IVehicle,
 } from "../interfaces/user.interface";
 import { LoginContext } from "./loginContext";
 
@@ -18,6 +21,8 @@ const UserContextProvider = ({ children }: IContextProps) => {
   const [editVehicleModalOpen, setEditVehicleModalOpen] =
     useState<boolean>(false);
   const [editVehicleId, setEditVehicleId] = useState<string>("");
+  const [owner, setOwner] = useState<IOwner>({} as IOwner);
+  const [ownerCars, setOwnerCars] = useState<IVehicle[]>([]);
   // const [carPageId, setCarPageId] = useState<string>("");
 
   const navigate = useNavigate();
@@ -91,6 +96,10 @@ const UserContextProvider = ({ children }: IContextProps) => {
         setEditVehicleId,
         // carPageId,
         // setCarPageId,
+        owner,
+        setOwner,
+        ownerCars,
+        setOwnerCars,
       }}
     >
       {children}
