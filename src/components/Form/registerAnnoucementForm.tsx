@@ -6,6 +6,8 @@ import api from "../../services/api";
 import { SetStateAction, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/userContext";
 import ModalBase from "../ModalBase";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export interface IForm {
   accountSubmit: SubmitHandler<FieldValues>;
@@ -75,9 +77,7 @@ const Form = () => {
         // setCreateVehicleModalOpen(false);
         return res.data;
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => toast.error("Alguma coisa deu errado!"));
   };
 
   const {
