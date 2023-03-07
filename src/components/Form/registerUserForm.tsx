@@ -44,6 +44,8 @@ export const RegisterUserForm = () => {
   });
 
   const onSubmitFunction = (data: any) => {
+    let zipCode = data.zipCode.split("-");
+    zipCode = `${zipCode[0].concat(zipCode[1])}`;
     const newData = {
       name: data.name,
       email: data.email,
@@ -58,9 +60,10 @@ export const RegisterUserForm = () => {
         state: data.state,
         city: data.city,
         street: data.street,
-        zipCode: data.zipCode,
+        zipCode: zipCode,
         number: data.number,
-        complement: data.complement,
+        complement:
+          data.complement && data.complement !== "" ? data.complement : null,
       },
     };
     console.log(newData);
@@ -152,12 +155,14 @@ export const RegisterUserForm = () => {
             Data de nascimento
           </label>
           <input
-            type="text"
-            placeholder="AAAA-DD-MM"
+            type="date"
+            placeholder="DD-MM-YYYY"
             {...register("birthdate")}
             className="font-Inter font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-12 focus:outline-none mb-4"
           />
-          <span className="text-alert1">{errors.birthdate?.message}</span>
+          <span className="text-alert1">
+            {errors.birthdate ? "Adicione sua data de nascimento" : null}
+          </span>
         </div>
 
         <div className="flex flex-col">

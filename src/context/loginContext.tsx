@@ -43,7 +43,10 @@ const LoginProvider = ({ children }: IContextProps) => {
       .then((res) => {
         setIsModalSucessAccount(true);
       })
-      .catch((err) => toast.error("Algo deu errado com o seu registro!"));
+      .catch((err) => {
+        console.log(err);
+        toast.error("Algo deu errado com o seu registro!");
+      });
   };
 
   const handleForgotPasswordValues = (data: IForgotPasswordForm) => {
@@ -54,7 +57,7 @@ const LoginProvider = ({ children }: IContextProps) => {
         navigate("/login");
       })
       .catch((err) => toast.error("Email inválido ou senha repetida!"));
-  }
+  };
 
   const handleLoginValues = (data: ILoginDataProps) => {
     api
