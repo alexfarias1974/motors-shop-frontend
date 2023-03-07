@@ -11,6 +11,8 @@ import { ProductCardAuction4 } from "../components/ProductCardAuction/index4";
 import "../index.css";
 import api from "../services/api";
 import { motion } from "framer-motion";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const carousel = useRef<HTMLDivElement | null>(null);
@@ -59,6 +61,7 @@ const Home = () => {
 
   return (
     <>
+      <ToastContainer />
       <Header />
       <section className="w-screen h-[36.3rem] bg-brand2 flex flex-col justify-center items-center text-center sm:max-md:w-full">
         <div className="font-lexend max-w-[46.7rem] flex flex-wrap justify-center">
