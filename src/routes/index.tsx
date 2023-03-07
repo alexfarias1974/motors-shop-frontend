@@ -14,15 +14,6 @@ interface IPrivateRoute {
   redirectTo: string;
 }
 
-const PrivateRoute = ({ children, redirectTo }: IPrivateRoute) => {
-  const isAuthenticated =
-    window.localStorage.getItem("@tokenId:token") !== null;
-
-  toast.error("Você precisa estar logado para acessar essa rota");
-
-  return <>{isAuthenticated ? children : <Navigate to={redirectTo} />}</>;
-};
-
 const MainRoutes = () => {
   return (
     <Routes>
@@ -30,14 +21,6 @@ const MainRoutes = () => {
       <Route path="/login" element={<LoginUser />} />
       <Route path="/forgotPassword" element={<ForgotPassword />} />
       <Route path="/home" element={<Home />} />
-      <Route
-        path="/userProfile"
-        element={
-          <PrivateRoute redirectTo="/">
-            <UserAdvertiserPage />
-          </PrivateRoute>
-        }
-      />
       <Route path="/detailed-vehicle" element={<DetailedViewPageVehicle />} />
       <Route path="/userProfile" element={<UserAdvertiserPage />} />
       <Route path="*" element={<Home />} />
