@@ -55,8 +55,8 @@ const UserAdvertiserPage = () => {
 
   const takeObj = window.localStorage.getItem("objectOwner:owner") as string;
 
-  let convert = JSON.parse(takeObj);
   if (takeObj) {
+    let convert = JSON.parse(takeObj);
     useEffect(() => {
       const cars = convert.vehicle.filter(
         (vehicle: any) => vehicle.vehicleType === "car"
@@ -68,7 +68,6 @@ const UserAdvertiserPage = () => {
       );
 
       setOwnerMotorCycles(motorcycles);
-
       setOwner(convert);
     }, []);
   }
@@ -123,7 +122,7 @@ const UserAdvertiserPage = () => {
         <Header />
         <section className="w-screen h-[22.3rem] bg-brand1"></section>
         <section>
-          <div className="flex items-center w-3/4 m-auto h-[25.5rem] bg-grey10 z-1 -mt-60 rounded">
+          <div className="flex items-center w-11/12 m-auto h-[25.5rem] bg-grey10 z-1 -mt-60 rounded">
             <div className="flex flex-col">
               <div className="bg-brand2 rounded-full ml-11 w-28 h-28 items-center flex justify-center text-center">
                 <p className="font-Inter text-[2.25rem] font-medium text-whiteFixed">
@@ -242,7 +241,7 @@ const UserAdvertiserPage = () => {
               </motion.div>
             </motion.div>
 
-            {cars.length < 1 ? (
+            {cars.length < 1 && ownerCars.length < 1 ? (
               <p className="font-lexend items-center mt-4 text-[1rem]">
                 Não há carros a venda no momento!
               </p>
@@ -262,7 +261,7 @@ const UserAdvertiserPage = () => {
                 drag="x"
                 dragConstraints={{ right: 0, left: -width }}
               >
-                {motorcycles?.map((motorCycle) => (
+                {ownerMotorCycles?.map((motorCycle) => (
                   <ProductCardAdvertiser
                     key={motorCycle.id}
                     id={motorCycle.id}
@@ -277,24 +276,29 @@ const UserAdvertiserPage = () => {
                 ))}
 
                 {!takeObj
-                  ? motorcycles.map((car) => (
+                  ? motorcycles.map((motorcycle) => (
                       <ProductCardAdvertiser
-                        key={car.id}
-                        id={car.id}
-                        title={car.title}
-                        description={car.description}
-                        mileage={car.mileage}
-                        price={car.price}
-                        year={car.year}
-                        images={car.images}
-                        owner={car.owner}
+                        key={motorcycle.id}
+                        id={motorcycle.id}
+                        title={motorcycle.title}
+                        description={motorcycle.description}
+                        mileage={motorcycle.mileage}
+                        price={motorcycle.price}
+                        year={motorcycle.year}
+                        images={motorcycle.images}
+                        owner={motorcycle.owner}
                       />
                     ))
                   : null}
               </motion.div>
             </motion.div>
 
-            {motorcycles.length < 1 ? (
+            {motorcycles.length < 1 && ownerMotorCycles.length < 1 ? (
+              <p className="font-lexend items-center mt-4 text-[1rem]">
+                Não há carros a venda no momento!
+              </p>
+            ) : null}
+            {ownerMotorCycles.length < 1 && motorcycles.length < 1 ? (
               <p className="font-lexend items-center mt-4 text-[1rem]">
                 Não há carros a venda no momento!
               </p>
