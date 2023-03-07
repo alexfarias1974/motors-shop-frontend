@@ -90,7 +90,10 @@ const Home = () => {
         </div>
       </section>
       <main className="ml-[4rem] mr-[4rem] flex flex-col">
-        <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]">
+        <h3
+          className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]"
+          id="auction"
+        >
           Leilão
         </h3>
         <div>
@@ -112,6 +115,7 @@ const Home = () => {
         <h3
           ref={carsRef}
           className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]"
+          id="cars"
         >
           Carros
         </h3>
@@ -150,6 +154,7 @@ const Home = () => {
         <h3
           ref={motorbikesRef}
           className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]"
+          id="motorcycles"
         >
           Motos
         </h3>
