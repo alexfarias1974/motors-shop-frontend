@@ -96,7 +96,7 @@ const NavBar = (accountType: any) => {
 
       {isModalEditOpen ? (
         <ModalBase setIs={setIsModalEditOpen}>
-          <div className="bg-whiteFixed w-[20rem]   p-2 rounded-md md:p-0 md:w-[20rem]  md:h-[30rem] xl:h-[39rem] overflow-y-scroll">
+          <div className="bg-whiteFixed w-[20rem]   p-2 rounded-md md:p-0 md:w-[20rem]  md:h-[30rem] xl:h-[39rem] xl:overflow-hidden overflow-y-scroll">
             <form
               className=" p-4 flex flex-col md:p-8 "
               onSubmit={handleSubmit(patchProfile)}
