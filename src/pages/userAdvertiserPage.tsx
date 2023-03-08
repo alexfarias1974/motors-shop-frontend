@@ -20,16 +20,9 @@ import { IOwner, IUser, IVehicle } from "../interfaces/user.interface";
 import { ProductCardAuction2 } from "../components/ProductCardAuction/index2";
 import { ProductCardAuction3 } from "../components/ProductCardAuction/index3";
 import { ProductCardAuction4 } from "../components/ProductCardAuction/index4";
-import { motion } from "framer-motion";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const UserAdvertiserPage = () => {
-  const carousel = useRef<HTMLDivElement | null>(null);
-  const [width, setWidth] = useState(0);
-  useEffect(() => {
-    setWidth(
-      carousel.current?.scrollWidth ? -carousel.current.offsetWidth : 1000
-    );
-  }, []);
 
   const [cars, setCars] = useState<ICar[]>([]);
   const [motorcycles, setMotorcycles] = useState<ICar[]>([]);
@@ -103,8 +96,25 @@ const UserAdvertiserPage = () => {
     setEditVehicleModalOpen,
   } = useContext(UserContext);
 
+
+  const scrollLeftCars = () => {
+    document.getElementById("contentCars")!.scrollLeft -= 600;
+  };
+
+  const scrollRightCars = () => {
+    document.getElementById("contentCars")!.scrollLeft += 600;
+  };
+
+  const scrollLeftMotorcycle = () => {
+    document.getElementById("contentMotorcycle")!.scrollLeft -= 600;
+  };
+
+  const scrollRightMotorcycle = () => {
+    document.getElementById("contentMotorcycle")!.scrollLeft += 600;
+  };
   const { isModalSucessAccount, setIsModalSucessAccount } =
     useContext(LoginContext);
+
 
   return (
     <>
@@ -172,7 +182,7 @@ const UserAdvertiserPage = () => {
             </div>
           </div>
         </section>
-        <main className="ml-[4rem] mr-[4rem] flex flex-col">
+        <main className="mx-[4rem] max-[640px]:mx-[1rem] flex flex-col">
           <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]">
             Leilão
           </h3>
@@ -195,20 +205,28 @@ const UserAdvertiserPage = () => {
               </div>
             </div>
           </div>
-          <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]">
+          <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem] -mb-[4.25rem] max-[640px]:-mb-[0.1rem]">
             Carros
           </h3>
-          <section className="w-full mx-auto my-0 min-h-[80vh] flex content-center max-w-[90vw]">
-            <motion.div
-              ref={carousel}
-              className="cursor-grab overflow-hidden mb-0"
-              whileTap={{ cursor: "grabbing" }}
+
+          <div className="flex justify-end top-5">
+            <button
+              onClick={scrollLeftCars}
+              className="p-4 text-[2rem] m-2 rounded-full bg-whiteFixed hover:bg-grey0 hover:text-grey10 max-[640px]:hidden"
             >
-              <motion.div
-                className="flex gap-8"
-                drag="x"
-                dragConstraints={{ right: 0, left: -width }}
-              >
+              <FiChevronLeft />
+            </button>
+            <button
+              onClick={scrollRightCars}
+              className="p-4 text-[2rem] m-2 rounded-full bg-whiteFixed hover:bg-grey0 hover:text-grey10 max-[640px]:hidden"
+            >
+              <FiChevronRight />
+            </button>
+          </div>
+          <section
+            id="contentCars"
+            className="carousel w-full gap-8 mx-auto mt-2 mb-40 max-h-[26rem] flex content-center max-w-[90vw] overflow-x-auto relative scroll-smooth scrollbar-hide"
+          >   
                 {ownerCars?.map((car) => (
                   <ProductCardAdvertiser
                     key={car.id}
@@ -222,7 +240,6 @@ const UserAdvertiserPage = () => {
                     owner={car.owner}
                   />
                 ))}
-
                 {!takeObj
                   ? cars.map((car) => (
                       <ProductCardAdvertiser
@@ -238,29 +255,34 @@ const UserAdvertiserPage = () => {
                       />
                     ))
                   : null}
-              </motion.div>
-            </motion.div>
-
             {cars.length < 1 && ownerCars.length < 1 ? (
               <p className="font-lexend items-center mt-4 text-[1rem]">
                 Não há carros a venda no momento!
               </p>
             ) : null}
           </section>
-          <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000">
+          <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000 -mb-[4.25rem] max-[640px]:-mb-[0.0rem]">
             Motos
           </h3>
-          <section className="w-full mx-auto my-0 min-h-[80vh] flex content-center max-w-[90vw]">
-            <motion.div
-              ref={carousel}
-              className="cursor-grab overflow-hidden"
-              whileTap={{ cursor: "grabbing" }}
+
+          <div className="flex justify-end top-5">
+            <button
+              onClick={scrollLeftMotorcycle}
+              className="p-4 text-[2rem] m-2 rounded-full bg-whiteFixed hover:bg-grey0 hover:text-grey10 max-[640px]:hidden"
             >
-              <motion.div
-                className="flex gap-8 m"
-                drag="x"
-                dragConstraints={{ right: 0, left: -width }}
-              >
+              <FiChevronLeft />
+            </button>
+            <button
+              onClick={scrollRightMotorcycle}
+              className="p-4 text-[2rem] m-2 rounded-full bg-whiteFixed hover:bg-grey0 hover:text-grey10 max-[640px]:hidden"
+            >
+              <FiChevronRight />
+            </button>
+          </div>
+          <section
+            id="contentMotorcycle"
+            className="carousel w-full gap-8 mx-auto my-0 max-h-[26rem] flex content-center max-w-[90vw] overflow-x-auto relative scroll-smooth scrollbar-hide pb-12 mb-40"
+          >        
                 {ownerMotorCycles?.map((motorCycle) => (
                   <ProductCardAdvertiser
                     key={motorCycle.id}
@@ -290,9 +312,6 @@ const UserAdvertiserPage = () => {
                       />
                     ))
                   : null}
-              </motion.div>
-            </motion.div>
-
             {motorcycles.length < 1 && ownerMotorCycles.length < 1 ? (
               <p className="font-lexend items-center mt-4 text-[1rem]">
                 Não há carros a venda no momento!

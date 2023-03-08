@@ -43,7 +43,7 @@ export const ProductCardAdvertiser = (car: ICar) => {
 
   return (
     <>
-      <div className="mx-auto max-w-[19.5rem] flex flex-col">
+      <div className="mx-auto max-w-[19.5rem] max-h-[26rem] flex flex-col">
         <picture className="bg-grey7 rounded-xl h-[11rem] w-[19.5rem]">
           <img
             className="h-[11rem] w-[19.5rem] rounded"
