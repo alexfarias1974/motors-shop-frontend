@@ -72,6 +72,7 @@ const Home = () => {
     <div className="bg-grey8">
       <ToastContainer />
       <Header />
+
       <section className="h-[36.3rem] bg-brand2 flex flex-col justify-center items-center text-center sm:max-md:w-full">
         <div className="font-lexend flex-col flex flex-wrap">
           <div className="min-[640px]:w-[748px] max-w-[640px]:justify-center max-w-[640px]:text-center">

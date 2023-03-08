@@ -3,7 +3,10 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { IUser } from "../../interfaces/user.interface";
+
+
 import api from "../../services/api";
+
 
 export interface ICar {
   id: string;
@@ -12,6 +15,7 @@ export interface ICar {
   mileage: number;
   description: string;
   price: number;
+  owner: IUser;
   images: [{ id: string; imageUrl: string }];
   owner: IUser;
 }
