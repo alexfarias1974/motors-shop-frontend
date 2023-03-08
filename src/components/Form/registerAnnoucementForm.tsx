@@ -64,7 +64,11 @@ const Form = () => {
   }, [vehicleType]);
 
   const registerAnnouncement = (data: SubmitFunction) => {
-    data = { ...data, vehicleType, images: [...images] };
+    const filteredImages = images.filter((image, i) => {
+      return images.indexOf(image) === i;
+    });
+    console.log(filteredImages);
+    data = { ...data, vehicleType, images: filteredImages };
 
     api
       .post("/vehicles", data, {
@@ -87,10 +91,11 @@ const Form = () => {
   } = useForm<SubmitFunction>({
     resolver: yupResolver(registerAnnoucementSchema),
   });
-  const defaultValue = "";
+
+  const [imagesRender, setImagesRender] = useState<Array<string>>([]);
 
   const addImage = async () => {
-    setImages([...images, defaultValue]);
+    setImagesRender([...imagesRender, ""]);
   };
 
   return (
@@ -229,13 +234,17 @@ const Form = () => {
             </label>
             <input
               type="text"
+              id="image"
               placeholder="inserir URL da imagem"
               className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-3 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
-              onBlur={(e) => images.push(e.target.value)}
+              onBlur={(e) => {
+                images.push(e.target.value);
+                setImages(images.filter((image) => image !== ""));
+              }}
             />
           </div>
 
-          {images.map((_, index) => {
+          {imagesRender.map((_, index) => {
             const fieldname = `images[${index}]`;
 
             return (
@@ -247,8 +256,11 @@ const Form = () => {
                   type="text"
                   name={`${fieldname}`}
                   placeholder="inserir URL da imagem"
-                  onBlur={(e) => images.push(e.target.value)}
                   className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-3 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                  onBlur={(e) => {
+                    images.push(e.target.value);
+                    setImages(images.filter((image) => image !== ""));
+                  }}
                 />
               </div>
             );
