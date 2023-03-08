@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
+import { IUser } from "../../interfaces/user.interface";
 
 export interface ICar {
   id?: string;
@@ -8,6 +9,7 @@ export interface ICar {
   mileage: number;
   description: string;
   price: number;
+  owner: IUser;
   images: [{ id: string; imageUrl: string }];
 }
 

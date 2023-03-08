@@ -24,7 +24,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <section className="w-screen h-[36.3rem] bg-brand2 flex flex-col justify-center items-center text-center">
+      <section className="h-[36.3rem] bg-brand2 flex flex-col justify-center items-center text-center">
         <div className="font-lexend max-w-[46.7rem] flex flex-wrap justify-center">
           <div>
             <h1 className="text-[2.75rem] font-bold text-grey10 mb-6">
