@@ -22,6 +22,7 @@ const DetailedViewPageVehicle = () => {
   const [idComment, setIdComment] = useState("");
   const [modalEditOpen, setModalEditOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
+  const [mainImage, setMainImage] = useState<string | undefined>();
 
   const token = localStorage.getItem("@tokenId:token");
   const carId = localStorage.getItem("@carId:id");
@@ -29,6 +30,7 @@ const DetailedViewPageVehicle = () => {
   useEffect(() => {
     api.get(`/vehicles/${carId}`).then((res) => {
       setVehicle(res.data);
+      setMainImage(res.data.images[0].imageUrl);
     });
 
     api.get("/messages").then((res) => setListComments(res.data));
@@ -121,9 +123,6 @@ const DetailedViewPageVehicle = () => {
     }
   };
 
-
-
-
   return (
     <>
       <Header />
@@ -132,7 +131,7 @@ const DetailedViewPageVehicle = () => {
           <div className=" bg-brand2 flex flex-col items-center text-center h-[22.2rem] lg:w-[47rem]">
             <figure className="flex justify-center bg-grey10 rounded-md w-72 p-8 mt-10 lg:w-[47rem] lg:h-[22.2rem]">
               <img
-                src={vehicle?.images[0].imageUrl}
+                src={mainImage}
                 alt="Imagem de um carro"
                 className="w-[28rem] rounded"
               />
@@ -197,7 +196,6 @@ const DetailedViewPageVehicle = () => {
                         />
                       )
                   )
-
                 ) : (
                   <p>Não há fotos para este vehículo</p>
                 )}
