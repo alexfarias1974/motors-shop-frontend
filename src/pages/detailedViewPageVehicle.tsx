@@ -31,6 +31,10 @@ const DetailedViewPageVehicle = () => {
     api.get(`/vehicles/${carId}`).then((res) => {
       setVehicle(res.data);
       setMainImage(res.data.images[0].imageUrl);
+
+      let ownerObject = JSON.stringify(res.data.owner);
+
+      window.localStorage.setItem("objectOwner:owner", ownerObject);
     });
 
     api.get("/messages").then((res) => setListComments(res.data));
@@ -129,15 +133,15 @@ const DetailedViewPageVehicle = () => {
       <main className="flex flex-col h-full lg:flex-row  lg:bg-brand2 lg:max-h-[34rem] lg:justify-center xl:justify-center">
         <section className="bg-grey8  flex justify-center flex-col lg:h-full mr-11">
           <div className=" bg-brand2 flex flex-col items-center text-center h-[22.2rem] lg:w-[47rem]">
-            <figure className="flex justify-center bg-grey10 rounded-md w-72 p-8 mt-10 lg:w-[47rem] lg:h-[22.2rem]">
+            <figure className="flex justify-center bg-grey10 rounded-md w-72 p-8 mt-10 lg:w-[47rem] lg:h-[22.2rem] max-w-[663px] max-h-[300px]">
               <img
                 src={mainImage}
                 alt="Imagem de um carro"
-                className="w-[28rem] rounded"
+                className="w-[28rem] rounded min-w-[50px] min-h-[50px]"
               />
             </figure>
 
-            <div className="w-[100%] bg-grey10 rounded-md mt-5 flex flex-col gap-2 p-5">
+            <div className="w-[100%] bg-grey10 rounded-md mt-5 flex flex-col gap-2 p-5 max-w-[663px]">
               <h3 className=" font-lexend font-bold text-grey1 pt-5 ">
                 {vehicle?.title}
               </h3>
@@ -160,20 +164,22 @@ const DetailedViewPageVehicle = () => {
                 </h4>
               </div>
 
-              <button className="flex p-1 ml-4 bg-brand1 rounded px-5 text-whiteFixed w-28 items-center">
-                <a
-                  href={`https://wa.me/55${vehicle?.owner.phone.replace(
-                    /[{()}]|-/g,
-                    ""
-                  )}?text=Tenho%20interesse%20em%20comprar%20seu%20carro`}
-                  target="_blank"
-                >
-                  Comprar
-                </a>
-              </button>
+              {token ? (
+                <button className="flex p-1 ml-4 bg-brand1 rounded px-5 text-whiteFixed w-28 items-center">
+                  <a
+                    href={`https://wa.me/55${vehicle?.owner.phone.replace(
+                      /[{()}]|-/g,
+                      ""
+                    )}?text=Tenho%20interesse%20em%20comprar%20seu%20carro`}
+                    target="_blank"
+                  >
+                    Comprar
+                  </a>
+                </button>
+              ) : null}
             </div>
 
-            <div className="mt-5 w-11/12 p-5 flex flex-col items-start gap-5  bg-grey10 rounded-md">
+            <div className="mt-5 w-11/12 p-5 flex flex-col items-start gap-5  bg-grey10 rounded-md max-w-[663px]">
               <h2 className="font-lexend text-grey1 flex justify-start font-bold  text-[1.100rem]">
                 Descrição
               </h2>
@@ -223,7 +229,7 @@ const DetailedViewPageVehicle = () => {
               </Link>
             </div>
 
-            <div className="mt-5 w-11/12 p-5 flex flex-col gap-5  bg-grey10 rounded-md">
+            <div className="mt-5 w-11/12 p-5 flex flex-col gap-5  bg-grey10 rounded-md max-w-[663px]">
               <h2 className="font-lexend text-grey1 flex justify-start font-bold text-[1.100rem]">
                 Comentários
               </h2>
@@ -276,51 +282,56 @@ const DetailedViewPageVehicle = () => {
               </div>
             </div>
 
-            <div className="mt-5 w-11/12 p-5 flex flex-col gap-5  bg-grey10 rounded-md">
-              <div className="flex gap-4 items-center">
-                <p className="font-inter text-sm font-medium  text-whiteFixed bg-brand2 rounded-full w-8 h-8 items-center flex justify-center text-center">
-                  {user?.name && user.name[0]}
-                </p>
-                <span className="font-inter">{user?.name}</span>
-              </div>
+            {token ? (
+              <>
+                <div className="mt-5 w-11/12 p-5 flex flex-col gap-5  bg-grey10 rounded-md">
+                  <div className="flex gap-4 items-center">
+                    <p className="font-inter text-sm font-medium  text-whiteFixed bg-brand2 rounded-full w-8 h-8 items-center flex justify-center text-center">
+                      {user?.name && user.name[0]}
+                    </p>
+                    <span className="font-inter">{user?.name}</span>
+                  </div>
 
-              <div>
-                <form onSubmit={submitComment}>
-                  <textarea
-                    id="createComment"
-                    name="createComment"
-                    className="resize-none font-inter text-[0.900rem] rounded-md border-2 border-grey7 p-2 pr-36 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-32 focus:outline-none w-full"
-                    placeholder="Carro muito confortável, foi uma ótima experiência de compra..."
-                    value={createComment}
-                    onChange={(e) => setCreateComment(e.target.value)}
-                  />
-                  <button className="absolute ml-[-124px] mt-[84px] p-1 bg-brand1 rounded px-5 text-whiteFixed w-28">
-                    Comentar
-                  </button>
-                </form>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => fixedComment("Gostei muito!")}
-                  className="bg-grey7 font-inter text-grey3 rounded-[1.5rem] p-1 px-3 text-[0.900rem]"
-                >
-                  Gostei muito!
-                </button>
-                <button
-                  onClick={() => fixedComment("Incrível")}
-                  className="bg-grey7 font-inter text-grey3 rounded-[1.5rem] p-1 px-3 text-[0.900rem]"
-                >
-                  Incrível
-                </button>
-                <button
-                  onClick={() => fixedComment("Recomendarei para meus amigos!")}
-                  className="bg-grey7 font-inter text-grey3 rounded-[1.5rem] p-1 px-3 text-[0.900rem]"
-                >
-                  Recomendarei para meus amigos!
-                </button>
-              </div>
-            </div>
+                  <div>
+                    <form onSubmit={submitComment}>
+                      <textarea
+                        id="createComment"
+                        name="createComment"
+                        className="resize-none font-inter text-[0.900rem] rounded-md border-2 border-grey7 p-2 pr-36 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-32 focus:outline-none w-full"
+                        placeholder="Carro muito confortável, foi uma ótima experiência de compra..."
+                        value={createComment}
+                        onChange={(e) => setCreateComment(e.target.value)}
+                      />
+                      <button className="absolute ml-[-124px] mt-[84px] p-1 bg-brand1 rounded px-5 text-whiteFixed w-28">
+                        Comentar
+                      </button>
+                    </form>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => fixedComment("Gostei muito!")}
+                      className="bg-grey7 font-inter text-grey3 rounded-[1.5rem] p-1 px-3 text-[0.900rem]"
+                    >
+                      Gostei muito!
+                    </button>
+                    <button
+                      onClick={() => fixedComment("Incrível")}
+                      className="bg-grey7 font-inter text-grey3 rounded-[1.5rem] p-1 px-3 text-[0.900rem]"
+                    >
+                      Incrível
+                    </button>
+                    <button
+                      onClick={() =>
+                        fixedComment("Recomendarei para meus amigos!")
+                      }
+                      className="bg-grey7 font-inter text-grey3 rounded-[1.5rem] p-1 px-3 text-[0.900rem]"
+                    >
+                      Recomendarei para meus amigos!
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : null}
           </div>
         </section>
 
