@@ -1,4 +1,6 @@
-import { Route, Routes } from "react-router-dom";
+import { ReactNode } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { toast } from "react-toastify";
 import { RegisterUserForm } from "../components/Form/registerUserForm";
 import DetailedViewPageVehicle from "../pages/detailedViewPageVehicle";
 import ForgotPassword from "../pages/forgotPassword";
@@ -6,6 +8,11 @@ import Home from "../pages/home";
 import LoginUser from "../pages/loginUserForm";
 import { RegisterUserPage } from "../pages/registerUserForm";
 import UserAdvertiserPage from "../pages/userAdvertiserPage";
+
+interface IPrivateRoute {
+  children: ReactNode;
+  redirectTo: string;
+}
 
 const MainRoutes = () => {
   return (

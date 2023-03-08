@@ -58,7 +58,6 @@ export const RegisterUserPage = () => {
         complement: data.complement,
       },
     };
-    console.log(newData);
     handleRegisterValues(newData);
   };
 

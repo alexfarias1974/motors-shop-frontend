@@ -52,17 +52,24 @@ export const registerUserSchema = yup.object().shape({
   cpf: yup
     .string()
     .required("Adicione seu CPF")
-    .min(11, "CPF deve conter no mínimo 11 caracteres")
-    .max(11, "CPF deve conter no máximo 11 caracteres"),
+    .matches(
+      /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/,
+      "Formato invalido"
+    ),
 
-  phone: yup.string().required("Adicione seu telefone"),
+  phone: yup
+    .string()
+    .required("Adicione seu telefone")
+    .matches(
+      /^\(?[1-9]{2}\)? ?(?:[2-8]|9[1-9])[0-9]{3}\-?[0-9]{4}$/,
+      "Formato invalido"
+    ),
 
   birthdate: yup
     .date()
-    .max(new Date(), "Data de nascimento não pode ser no futuro")
     .min(new Date("01-01-1900"), "Data de nascimento inválida")
+    .max(new Date(), "Data de nascimento não pode ser no futuro")
     .required("Adicione sua data de nascimento"),
-
   description: yup.string().required("Adicione uma descrição"),
 
   password: yup
@@ -85,8 +92,17 @@ export const registerUserSchema = yup.object().shape({
   state: yup.string().required("Adicione seu estado"),
   city: yup.string().required("Adicione sua cidade"),
   street: yup.string().required("Adicione sua rua"),
-  zipCode: yup.string().required("Adicione seu CEP"),
-  number: yup.number().notRequired(),
+  zipCode: yup
+    .string()
+    .required("Adicione seu CEP")
+    .matches(/^[0-9]{5}-[0-9]{3}$/, "Formato invalido"),
+  number: yup.lazy((value) => {
+    if (value !== undefined) {
+      yup.number();
+    }
+    return yup.mixed().notRequired();
+  }),
+
   complement: yup.string().notRequired(),
 });
 
@@ -151,6 +167,5 @@ export const forgotPasswordSchema = yup.object().shape({
       [yup.ref("password"), null!],
       "As senhas devem corresponder entre si"
     )
-    .required("Confirme sua senha")
-})
-
+    .required("Confirme sua senha"),
+});

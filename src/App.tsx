@@ -1,5 +1,4 @@
 import Footer from "./components/Footer";
-
 import MainRoutes from "./routes";
 
 function App() {

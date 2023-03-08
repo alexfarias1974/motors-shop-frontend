@@ -19,6 +19,7 @@
     "react-toastify": "^9.1.1",
     "sass": "^1.58.1",
     "tailwind-scrollbar-hide": "^1.1.7",
+    "toastify": "^2.0.1",
     "yup": "^1.0.0"
   },
   "devDependencies": {

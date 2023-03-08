@@ -11,6 +11,10 @@ import { ProductCardAuction4 } from "../components/ProductCardAuction/index4";
 import "../index.css";
 import api from "../services/api";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { motion } from "framer-motion";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const Home = () => {
   const carsRef: any = useRef(null);
@@ -67,6 +71,8 @@ const Home = () => {
 
   return (
     <div className="bg-grey8">
+    <>
+      <ToastContainer />
       <Header />
       <section className="h-[36.3rem] bg-brand2 flex flex-col justify-center items-center text-center sm:max-md:w-full">
         <div className="font-lexend flex-col flex flex-wrap">
@@ -95,7 +101,10 @@ const Home = () => {
         </div>
       </section>
       <main className="mx-[4rem] max-[640px]:mx-[1rem] flex flex-col">
-        <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]">
+        <h3
+          className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]"
+          id="auction"
+        >
           Leilão
         </h3>
         <div>
@@ -118,7 +127,7 @@ const Home = () => {
         <h3
           ref={carsRef}
           className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem] -mb-[4.25rem] max-[640px]:-mb-[0.1rem]"
-        >
+          id="cars">
           Carros
         </h3>
         <div className="flex justify-end top-5">
@@ -126,6 +135,7 @@ const Home = () => {
             onClick={scrollLeftCars}
             className="p-4 text-[1.5rem] m-2 rounded-full bg-whiteFixed hover:bg-grey0 hover:text-grey10 max-[640px]:hidden"
           >
+
             <FiChevronLeft />
           </button>
           <button
@@ -151,12 +161,19 @@ const Home = () => {
               images={car.images}
               owner={car.owner}
             />
-          ))}
+          ))}         
+          {cars.length < 1 ? (
+            <p className="font-lexend items-center mt-4 text-[1rem]">
+              Não há carros a venda no momento!
+            </p>
+          ) : null}
+
         </section>
 
         <h3
           ref={motorbikesRef}
-          className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem] -mb-[4.25rem] max-[640px]:-mb-[0.1rem]"
+          className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem] -mb-[4.25rem] max-[640px]:-mb-[0.1rem]"   
+          id="motorcycles"
         >
           Motos
         </h3>
@@ -191,6 +208,11 @@ const Home = () => {
               owner={car.owner}
             />
           ))}
+          {motorcycles.length < 1 ? (
+            <p className="font-lexend items-center mt-4 text-[1rem]">
+              Não há motos a venda no momento!
+            </p>
+          ) : null}
         </section>
       </main>
       <Footer />
