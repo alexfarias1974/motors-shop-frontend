@@ -1,13 +1,16 @@
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import api from "../services/api";
+
 import { ICar } from "../components/ProductCardAdvertiser";
 import { IComment } from "../interfaces/comments.interface";
 import { IUser } from "../interfaces/user.interface";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import ModalBase from "../components/ModalBase";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../context/userContext";
+import api from "../services/api";
+import { LoginContext } from "../context/loginContext";
 
 const DetailedViewPageVehicle = () => {
   const [createComment, setCreateComment] = useState("");
@@ -118,6 +121,9 @@ const DetailedViewPageVehicle = () => {
     }
   };
 
+
+
+
   return (
     <>
       <Header />
@@ -148,7 +154,10 @@ const DetailedViewPageVehicle = () => {
                 </div>
 
                 <h4 className="flex p-4 font-lexend font-bold text-base text-grey1">
-                  R$ {vehicle?.price}
+                  {Number(vehicle?.price).toLocaleString("pt-br", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
                 </h4>
               </div>
 
@@ -169,7 +178,6 @@ const DetailedViewPageVehicle = () => {
               <h2 className="font-lexend text-grey1 flex justify-start font-bold  text-[1.100rem]">
                 Descrição
               </h2>
-
               <p className="text-grey2 font-inter">{vehicle?.description}</p>
             </div>
 
@@ -189,12 +197,12 @@ const DetailedViewPageVehicle = () => {
                         />
                       )
                   )
+
                 ) : (
                   <p>Não há fotos para este vehículo</p>
                 )}
               </div>
             </div>
-
             <div className="mt-5 w-11/12 p-5 flex flex-col gap-5  bg-grey10 rounded-md items-center lg:hidden">
               <div className="bg-brand2 rounded-full w-10 h-10 items-center flex justify-center text-center">
                 <p className="font-inter text-sm font-medium text-whiteFixed">
@@ -208,7 +216,6 @@ const DetailedViewPageVehicle = () => {
               <p className="text-grey2 font-inter">
                 {vehicle?.owner.description}
               </p>
-
               <Link
                 to={"/userProfile"}
                 className="bg-grey0 p-2 text-whiteFixed rounded-sm"
