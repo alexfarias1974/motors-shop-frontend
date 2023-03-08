@@ -15,7 +15,6 @@ import { motion } from "framer-motion";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const Home = () => {
   const carsRef: any = useRef(null);
   const motorbikesRef: any = useRef(null);
@@ -71,7 +70,6 @@ const Home = () => {
 
   return (
     <div className="bg-grey8">
-    <>
       <ToastContainer />
       <Header />
       <section className="h-[36.3rem] bg-brand2 flex flex-col justify-center items-center text-center sm:max-md:w-full">
@@ -127,7 +125,8 @@ const Home = () => {
         <h3
           ref={carsRef}
           className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem] -mb-[4.25rem] max-[640px]:-mb-[0.1rem]"
-          id="cars">
+          id="cars"
+        >
           Carros
         </h3>
         <div className="flex justify-end top-5">
@@ -135,7 +134,6 @@ const Home = () => {
             onClick={scrollLeftCars}
             className="p-4 text-[1.5rem] m-2 rounded-full bg-whiteFixed hover:bg-grey0 hover:text-grey10 max-[640px]:hidden"
           >
-
             <FiChevronLeft />
           </button>
           <button
@@ -161,18 +159,17 @@ const Home = () => {
               images={car.images}
               owner={car.owner}
             />
-          ))}         
+          ))}
           {cars.length < 1 ? (
             <p className="font-lexend items-center mt-4 text-[1rem]">
               Não há carros a venda no momento!
             </p>
           ) : null}
-
         </section>
 
         <h3
           ref={motorbikesRef}
-          className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem] -mb-[4.25rem] max-[640px]:-mb-[0.1rem]"   
+          className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem] -mb-[4.25rem] max-[640px]:-mb-[0.1rem]"
           id="motorcycles"
         >
           Motos
