@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../context/loginContext";
-import { IUserPatchForm } from "../../interfaces/user.interface";
+import { IUser, IUserPatchForm } from "../../interfaces/user.interface";
 import api from "../../services/api";
 import { userPatchSchema } from "../../validations/forms.validations";
 import Button from "../Button";
@@ -95,7 +95,7 @@ const NavBar = (accountType: any) => {
 
       {isModalEditOpen ? (
         <ModalBase setIs={setIsModalEditOpen}>
-          <div className="bg-whiteFixed w-[20rem]   p-2 rounded-md md:p-0 md:w-[20rem]  md:h-[30rem] xl:h-[39rem] overflow-y-scroll">
+          <div className="bg-whiteFixed w-[20rem]   p-2 rounded-md md:p-0 md:w-[20rem]  md:h-[30rem] xl:h-[39rem] xl:overflow-hidden overflow-y-scroll">
             <form
               className=" p-4 flex flex-col md:p-8 "
               onSubmit={handleSubmit(patchProfile)}

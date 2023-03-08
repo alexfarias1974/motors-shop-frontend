@@ -127,7 +127,7 @@ const DetailedViewPageVehicle = () => {
             <div className="mt-5 w-11/12 p-5 flex flex-col gap-5  bg-grey10 rounded-md items-center lg:hidden">
               <div className="bg-brand2 rounded-full w-10 h-10 items-center flex justify-center text-center">
                 <p className="font-inter text-sm font-medium text-whiteFixed">
-                  S
+                  {user?.name ? user?.name[0].toUpperCase() : ""}
                 </p>
               </div>
               <h2 className="font-lexend font-bold text-grey1 pt-1 ">
@@ -235,7 +235,7 @@ const DetailedViewPageVehicle = () => {
           <div className=" lg:mt-5 lg:w-[21.75rem] lg:p-5  lg:flex  lg:flex-col  lg:gap-5   lg:bg-grey10  lg:rounded-md  lg:items-center lg:mb-7 hidden   ">
             <div className="bg-brand2 rounded-full w-16 h-16 items-center flex justify-center text-center">
               <p className="font-inter text-sm font-bold text-whiteFixed text-[1.500rem]">
-                S
+                {user?.name ? user?.name[0].toUpperCase() : ""}
               </p>
             </div>
             <h2 className="font-lexend font-bold text-grey1 pt-1 ">
