@@ -10,17 +10,9 @@ import { ProductCardAuction3 } from "../components/ProductCardAuction/index3";
 import { ProductCardAuction4 } from "../components/ProductCardAuction/index4";
 import "../index.css";
 import api from "../services/api";
-import { motion } from "framer-motion";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const Home = () => {
-  const carousel = useRef<HTMLDivElement | null>(null);
-  const [width, setWidth] = useState(0);
-  useEffect(() => {
-    setWidth(
-      carousel.current?.scrollWidth ? -carousel.current.offsetWidth : 800
-    );
-  }, []);
-
   const carsRef: any = useRef(null);
   const motorbikesRef: any = useRef(null);
 
@@ -57,12 +49,28 @@ const Home = () => {
       });
   }, []);
 
+  const scrollLeftCars = () => {
+    document.getElementById("contentCars")!.scrollLeft -= 600;
+  };
+
+  const scrollRightCars = () => {
+    document.getElementById("contentCars")!.scrollLeft += 600;
+  };
+
+  const scrollLeftMotorcycle = () => {
+    document.getElementById("contentMotorcycle")!.scrollLeft -= 600;
+  };
+
+  const scrollRightMotorcycle = () => {
+    document.getElementById("contentMotorcycle")!.scrollLeft += 600;
+  };
+
   return (
-    <>
+    <div className="bg-grey8">
       <Header />
-      <section className="w-screen h-[36.3rem] bg-brand2 flex flex-col justify-center items-center text-center sm:max-md:w-full">
-        <div className="font-lexend max-w-[46.7rem] flex flex-wrap justify-center">
-          <div>
+      <section className="h-[36.3rem] bg-brand2 flex flex-col justify-center items-center text-center sm:max-md:w-full">
+        <div className="font-lexend flex-col flex flex-wrap">
+          <div className="min-[640px]:w-[748px] max-w-[640px]:justify-center max-w-[640px]:text-center">
             <h1 className="text-[2.75rem] font-bold text-grey10 mb-6">
               Velocidade e experiência em um lugar feito para você
             </h1>
@@ -70,7 +78,7 @@ const Home = () => {
               Um ambiente feito para você explorar o seu melhor
             </h4>
           </div>
-          <div className="flex flex-row justify-center content-center w-[24rem] h-[3rem] gap-5 max-[640px]:flex-col">
+          <div className="flex flex-row justify-center mx-auto content-center w-[24rem] h-[3rem] gap-5 max-[640px]:flex-col">
             <button
               onClick={findSectionCars}
               className="text-grey10 border-grey10 border-solid border-2 hover:text-grey0 hover:bg-whiteFixed rounded w-[80%] min-h-[48px] self-center"
@@ -86,7 +94,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <main className="ml-[4rem] mr-[4rem] flex flex-col">
+      <main className="mx-[4rem] max-[640px]:mx-[1rem] flex flex-col">
         <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]">
           Leilão
         </h3>
@@ -106,75 +114,87 @@ const Home = () => {
             </div>
           </div>
         </div>
+
         <h3
           ref={carsRef}
-          className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]"
+          className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem] -mb-[4.25rem] max-[640px]:-mb-[0.1rem]"
         >
           Carros
         </h3>
-        <section className="app w-full mx-auto my-0 min-h-[80vh] flex content-center max-w-[90vw]">
-          <motion.div
-            ref={carousel}
-            className="carousel cursor-grab overflow-hidden"
-            whileTap={{ cursor: "grabbing" }}
+        <div className="flex justify-end top-5">
+          <button
+            onClick={scrollLeftCars}
+            className="p-4 text-[1.5rem] m-2 rounded-full bg-whiteFixed hover:bg-grey0 hover:text-grey10 max-[640px]:hidden"
           >
-            <motion.div
-              className="inner flex gap-8"
-              drag="x"
-              dragConstraints={{ right: 0, left: -width }}
-            >
-              {cars?.map((car) => (
-                <ProductCard
-                  key={car.id}
-                  id={car.id}
-                  title={car.title}
-                  description={car.description}
-                  mileage={car.mileage}
-                  price={car.price}
-                  year={car.year}
-                  images={car.images}
-                  owner={car.owner}
-                />
-              ))}
-            </motion.div>
-          </motion.div>
+            <FiChevronLeft />
+          </button>
+          <button
+            onClick={scrollRightCars}
+            className="p-4 text-[1.5rem] m-2 rounded-full bg-whiteFixed hover:bg-grey0 hover:text-grey10 max-[640px]:hidden"
+          >
+            <FiChevronRight />
+          </button>
+        </div>
+        <section
+          id="contentCars"
+          className="carousel snap-x w-full gap-8 mx-auto mt-2 mb-20 max-h-[26rem] flex content-center max-w-[90vw] overflow-x-auto relative scroll-smooth scrollbar-hide"
+        >
+          {cars?.map((car) => (
+            <ProductCard
+              key={car.id}
+              id={car.id}
+              title={car.title}
+              description={car.description}
+              mileage={car.mileage}
+              price={car.price}
+              year={car.year}
+              images={car.images}
+              owner={car.owner}
+            />
+          ))}
         </section>
+
         <h3
           ref={motorbikesRef}
-          className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem]"
+          className="font-lexend text-[1.5rem] font-semibold text-#000000 mt-[5rem] -mb-[4.25rem] max-[640px]:-mb-[0.1rem]"
         >
           Motos
         </h3>
-        <section className="app w-full mx-auto my-0 min-h-[80vh] flex content-center max-w-[90vw]">
-          <motion.div
-            ref={carousel}
-            className="carousel cursor-grab overflow-hidden"
-            whileTap={{ cursor: "grabbing" }}
+        <div className="flex justify-end top-5">
+          <button
+            onClick={scrollLeftMotorcycle}
+            className="p-4 text-[1.5rem] m-2 rounded-full bg-whiteFixed hover:bg-grey0 hover:text-grey10 max-[640px]:hidden"
           >
-            <motion.div
-              className="inner flex gap-8"
-              drag="x"
-              dragConstraints={{ right: 0, left: -width }}
-            >
-              {motorcycles?.map((car) => (
-                <ProductCard
-                  key={car.id}
-                  id={car.id}
-                  title={car.title}
-                  description={car.description}
-                  mileage={car.mileage}
-                  price={car.price}
-                  year={car.year}
-                  images={car.images}
-                  owner={car.owner}
-                />
-              ))}
-            </motion.div>
-          </motion.div>
+            <FiChevronLeft />
+          </button>
+          <button
+            onClick={scrollRightMotorcycle}
+            className="p-4 text-[1.5rem] m-2 rounded-full bg-whiteFixed hover:bg-grey0 hover:text-grey10 max-[640px]:hidden"
+          >
+            <FiChevronRight />
+          </button>
+        </div>
+        <section
+          id="contentMotorcycle"
+          className="carousel w-full gap-8 mx-auto mt-2 mb-40 max-h-[26rem] flex content-center max-w-[90vw] overflow-x-auto relative scroll-smooth scrollbar-hide pb-12"
+        >
+          {motorcycles?.map((car) => (
+            <ProductCard
+              key={car.id}
+              id={car.id}
+              title={car.title}
+              description={car.description}
+              mileage={car.mileage}
+              price={car.price}
+              year={car.year}
+              images={car.images}
+              owner={car.owner}
+            />
+          ))}
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

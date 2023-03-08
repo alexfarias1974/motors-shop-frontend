@@ -6,7 +6,7 @@ export const ProductCard = (car: ICar) => {
   return (
     <>
       <div
-        className="mx-auto max-w-[19.5rem] flex flex-col hover:cursor-pointer"
+        className="mx-auto snap-center max-w-[19.5rem] max-h-[25rem] flex flex-col hover:cursor-pointer"
         onClick={() => {
           localStorage.setItem("@carId:id", car.id);
           navigate("/detailed-vehicle");
