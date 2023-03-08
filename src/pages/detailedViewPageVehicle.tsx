@@ -187,15 +187,16 @@ const DetailedViewPageVehicle = () => {
 
               <div className="flex flex-wrap gap-2 justify-center p-5">
                 {vehicle?.images ? (
-                  vehicle.images.map(
-                    (images, index) =>
-                      index >= 1 && (
-                        <img
-                          src={images.imageUrl}
-                          className="w-16 bg-grey7 p-1"
-                        />
-                      )
-                  )
+                  vehicle.images.map((images, index) => (
+                    <img
+                      src={images.imageUrl}
+                      className="w-16 bg-grey7 p-1"
+                      onClick={() => {
+                        setMainImage(images.imageUrl);
+                        console.log("clicando");
+                      }}
+                    />
+                  ))
                 ) : (
                   <p>Não há fotos para este vehículo</p>
                 )}
@@ -333,14 +334,15 @@ const DetailedViewPageVehicle = () => {
 
             <div className="flex flex-wrap gap-5">
               {vehicle?.images ? (
-                vehicle.images.map(
-                  (images, index) =>
-                    index >= 1 && (
-                      <figure className="flex justify-center items-center bg-grey7 w-[6.75rem] h-[6.75rem] rounded">
-                        <img src={images.imageUrl} className="w-[6.5rem]" />
-                      </figure>
-                    )
-                )
+                vehicle.images.map((images) => (
+                  <figure className="flex justify-center items-center bg-grey7 w-[6.75rem] h-[6.75rem] rounded">
+                    <img
+                      src={images.imageUrl}
+                      className="w-[6.5rem]"
+                      onClick={() => setMainImage(images.imageUrl)}
+                    />
+                  </figure>
+                ))
               ) : (
                 <p>Não há fotos para este vehículo</p>
               )}
