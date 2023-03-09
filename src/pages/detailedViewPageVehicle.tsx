@@ -37,7 +37,9 @@ const DetailedViewPageVehicle = () => {
       window.localStorage.setItem("objectOwner:owner", ownerObject);
     });
 
-    api.get("/messages").then((res) => setListComments(res.data));
+    api
+      .get(`/messages/vehicle/${carId}`)
+      .then((res) => setListComments(res.data));
 
     if (token) {
       api
