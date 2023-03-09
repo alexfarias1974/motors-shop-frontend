@@ -157,7 +157,7 @@ const UserAdvertiserPage = () => {
                 </p>
               </div>
 
-              {userInfo.name === owner.name ? (
+              {takeObj ? null : (
                 <div>
                   <button
                     className="border-brand1 border-2 border-solid rounded ml-11 mt-11 w-[146px] h-[48px] bg-whiteFixed font-inter text-[16px] text-brand1 font-semibold hover:bg-brand4"
@@ -166,18 +166,7 @@ const UserAdvertiserPage = () => {
                     Criar Anúncio
                   </button>
                 </div>
-              ) : null}
-
-              {!owner.name ? (
-                <div>
-                  <button
-                    className="border-brand1 border-2 border-solid rounded ml-11 mt-11 w-[146px] h-[48px] bg-whiteFixed font-inter text-[16px] text-brand1 font-semibold hover:bg-brand4"
-                    onClick={() => setCreateVehicleModalOpen(true)}
-                  >
-                    Criar Anúncio
-                  </button>
-                </div>
-              ) : null}
+              )}
             </div>
           </div>
         </section>
