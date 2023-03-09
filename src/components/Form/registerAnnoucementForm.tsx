@@ -78,6 +78,7 @@ const Form = () => {
       })
       .then((res) => {
         setIsModalSucess(true);
+        window.location.reload();
         // setCreateVehicleModalOpen(false);
         return res.data;
       })
