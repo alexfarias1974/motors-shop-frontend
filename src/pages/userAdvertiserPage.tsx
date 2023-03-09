@@ -131,7 +131,7 @@ const UserAdvertiserPage = () => {
       ) : null}
       <div className="bg-grey8">
         <Header />
-        <section className="w-screen h-[22.3rem] bg-brand1"></section>
+        <section className="h-[22.3rem] bg-brand1"></section>
         <section>
           <div className="flex items-center w-11/12 m-auto h-[25.5rem] bg-grey10 z-1 -mt-60 rounded">
             <div className="flex flex-col">
