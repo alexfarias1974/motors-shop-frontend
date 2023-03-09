@@ -13,15 +13,44 @@ import ModalBase from "../ModalBase";
 const NavBar = (accountType: any) => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
+  const [isModalEditAddresOpen, setIsModalEditAddresOpen] = useState(false);
   const token = localStorage.getItem("@tokenId:token");
   const navigate = useNavigate();
 
   const patchProfile = (data: IUserPatchForm) => {
+    let zipCode: string[] | undefined = data.zipCode?.split("-");
+    let zipCodeStr = "";
+
+    if (zipCode) {
+      zipCodeStr = `${zipCode[0].concat(zipCode[1])}`;
+    }
+
+    const newData = {
+      name: data.name,
+      email: data.email,
+      cpf: data.cpf,
+      phone: data.phone,
+      birthdate: data.birthdate,
+      description: data.description,
+      address: {
+        state: data.state,
+        city: data.city,
+        street: data.street,
+        zipCode: zipCodeStr,
+        number: data.number,
+        complement: data.complement,
+      },
+    };
+
     api
-      .patch("/users", data, { headers: { Authorization: `Bearer ${token}` } })
+      .patch("/users", newData, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((_) => {
         setIsModalEditOpen(false);
+        setIsModalEditAddresOpen(false);
         window.location.reload();
+
       });
   };
 
@@ -51,7 +80,12 @@ const NavBar = (accountType: any) => {
           >
             Editar Perfil
           </span>
-          <span className="text-grey2 cursor-pointer">Editar Endereço</span>
+          <span
+            className="text-grey2 cursor-pointer"
+            onClick={() => setIsModalEditAddresOpen(!isModalEditAddresOpen)}
+          >
+            Editar Endereço
+          </span>
           <span
             className="text-grey2 cursor-pointer"
             onClick={() => {
@@ -70,7 +104,12 @@ const NavBar = (accountType: any) => {
           >
             Editar Perfil
           </span>
-          <span className="text-grey2 cursor-pointer">Editar Endereço</span>
+          <span
+            className="text-grey2 cursor-pointer"
+            onClick={() => setIsModalEditAddresOpen(!isModalEditAddresOpen)}
+          >
+            Editar Endereço
+          </span>
           <span
             className="text-grey2 cursor-pointer"
             onClick={() => {
@@ -248,6 +287,127 @@ const NavBar = (accountType: any) => {
           </div>
         </ModalBase>
       ) : null}
+
+      {isModalEditAddresOpen && (
+        <ModalBase setIs={setIsModalEditAddresOpen}>
+          <div className="bg-whiteFixed p-2 rounded md:w-[32.5rem] xl:overflow-hidden overflow-y-scroll max-sm:w-[94vw]">
+            <form
+              className=" p-4 flex flex-col md:p-8 "
+              onSubmit={handleSubmit(patchProfile)}
+            >
+              <div className="flex justify-between">
+                <h2 className="text-[0.900rem] font-medium mb-3 font-lexend">
+                  Editar endereço
+                </h2>
+
+                <AiOutlineClose
+                  onClick={() =>
+                    setIsModalEditAddresOpen(!isModalEditAddresOpen)
+                  }
+                  className="hover:cursor-pointer text-grey3 text-[1.25rem]"
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label
+                  htmlFor=""
+                  className="font-medium text-[0.875rem] mb-6 mt-7"
+                >
+                  Informações de endereço
+                </label>
+              </div>
+
+              <div className="flex flex-col">
+                <label htmlFor="" className="font-medium mb-2">
+                  CEP
+                </label>
+                <input
+                  type="text"
+                  placeholder="00000-000"
+                  className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                  {...register("zipCode")}
+                />
+              </div>
+
+              <div className="flex justify-between w-full">
+                <div className="flex flex-col w-[49%]">
+                  <label htmlFor="" className="font-medium mb-2">
+                    Estado
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Paraná"
+                    className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                    {...register("state")}
+                  />
+                </div>
+
+                <div className="flex flex-col w-[49%]">
+                  <label htmlFor="" className="font-medium mb-2">
+                    Cidade
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Curitiba"
+                    className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                    {...register("city")}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <label htmlFor="" className="font-medium mb-2">
+                  Rua
+                </label>
+                <input
+                  type="text"
+                  placeholder="Rua do paraná"
+                  className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                  {...register("street")}
+                />
+              </div>
+
+              <div className="flex justify-between w-full">
+                <div className="flex flex-col w-[49%]">
+                  <label htmlFor="" className="font-medium mb-2">
+                    Número
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="1029"
+                    className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                    {...register("number")}
+                  />
+                </div>
+
+                <div className="flex flex-col w-[49%]">
+                  <label className="font-medium mb-2">Complemento</label>
+                  <input
+                    type="text"
+                    placeholder="Apart 12"
+                    className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                    {...register("complement")}
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 mt-7 max-sm:justify-between">
+                <button
+                  className="bg-grey6 text-grey2 rounded px-6 py-3 font-bold"
+                  onClick={() => {
+                    setIsModalEditAddresOpen(!isModalEditAddresOpen);
+                  }}
+                >
+                  Cancelar
+                </button>
+                <button className="bg-brand1 text-whiteFixed rounded px-6 py-3 font-bold">
+                  Salvar alterações
+                </button>
+              </div>
+            </form>
+          </div>
+        </ModalBase>
+      )}
     </>
   );
 };

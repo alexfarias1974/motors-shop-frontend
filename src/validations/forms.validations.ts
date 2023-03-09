@@ -148,6 +148,18 @@ export const userPatchSchema = yup.object().shape({
     }
     return yup.mixed().notRequired();
   }),
+  state: yup.string(),
+  city: yup.string(),
+  street: yup.string(),
+  zipCode: yup.string().matches(/^[0-9]{5}-[0-9]{3}$/, "Formato inválido"),
+  number: yup.lazy((value) => {
+    if (value !== undefined) {
+      yup.number();
+    }
+    return yup.mixed().notRequired();
+  }),
+
+  complement: yup.string().notRequired(),
 });
 
 export const forgotPasswordSchema = yup.object().shape({
