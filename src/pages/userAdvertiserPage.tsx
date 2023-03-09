@@ -23,7 +23,6 @@ import { ProductCardAuction4 } from "../components/ProductCardAuction/index4";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const UserAdvertiserPage = () => {
-
   const [cars, setCars] = useState<ICar[]>([]);
   const [motorcycles, setMotorcycles] = useState<ICar[]>([]);
   const [userInfo, setUserInfo] = useState({} as IUser);
@@ -96,7 +95,6 @@ const UserAdvertiserPage = () => {
     setEditVehicleModalOpen,
   } = useContext(UserContext);
 
-
   const scrollLeftCars = () => {
     document.getElementById("contentCars")!.scrollLeft -= 600;
   };
@@ -114,7 +112,6 @@ const UserAdvertiserPage = () => {
   };
   const { isModalSucessAccount, setIsModalSucessAccount } =
     useContext(LoginContext);
-
 
   return (
     <>
@@ -226,8 +223,22 @@ const UserAdvertiserPage = () => {
           <section
             id="contentCars"
             className="carousel w-full gap-8 mx-auto mt-2 mb-40 max-h-[26rem] flex content-center max-w-[90vw] overflow-x-auto relative scroll-smooth scrollbar-hide"
-          >   
-                {ownerCars?.map((car) => (
+          >
+            {ownerCars?.map((car) => (
+              <ProductCardAdvertiser
+                key={car.id}
+                id={car.id}
+                title={car.title}
+                description={car.description}
+                mileage={car.mileage}
+                price={car.price}
+                year={car.year}
+                images={car.images}
+                owner={car.owner}
+              />
+            ))}
+            {!takeObj
+              ? cars.map((car) => (
                   <ProductCardAdvertiser
                     key={car.id}
                     id={car.id}
@@ -239,22 +250,8 @@ const UserAdvertiserPage = () => {
                     images={car.images}
                     owner={car.owner}
                   />
-                ))}
-                {!takeObj
-                  ? cars.map((car) => (
-                      <ProductCardAdvertiser
-                        key={car.id}
-                        id={car.id}
-                        title={car.title}
-                        description={car.description}
-                        mileage={car.mileage}
-                        price={car.price}
-                        year={car.year}
-                        images={car.images}
-                        owner={car.owner}
-                      />
-                    ))
-                  : null}
+                ))
+              : null}
             {cars.length < 1 && ownerCars.length < 1 ? (
               <p className="font-lexend items-center mt-4 text-[1rem]">
                 Não há carros a venda no momento!
@@ -282,44 +279,44 @@ const UserAdvertiserPage = () => {
           <section
             id="contentMotorcycle"
             className="carousel w-full gap-8 mx-auto my-0 max-h-[26rem] flex content-center max-w-[90vw] overflow-x-auto relative scroll-smooth scrollbar-hide pb-12 mb-40"
-          >        
-                {ownerMotorCycles?.map((motorCycle) => (
-                  <ProductCardAdvertiser
-                    key={motorCycle.id}
-                    id={motorCycle.id}
-                    title={motorCycle.title}
-                    description={motorCycle.description}
-                    mileage={motorCycle.mileage}
-                    price={motorCycle.price}
-                    year={motorCycle.year}
-                    images={motorCycle.images}
-                    owner={motorCycle.owner}
-                  />
-                ))}
+          >
+            {ownerMotorCycles?.map((motorCycle) => (
+              <ProductCardAdvertiser
+                key={motorCycle.id}
+                id={motorCycle.id}
+                title={motorCycle.title}
+                description={motorCycle.description}
+                mileage={motorCycle.mileage}
+                price={motorCycle.price}
+                year={motorCycle.year}
+                images={motorCycle.images}
+                owner={motorCycle.owner}
+              />
+            ))}
 
-                {!takeObj
-                  ? motorcycles.map((motorcycle) => (
-                      <ProductCardAdvertiser
-                        key={motorcycle.id}
-                        id={motorcycle.id}
-                        title={motorcycle.title}
-                        description={motorcycle.description}
-                        mileage={motorcycle.mileage}
-                        price={motorcycle.price}
-                        year={motorcycle.year}
-                        images={motorcycle.images}
-                        owner={motorcycle.owner}
-                      />
-                    ))
-                  : null}
+            {!takeObj
+              ? motorcycles.map((motorcycle) => (
+                  <ProductCardAdvertiser
+                    key={motorcycle.id}
+                    id={motorcycle.id}
+                    title={motorcycle.title}
+                    description={motorcycle.description}
+                    mileage={motorcycle.mileage}
+                    price={motorcycle.price}
+                    year={motorcycle.year}
+                    images={motorcycle.images}
+                    owner={motorcycle.owner}
+                  />
+                ))
+              : null}
             {motorcycles.length < 1 && ownerMotorCycles.length < 1 ? (
               <p className="font-lexend items-center mt-4 text-[1rem]">
-                Não há carros a venda no momento!
+                Não há motos a venda no momento!
               </p>
             ) : null}
             {ownerMotorCycles.length < 1 && motorcycles.length < 1 ? (
               <p className="font-lexend items-center mt-4 text-[1rem]">
-                Não há carros a venda no momento!
+                Não há motos a venda no momento!
               </p>
             ) : null}
           </section>
