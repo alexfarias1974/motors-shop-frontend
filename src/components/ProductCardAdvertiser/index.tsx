@@ -4,9 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { IUser } from "../../interfaces/user.interface";
 
-
 import api from "../../services/api";
-
 
 export interface ICar {
   id: string;
@@ -17,7 +15,6 @@ export interface ICar {
   price: number;
   owner: IUser;
   images: [{ id: string; imageUrl: string }];
-  owner: IUser;
 }
 
 export const ProductCardAdvertiser = (car: ICar) => {
@@ -47,7 +44,13 @@ export const ProductCardAdvertiser = (car: ICar) => {
 
   return (
     <>
-      <div className="mx-auto max-w-[19.5rem] max-h-[26rem] flex flex-col">
+      <div
+        className="mx-auto max-w-[19.5rem] max-h-[26rem] flex flex-col cursor-pointer"
+        onClick={() => {
+          localStorage.setItem("@carId:id", car.id);
+          navigate("/detailed-vehicle");
+        }}
+      >
         <picture className="bg-grey7 rounded-xl h-[11rem] w-[19.5rem]">
           <img
             className="h-[11rem] w-[19.5rem] rounded"
