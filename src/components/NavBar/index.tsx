@@ -21,6 +21,7 @@ const NavBar = (accountType: any) => {
       .patch("/users", data, { headers: { Authorization: `Bearer ${token}` } })
       .then((_) => {
         setIsModalEditOpen(false);
+        window.location.reload();
       });
   };
 

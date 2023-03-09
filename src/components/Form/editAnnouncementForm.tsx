@@ -76,6 +76,7 @@ const EditAnnounceForm = () => {
       })
       .then((res) => {
         setEditVehicleModalOpen(false);
+        window.location.reload();
         return res.data;
       })
       .catch((err) => {

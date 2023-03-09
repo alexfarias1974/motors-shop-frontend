@@ -8,7 +8,7 @@ import {
 import { ProductCardAuction } from "../components/ProductCardAuction";
 import "../index.css";
 import ModalBase from "../components/ModalBase";
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useState, useRef, useMemo } from "react";
 import Form from "../components/Form/registerAnnoucementForm";
 import { UserContext } from "../context/userContext";
 import api from "../services/api";
@@ -31,6 +31,8 @@ const UserAdvertiserPage = () => {
   const [ownerMotorCycles, setOwnerMotorCycles] = useState<IVehicle[]>([]);
 
   const token = localStorage.getItem("@tokenId:token");
+
+  const { current: items } = useRef([cars]);
 
   useEffect(() => {
     if (token) {
