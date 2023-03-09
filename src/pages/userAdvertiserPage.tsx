@@ -55,40 +55,42 @@ const UserAdvertiserPage = () => {
       const cars = convert.vehicle.filter(
         (vehicle: any) => vehicle.vehicleType === "car"
       );
-      setOwnerCars(cars);
+      setCars(cars);
+      console.log(cars);
 
       const motorcycles = convert.vehicle.filter(
         (vehicle: any) => vehicle.vehicleType === "motorcycle"
       );
 
-      setOwnerMotorCycles(motorcycles);
+      setMotorcycles(motorcycles);
       setOwner(convert);
     }, []);
   }
+  if (!takeObj) {
+    useEffect(() => {
+      api
+        .get("/vehicles/user", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("@tokenId:token")}`,
+          },
+        })
+        .then((res) => {
+          const cars = res.data.filter(
+            (vehicle: any) => vehicle.vehicleType === "car"
+          );
+          setCars(cars);
 
-  useEffect(() => {
-    api
-      .get("/vehicles/user", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("@tokenId:token")}`,
-        },
-      })
-      .then((res) => {
-        const cars = res.data.filter(
-          (vehicle: any) => vehicle.vehicleType === "car"
-        );
-        setCars(cars);
+          const motorcycles = res.data.filter(
+            (vehicle: any) => vehicle.vehicleType === "motorcycle"
+          );
 
-        const motorcycles = res.data.filter(
-          (vehicle: any) => vehicle.vehicleType === "motorcycle"
-        );
-
-        setMotorcycles(motorcycles);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+          setMotorcycles(motorcycles);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, []);
+  }
 
   const {
     createVehicleModalOpen,
@@ -226,39 +228,25 @@ const UserAdvertiserPage = () => {
             id="contentCars"
             className="carousel w-full gap-8 mx-auto mt-2 mb-40 max-h-[26rem] flex content-center max-w-[90vw] overflow-x-auto relative scroll-smooth scrollbar-hide"
           >
-            {ownerCars?.map((car) => (
-              <ProductCardAdvertiser
-                key={car.id}
-                id={car.id}
-                title={car.title}
-                description={car.description}
-                mileage={car.mileage}
-                price={car.price}
-                year={car.year}
-                images={car.images}
-                owner={car.owner}
-              />
-            ))}
-            {!takeObj
-              ? cars.map((car) => (
-                  <ProductCardAdvertiser
-                    key={car.id}
-                    id={car.id}
-                    title={car.title}
-                    description={car.description}
-                    mileage={car.mileage}
-                    price={car.price}
-                    year={car.year}
-                    images={car.images}
-                    owner={car.owner}
-                  />
-                ))
-              : null}
-            {cars.length < 1 && ownerCars.length < 1 ? (
+            {cars.length === 0 ? (
               <p className="font-lexend items-center mt-4 text-[1rem]">
                 Não há carros a venda no momento!
               </p>
-            ) : null}
+            ) : (
+              cars.map((car) => (
+                <ProductCardAdvertiser
+                  key={car.id}
+                  id={car.id}
+                  title={car.title}
+                  description={car.description}
+                  mileage={car.mileage}
+                  price={car.price}
+                  year={car.year}
+                  images={car.images}
+                  owner={car.owner}
+                />
+              ))
+            )}
           </section>
           <h3 className="font-lexend text-[1.5rem] font-semibold text-#000000 -mb-[4.25rem] max-[640px]:-mb-[0.0rem]">
             Motos
@@ -282,45 +270,25 @@ const UserAdvertiserPage = () => {
             id="contentMotorcycle"
             className="carousel w-full gap-8 mx-auto my-0 max-h-[26rem] flex content-center max-w-[90vw] overflow-x-auto relative scroll-smooth scrollbar-hide pb-12 mb-40"
           >
-            {ownerMotorCycles?.map((motorCycle) => (
-              <ProductCardAdvertiser
-                key={motorCycle.id}
-                id={motorCycle.id}
-                title={motorCycle.title}
-                description={motorCycle.description}
-                mileage={motorCycle.mileage}
-                price={motorCycle.price}
-                year={motorCycle.year}
-                images={motorCycle.images}
-                owner={motorCycle.owner}
-              />
-            ))}
-
-            {!takeObj
-              ? motorcycles.map((motorcycle) => (
-                  <ProductCardAdvertiser
-                    key={motorcycle.id}
-                    id={motorcycle.id}
-                    title={motorcycle.title}
-                    description={motorcycle.description}
-                    mileage={motorcycle.mileage}
-                    price={motorcycle.price}
-                    year={motorcycle.year}
-                    images={motorcycle.images}
-                    owner={motorcycle.owner}
-                  />
-                ))
-              : null}
-            {motorcycles.length < 1 && ownerMotorCycles.length < 1 ? (
+            {motorcycles.length > 0 ? (
+              motorcycles.map((motorcycle) => (
+                <ProductCardAdvertiser
+                  key={motorcycle.id}
+                  id={motorcycle.id}
+                  title={motorcycle.title}
+                  description={motorcycle.description}
+                  mileage={motorcycle.mileage}
+                  price={motorcycle.price}
+                  year={motorcycle.year}
+                  images={motorcycle.images}
+                  owner={motorcycle.owner}
+                />
+              ))
+            ) : (
               <p className="font-lexend items-center mt-4 text-[1rem]">
                 Não há motos a venda no momento!
               </p>
-            ) : null}
-            {ownerMotorCycles.length < 1 && motorcycles.length < 1 ? (
-              <p className="font-lexend items-center mt-4 text-[1rem]">
-                Não há motos a venda no momento!
-              </p>
-            ) : null}
+            )}
           </section>
         </main>
         <Footer />
