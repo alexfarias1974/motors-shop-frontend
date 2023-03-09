@@ -112,4 +112,10 @@ export interface IUserPatchForm {
   phone?: number;
   birthdate?: Date;
   description?: string;
+  zipCode?: string;
+  state?: string;
+  city?: string;
+  street?: string;
+  number?: number | null;
+  complement?: string | null;
 }
