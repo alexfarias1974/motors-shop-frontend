@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { ICar } from "../components/ProductCardAdvertiser";
 
 import {
@@ -25,13 +26,30 @@ const UserContextProvider = ({ children }: IContextProps) => {
   const [owner, setOwner] = useState<IOwner>({} as IOwner);
   const [ownerCars, setOwnerCars] = useState<IVehicle[]>([]);
 
-
   const navigate = useNavigate();
 
   const logout = () => {
     localStorage.clear();
     navigate("/login", { replace: true });
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("@tokenId:token");
+    if (token) {
+      const timerWarning = setTimeout(() => {
+        toast.error("Seu login está prestes a expirar!");
+      }, 42900000);
+
+      const timerOut = setTimeout(() => {
+        localStorage.clear();
+        navigate("/login");
+      }, 43000000);
+      return () => {
+        clearTimeout(timerOut);
+        clearTimeout(timerWarning);
+      };
+    }
+  }, []);
 
   return (
     <UserContext.Provider
