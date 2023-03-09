@@ -49,6 +49,8 @@ const NavBar = (accountType: any) => {
       .then((_) => {
         setIsModalEditOpen(false);
         setIsModalEditAddresOpen(false);
+        window.location.reload();
+
       });
   };
 
