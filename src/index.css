@@ -23,3 +23,18 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+*::-webkit-scrollbar {
+  width: 14px;
+}
+
+*::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 14px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(81, 38, 234);
+  border-radius: 20px;
+  border: 3px solid white;
+}
