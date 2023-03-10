@@ -26,15 +26,20 @@
 
 *::-webkit-scrollbar {
   width: 14px;
+  background: transparent;
 }
 
 *::-webkit-scrollbar-track {
-  background: white;
+  background: transparent;
   border-radius: 14px;
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: rgb(81, 38, 234);
   border-radius: 20px;
-  border: 3px solid white;
+  border: 1px solid white;
+}
+
+body {
+  overflow: overlay;
 }
