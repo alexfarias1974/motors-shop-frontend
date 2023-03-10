@@ -217,7 +217,27 @@ const UserAdvertiserPage = () => {
             id="contentCars"
             className="carousel w-full gap-8 mx-auto mt-2 mb-40 max-h-[26rem] flex content-center max-w-[90vw] overflow-x-auto relative scroll-smooth scrollbar-hide"
           >
-            {cars.length === 0 ? (
+            {takeObj ? (
+              cars.length === 0 ? (
+                <p className="font-lexend items-center mt-4 text-[1rem]">
+                  Não há carros a venda no momento!
+                </p>
+              ) : (
+                cars.map((car) => (
+                  <ProductCard
+                    key={car.id}
+                    id={car.id}
+                    title={car.title}
+                    description={car.description}
+                    mileage={car.mileage}
+                    price={car.price}
+                    year={car.year}
+                    images={car.images}
+                    owner={car.owner}
+                  />
+                ))
+              )
+            ) : cars.length === 0 ? (
               <p className="font-lexend items-center mt-4 text-[1rem]">
                 Não há carros a venda no momento!
               </p>
@@ -259,7 +279,27 @@ const UserAdvertiserPage = () => {
             id="contentMotorcycle"
             className="carousel w-full gap-8 mx-auto my-0 max-h-[26rem] flex content-center max-w-[90vw] overflow-x-auto relative scroll-smooth scrollbar-hide pb-12 mb-40"
           >
-            {motorcycles.length > 0 ? (
+            {takeObj ? (
+              motorcycles.length > 0 ? (
+                motorcycles.map((motorcycle) => (
+                  <ProductCard
+                    key={motorcycle.id}
+                    id={motorcycle.id}
+                    title={motorcycle.title}
+                    description={motorcycle.description}
+                    mileage={motorcycle.mileage}
+                    price={motorcycle.price}
+                    year={motorcycle.year}
+                    images={motorcycle.images}
+                    owner={motorcycle.owner}
+                  />
+                ))
+              ) : (
+                <p className="font-lexend items-center mt-4 text-[1rem]">
+                  Não há motos a venda no momento!
+                </p>
+              )
+            ) : motorcycles.length > 0 ? (
               motorcycles.map((motorcycle) => (
                 <ProductCardAdvertiser
                   key={motorcycle.id}

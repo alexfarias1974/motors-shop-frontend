@@ -44,13 +44,7 @@ export const ProductCardAdvertiser = (car: ICar) => {
 
   return (
     <>
-      <div
-        className="mx-auto max-w-[19.5rem] max-h-[26rem] flex flex-col cursor-pointer"
-        onClick={() => {
-          localStorage.setItem("@carId:id", car.id);
-          navigate("/detailed-vehicle");
-        }}
-      >
+      <div className="mx-auto max-w-[19.5rem] max-h-[26rem] flex flex-col cursor-pointer">
         <picture className="bg-grey7 rounded-xl h-[11rem] w-[19.5rem]">
           <img
             className="h-[11rem] w-[19.5rem] rounded"
@@ -83,28 +77,27 @@ export const ProductCardAdvertiser = (car: ICar) => {
             </h4>
           </div>
         </div>
-        {!takeObj ? (
-          <div className="flex font-inter text-sm font-semibold text-grey1 gap-3 mt-6">
-            <button
-              className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
-              onClick={() => {
-                setEditVehicleModalOpen(true);
-                setEditVehicleId(car.id);
-              }}
-            >
-              Editar
-            </button>
-            <button
-              className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
-              onClick={() => {
-                localStorage.setItem("@carId:id", car.id);
-                navigate("/detailed-vehicle");
-              }}
-            >
-              Ver como
-            </button>
-          </div>
-        ) : null}
+
+        <div className="flex font-inter text-sm font-semibold text-grey1 gap-3 mt-6">
+          <button
+            className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
+            onClick={() => {
+              setEditVehicleModalOpen(true);
+              setEditVehicleId(car.id);
+            }}
+          >
+            Editar
+          </button>
+          <button
+            className="border-#000 border-solid border-2 hover:bg-brand1 hover:border-brand1 rounded py-2 px-5"
+            onClick={() => {
+              localStorage.setItem("@carId:id", car.id);
+              navigate("/detailed-vehicle");
+            }}
+          >
+            Ver como
+          </button>
+        </div>
       </div>
     </>
   );
