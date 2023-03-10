@@ -50,7 +50,6 @@ const NavBar = (accountType: any) => {
         setIsModalEditOpen(false);
         setIsModalEditAddresOpen(false);
         window.location.reload();
-
       });
   };
 
@@ -135,7 +134,7 @@ const NavBar = (accountType: any) => {
 
       {isModalEditOpen ? (
         <ModalBase setIs={setIsModalEditOpen}>
-          <div className="bg-whiteFixed w-[20rem]   p-2 rounded-md md:p-0 md:w-[20rem]  md:h-[30rem] xl:h-[39rem] xl:overflow-hidden overflow-y-scroll">
+          <div className="bg-whiteFixed p-2 rounded md:w-[32.5rem] overflow-y-scroll max-sm:w-[94vw] h-[50rem]">
             <form
               className=" p-4 flex flex-col md:p-8 "
               onSubmit={handleSubmit(patchProfile)}
@@ -147,88 +146,91 @@ const NavBar = (accountType: any) => {
 
                 <AiOutlineClose
                   onClick={() => setIsModalEditOpen(false)}
-                  className="hover:cursor-pointer text-grey3 text-[0.900rem]"
+                  className="hover:cursor-pointer text-grey3 text-[1.25rem]"
                 />
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="" className="font-medium text-[0.875rem] mb-3">
+                <label
+                  htmlFor=""
+                  className="font-medium text-[0.875rem] mb-6 mt-7"
+                >
                   Informações pessoais
                 </label>
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="" className="font-medium">
+                <label htmlFor="" className="font-medium mb-2">
                   Nome
                 </label>
                 <input
                   type="text"
                   placeholder="Ex: Samuel"
-                  className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-3 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                  className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
                   {...register("name")}
                 />
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="" className="font-medium">
+                <label htmlFor="" className="font-medium mb-2">
                   Email
                 </label>
                 <input
                   type="text"
                   placeholder="samuel@kenzie.com"
-                  className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-3 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                  className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
                   {...register("email")}
                 />
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="" className="font-medium">
+                <label htmlFor="" className="font-medium mb-2">
                   CPF
                 </label>
                 <input
                   type="text"
                   placeholder="000.000.000-00"
-                  className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-3 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                  className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
                   {...register("cpf")}
                 />
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="" className="font-medium">
+                <label htmlFor="" className="font-medium mb-2">
                   Celular
                 </label>
                 <input
                   type="text"
                   placeholder="(11) 915757419"
-                  className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-3 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                  className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
                   {...register("phone")}
                 />
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="" className="font-medium">
+                <label htmlFor="" className="font-medium mb-2">
                   Data de Nascimento
                 </label>
                 <input
                   type="text"
                   placeholder="09/12/1992"
-                  className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-3 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                  className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
                   {...register("birthdate")}
                 />
               </div>
 
               <div className="flex flex-col">
-                <label className="font-medium">Descrição</label>
+                <label className="font-medium mb-2">Descrição</label>
                 <textarea
                   placeholder="Digitar descrição"
-                  className="font-normal text-[1rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-10 focus:outline-none mb-4"
+                  className="resize-none font-normal text-[0.900rem] rounded border-2 border-grey7 p-4 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-24 focus:outline-none mb-4"
                   {...register("description")}
                 />
               </div>
 
-              <div className=" flex gap-2  justify-between ">
+              <div className="flex justify-end gap-2 mt-7 max-sm:justify-between">
                 <button
-                  className="bg-grey6 text-grey2 rounded-md h-9 p-1  text-[0.800rem]"
+                  className="bg-grey6 text-grey2 rounded px-6 py-3 font-semibold max-sm:px-5"
                   onClick={() => {
                     setIsModalEditOpen(false);
                     setIsModalDelete(true);
@@ -236,7 +238,7 @@ const NavBar = (accountType: any) => {
                 >
                   Excluir perfil
                 </button>
-                <button className="bg-brand1 text-whiteFixed rounded-md  h-10 p-1 text-[0.800rem] ">
+                <button className="bg-brand1 text-whiteFixed rounded px-6 py-3 font-semibold max-sm:px-5">
                   Salvar alterações
                 </button>
               </div>
@@ -244,6 +246,7 @@ const NavBar = (accountType: any) => {
           </div>
         </ModalBase>
       ) : null}
+
       {isModalDelete ? (
         <ModalBase setIs={setIsModalDelete}>
           <div className="bg-whiteFixed w-11/12 rounded-md p-3 flex flex-col gap-5 max-w-[26.568rem]">

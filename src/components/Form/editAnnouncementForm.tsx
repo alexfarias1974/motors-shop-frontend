@@ -116,7 +116,7 @@ const EditAnnounceForm = () => {
 
   return (
     <>
-      <div className="bg-whiteFixed w-[18rem] h-[40rem] p-2 rounded-md md:p-0 md:w-[20rem]  md:h-[30rem] xl:h-[39rem] max- overflow-y-scroll">
+      <div className="bg-whiteFixed p-2 rounded md:w-[32.5rem] overflow-y-scroll max-sm:w-[94vw] h-[50rem]">
         <form
           className="p-4 flex flex-col md:p-8 "
           onSubmit={handleSubmit(editAnnouncement)}
@@ -127,7 +127,7 @@ const EditAnnounceForm = () => {
             </h3>
 
             <AiOutlineClose
-              className="hover:cursor-pointer text-grey3 text-[0.900rem]"
+              className="hover:cursor-pointer text-grey3 text-[1.25rem]"
               onClick={() => setEditVehicleModalOpen(false)}
             />
           </div>
@@ -135,19 +135,19 @@ const EditAnnounceForm = () => {
           <div className="flex flex-col">
             <label
               htmlFor="typeAnnouncement"
-              className="font-medium text-[0.875rem] mb-4"
+              className="font-medium text-[0.875rem] mb-6 mt-7"
             >
               Tipo de anúncio
             </label>
             <div className="flex justify-between gap-3 mb-4">
               <button
-                className={`${sellColor} h-10 w-full rounded font-semibold text-base border-2`}
+                className={`${sellColor} w-full rounded font-semibold text-base border-2 px-6 py-3`}
                 onClick={() => setAnnouncementType("sell")}
               >
                 Venda
               </button>
               <button
-                className={`${auctionColor} h-10 w-full rounded font-semibold text-base border-2`}
+                className={`${auctionColor} w-full rounded font-semibold text-base border-2 px-6 py-3`}
                 onClick={() => setAnnouncementType("auction")}
               >
                 Leilão
@@ -166,12 +166,12 @@ const EditAnnounceForm = () => {
               type="text"
               placeholder="Digitar título"
               {...register("title")}
-              className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-3 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+              className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
             />
           </div>
 
-          <div className="flex justify-between gap-2">
-            <div className="flex flex-col">
+          <div className="flex justify-between w-full max-sm:flex-wrap">
+            <div className="flex flex-col w-[32%] max-sm:w-[49%]">
               <label htmlFor="year" className="font-medium mb-1">
                 Ano
               </label>
@@ -179,11 +179,11 @@ const EditAnnounceForm = () => {
                 type="number"
                 placeholder="2018"
                 {...register("year")}
-                className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-10 focus:outline-none mb-4 w-full"
+                className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
               />
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col w-[32%] max-sm:w-[49%]">
               <label htmlFor="mileage" className="font-medium mb-1">
                 Quilometragem
               </label>
@@ -191,11 +191,11 @@ const EditAnnounceForm = () => {
                 type="text"
                 placeholder="0"
                 {...register("mileage")}
-                className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-10 focus:outline-none mb-4 w-full"
+                className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
               />
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col w-[32%] max-sm:w-[100%]">
               <label htmlFor="price" className="font-medium mb-1">
                 Preço
               </label>
@@ -203,7 +203,7 @@ const EditAnnounceForm = () => {
                 type="text"
                 placeholder="50.000,00"
                 {...register("price")}
-                className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-10 focus:outline-none mb-4 w-full"
+                className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
               />
             </div>
           </div>
@@ -214,7 +214,7 @@ const EditAnnounceForm = () => {
             </label>
             <textarea
               placeholder="Digitar descrição"
-              className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-3 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-10 focus:outline-none mb-4"
+              className="resize-none font-normal text-[0.900rem] rounded border-2 border-grey7 p-4 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-24 focus:outline-none mb-4"
               {...register("description")}
             />
           </div>
@@ -225,14 +225,14 @@ const EditAnnounceForm = () => {
             </label>
             <div className="flex justify-between gap-3">
               <button
-                className={`${carColor} h-10 w-full rounded font-semibold text-base border-2`}
+                className={`${carColor} w-full rounded font-semibold text-base border-2 px-6 py-3`}
                 onClick={() => setVehicleType("car")}
                 type="button"
               >
                 Carro
               </button>
               <button
-                className={`${motorcycleColor} h-10 w-full rounded font-semibold text-base border-2`}
+                className={`${motorcycleColor} w-full rounded font-semibold text-base border-2 px-6 py-3`}
                 onClick={() => setVehicleType("motorcycle")}
                 type="button"
               >
@@ -248,7 +248,7 @@ const EditAnnounceForm = () => {
             <input
               type="text"
               placeholder="inserir URL da imagem"
-              className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-3 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+              className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
               onBlur={(e) => images.push(e.target.value)}
             />
           </div>
@@ -266,7 +266,7 @@ const EditAnnounceForm = () => {
                   name={`${fieldname}`}
                   placeholder="inserir URL da imagem"
                   onBlur={(e) => images.push(e.target.value)}
-                  className="font-normal text-[0.900rem] rounded-md border-2 border-grey7 p-3 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
+                  className="font-normal text-[0.900rem] rounded border-2 border-grey7 pl-4 py-6 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-8 focus:outline-none mb-4"
                 />
               </div>
             );
@@ -274,7 +274,7 @@ const EditAnnounceForm = () => {
 
           <div>
             <button
-              className="bg-brand4 text-brand1 font-semibold text-[0.875rem] h-10 px-3"
+              className="bg-brand4 text-brand1 font-semibold text-[0.875rem] h-10 px-3 rounded mt-3 max-sm:w-[100%]"
               type="button"
               onClick={addImage}
             >
@@ -282,9 +282,9 @@ const EditAnnounceForm = () => {
             </button>
           </div>
 
-          <div className="flex gap-2  justify-between mt-5">
+          <div className="flex justify-end gap-2 mt-7 max-sm:justify-between">
             <button
-              className="bg-grey6 text-grey2 rounded-md p-1 h-9  text-[0.800rem]"
+              className="bg-grey6 text-grey2 rounded px-6 py-3 font-semibold max-sm:px-4"
               type="button"
               onClick={() => {
                 setIsModalDelete(true);
@@ -292,7 +292,7 @@ const EditAnnounceForm = () => {
             >
               Excluir anúncio
             </button>
-            <button className="bg-brand1 text-whiteFixed rounded-md  h-10 p-1 text-[0.800rem] ">
+            <button className="bg-brand1 text-whiteFixed rounded px-6 py-3 font-semibold max-sm:px-4">
               Salvar alterações
             </button>
           </div>
