@@ -132,24 +132,24 @@ const DetailedViewPageVehicle = () => {
   return (
     <>
       <Header />
-      <main className="flex flex-col h-full lg:flex-row  lg:bg-brand2 lg:max-h-[34rem] lg:justify-center xl:justify-center">
-        <section className="bg-grey8  flex justify-center flex-col lg:h-full mr-11">
-          <div className=" bg-brand2 flex flex-col items-center text-center h-[22.2rem] lg:w-[47rem]">
-            <figure className="flex justify-center bg-grey10 rounded-md w-72 p-8 mt-10 lg:w-[47rem] lg:h-[22.2rem] max-w-[663px] max-h-[300px]">
+      <div className="flex flex-row bg-brand2 justify-center h-[34rem]">
+        <div className="absolute flex">
+          <section className="flex justify-center flex-col w-[45rem] my-10 max-sm:w-[95vw]">
+            <figure className="flex justify-center max-sm:items-center bg-grey10 rounded p-8 w-[100%] h-[22rem]">
               <img
                 src={mainImage}
                 alt="Imagem de um carro"
-                className="w-[28rem] rounded min-w-[50px] min-h-[50px]"
+                className="w-[28rem] rounded min-w-[50px] min-h-[50px] max-sm:h-[12rem]"
               />
             </figure>
 
-            <div className="w-[100%] bg-grey10 rounded-md mt-5 flex flex-col gap-2 p-5 max-w-[663px]">
-              <h3 className=" font-lexend font-bold text-grey1 pt-5 ">
+            <div className="w-[100%] bg-grey10 rounded mt-5 flex flex-col gap-2 p-5 border-[2px] border-grey7">
+              <h3 className="font-lexend font-bold text-grey1 mb-10">
                 {vehicle?.title}
               </h3>
 
-              <div className="md:flex md:flex-row items-center md: justify-between">
-                <div className="flex gap-1 p-2 flex-row font-inter text-sm font-medium text-brand1">
+              <div className="md:flex md:flex-row items-center justify-between">
+                <div className="flex gap-1 flex-row font-inter text-sm font-medium text-brand1 mb-5">
                   <span className="px-2 py-1 bg-brand4 rounded">
                     {vehicle?.year}
                   </span>
@@ -158,7 +158,7 @@ const DetailedViewPageVehicle = () => {
                   </span>
                 </div>
 
-                <h4 className="flex p-4 font-lexend font-bold text-base text-grey1">
+                <h4 className="flex font-lexend font-bold text-base text-grey1">
                   {Number(vehicle?.price).toLocaleString("pt-br", {
                     style: "currency",
                     currency: "BRL",
@@ -167,7 +167,7 @@ const DetailedViewPageVehicle = () => {
               </div>
 
               {token ? (
-                <button className="flex p-1 ml-4 bg-brand1 rounded px-5 text-whiteFixed w-28 items-center">
+                <button className="flex p-1 bg-brand1 rounded px-5 text-whiteFixed w-28 items-center">
                   <a
                     href={`https://wa.me/55${vehicle?.owner.phone.replace(
                       /[{()}]|-/g,
@@ -181,36 +181,39 @@ const DetailedViewPageVehicle = () => {
               ) : null}
             </div>
 
-            <div className="mt-5 w-11/12 p-5 flex flex-col items-start gap-5  bg-grey10 rounded-md max-w-[663px]">
+            <div className="mt-5 w-full p-5 flex flex-col items-start gap-5  bg-grey10 rounded  border-[2px] border-grey7">
               <h2 className="font-lexend text-grey1 flex justify-start font-bold  text-[1.100rem]">
                 Descrição
               </h2>
               <p className="text-grey2 font-inter">{vehicle?.description}</p>
             </div>
 
-            <div className="mt-5 w-11/12 p-5 flex flex-col gap-5  bg-grey10 rounded-md lg:hidden">
-              <h2 className="font-lexend text-grey1 flex justify-start ">
+            <div className="mt-5 p-5 flex flex-col gap-5 bg-grey10 rounded lg:hidden border-[2px] border-grey7">
+              <h2 className="font-lexend text-grey1 flex justify-start font-semibold">
                 Fotos
               </h2>
 
-              <div className="flex flex-wrap gap-2 justify-center p-5">
+              <div className="flex flex-wrap gap-2">
                 {vehicle?.images ? (
                   vehicle.images.map((images, index) => (
-                    <img
-                      src={images.imageUrl}
-                      className="w-16 bg-grey7 p-1"
-                      onClick={() => {
-                        setMainImage(images.imageUrl);
-                        console.log("clicando");
-                      }}
-                    />
+                    <figure className="flex justify-center items-center bg-grey7 w-[5.75rem] h-[5.75rem] rounded">
+                      <img
+                        src={images.imageUrl}
+                        className="w-[5.25rem] bg-grey7 p-1"
+                        onClick={() => {
+                          setMainImage(images.imageUrl);
+                          console.log("clicando");
+                        }}
+                      />
+                    </figure>
                   ))
                 ) : (
                   <p>Não há fotos para este vehículo</p>
                 )}
               </div>
             </div>
-            <div className="mt-5 w-11/12 p-5 flex flex-col gap-5  bg-grey10 rounded-md items-center lg:hidden">
+
+            <div className="mt-5 p-5 flex flex-col gap-5 bg-grey10 rounded items-center lg:hidden border-[2px] border-grey7">
               <div className="bg-brand2 rounded-full w-10 h-10 items-center flex justify-center text-center">
                 <p className="font-inter text-sm font-medium text-whiteFixed">
                   {vehicle?.owner.name && vehicle.owner.name[0]}
@@ -231,7 +234,7 @@ const DetailedViewPageVehicle = () => {
               </Link>
             </div>
 
-            <div className="mt-5 w-11/12 p-5 flex flex-col gap-5  bg-grey10 rounded-md max-w-[663px]">
+            <div className="mt-5 w-full p-5 flex flex-col gap-5  bg-grey10 rounded border-[2px] border-grey7">
               <h2 className="font-lexend text-grey1 flex justify-start font-bold text-[1.100rem]">
                 Comentários
               </h2>
@@ -286,7 +289,7 @@ const DetailedViewPageVehicle = () => {
 
             {token ? (
               <>
-                <div className="mt-5 w-11/12 p-5 flex flex-col gap-5  bg-grey10 rounded-md">
+                <div className="mt-5 p-5 flex flex-col gap-5 bg-grey10 rounded w-full border-[2px] border-grey7">
                   <div className="flex gap-4 items-center">
                     <p className="font-inter text-sm font-medium  text-whiteFixed bg-brand2 rounded-full w-8 h-8 items-center flex justify-center text-center">
                       {user?.name && user.name[0]}
@@ -299,12 +302,12 @@ const DetailedViewPageVehicle = () => {
                       <textarea
                         id="createComment"
                         name="createComment"
-                        className="resize-none font-inter text-[0.900rem] rounded-md border-2 border-grey7 p-2 pr-36 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-32 focus:outline-none w-full"
+                        className="resize-none font-inter text-[0.900rem] rounded-md border-2 border-grey7 p-2 pr-36 max-sm:pr-2 hover:bg-grey7 focus:border-brand2 focus:bg-grey7 h-32 focus:outline-none w-full"
                         placeholder="Carro muito confortável, foi uma ótima experiência de compra..."
                         value={createComment}
                         onChange={(e) => setCreateComment(e.target.value)}
                       />
-                      <button className="absolute ml-[-124px] mt-[84px] p-1 bg-brand1 rounded px-5 text-whiteFixed w-28">
+                      <button className="absolute max-sm:relative max-sm:ml-0 max-sm:mt-3 ml-[-124px] mt-[84px] p-1 bg-brand1 rounded px-5 text-whiteFixed w-28">
                         Comentar
                       </button>
                     </form>
@@ -334,59 +337,59 @@ const DetailedViewPageVehicle = () => {
                 </div>
               </>
             ) : null}
-          </div>
-        </section>
+          </section>
 
-        <div className="flex flex-col justify-center">
-          <div className="lg:flex lg:flex-col lg:bg-grey10 lg:rounded-md lg:w-[28rem] lg:h-[23rem] hidden p-8 mt-[18.35rem]">
-            <div>
-              <h2 className="font-lexend text-grey1 font-bold text-[1.25rem] mb-8">
-                Fotos
+          <section className="flex flex-col rounded w-[28rem] mt-10 ml-10 max-sm:hidden">
+            <div className="bg-whiteFixed rounded p-8">
+              <div>
+                <h2 className="font-lexend text-grey1 font-bold text-[1.25rem] mb-8">
+                  Fotos
+                </h2>
+              </div>
+
+              <div className="flex flex-wrap gap-5">
+                {vehicle?.images ? (
+                  vehicle.images.map((images) => (
+                    <figure className="flex justify-center items-center bg-grey7 w-[6.75rem] h-[6.75rem] rounded">
+                      <img
+                        src={images.imageUrl}
+                        className="w-[6.5rem]"
+                        onClick={() => setMainImage(images.imageUrl)}
+                      />
+                    </figure>
+                  ))
+                ) : (
+                  <p>Não há fotos para este vehículo</p>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-8 w-full flex flex-col gap-5 bg-grey10 rounded items-center p-8 border-[2px] border-grey7">
+              <div className="bg-brand2 rounded-full w-[6.5rem] h-[6.5rem] items-center flex justify-center text-center">
+                <p className="font-inter text-sm font-bold text-whiteFixed text-[2.25rem]">
+                  {vehicle?.owner.name && vehicle.owner.name[0]}
+                </p>
+              </div>
+              <h2 className="font-lexend font-bold text-grey1 pt-1 text-[1.25rem]">
+                {vehicle?.owner.name}
               </h2>
-            </div>
 
-            <div className="flex flex-wrap gap-5">
-              {vehicle?.images ? (
-                vehicle.images.map((images) => (
-                  <figure className="flex justify-center items-center bg-grey7 w-[6.75rem] h-[6.75rem] rounded">
-                    <img
-                      src={images.imageUrl}
-                      className="w-[6.5rem]"
-                      onClick={() => setMainImage(images.imageUrl)}
-                    />
-                  </figure>
-                ))
-              ) : (
-                <p>Não há fotos para este vehículo</p>
-              )}
-            </div>
-          </div>
+              <div className="w-[22rem]">
+                <p className="text-grey2 font-inter text-center">
+                  {vehicle?.owner.description}
+                </p>
+              </div>
 
-          <div className=" lg:mt-8 lg:w-[28rem] lg:p-9  lg:flex  lg:flex-col  lg:gap-5   lg:bg-grey10  lg:rounded-md  lg:items-center lg:mb-7 hidden">
-            <div className="bg-brand2 rounded-full w-[6.5rem] h-[6.5rem] items-center flex justify-center text-center">
-              <p className="font-inter text-sm font-bold text-whiteFixed text-[2.25rem]">
-                {vehicle?.owner.name && vehicle.owner.name[0]}
-              </p>
+              <Link
+                to={"/userProfile"}
+                className="bg-grey0 py-2 px-5 text-whiteFixed rounded font-inter"
+              >
+                Ver todos os anúncios
+              </Link>
             </div>
-            <h2 className="font-lexend font-bold text-grey1 pt-1 text-[1.25rem]">
-              {vehicle?.owner.name}
-            </h2>
-
-            <div className="w-[22rem]">
-              <p className="text-grey2 font-inter text-center">
-                {vehicle?.owner.description}
-              </p>
-            </div>
-
-            <Link
-              to={"/userProfile"}
-              className="bg-grey0 p-2 text-whiteFixed rounded-sm font-inter"
-            >
-              Ver todos os anúncios
-            </Link>
-          </div>
+          </section>
         </div>
-      </main>
+      </div>
 
       {modalEditOpen && (
         <ModalBase setIs={setModalEditOpen}>
